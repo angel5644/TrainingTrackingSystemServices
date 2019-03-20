@@ -21,7 +21,7 @@ public class UserResource {
 	
 	@RequestMapping(value= "/create_user_post", method = RequestMethod.POST)
 	@ResponseBody
-	public String createCustomer(HttpServletRequest request){
+	public String createUser(HttpServletRequest request){
 		
 		//String id = request.getParameter("id");
 		String first_name= request.getParameter("first_name");
