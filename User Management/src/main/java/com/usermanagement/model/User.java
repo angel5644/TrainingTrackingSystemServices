@@ -6,5 +6,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USERS", catalog = "XE")
 public class User {
+	//aber
 
 }
