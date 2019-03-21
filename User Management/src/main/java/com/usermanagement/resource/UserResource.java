@@ -1,8 +1,11 @@
 package com.usermanagement.resource;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,14 @@ public class UserResource {
 
 	@Autowired
     UserRepository userRepository;
+	
+	
+	@GetMapping("/all")
+    public List<User> getAll() {
+        //usersRepository.flush();
+        System.out.println(userRepository.findAll());
+        return userRepository.findAll();
+    }
 	
 	@RequestMapping(value= "/create_user_post", method = RequestMethod.POST)
 	@ResponseBody
