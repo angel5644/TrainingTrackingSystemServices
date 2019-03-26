@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -23,11 +24,12 @@ import com.usermanagement.resource.UserResource;
 @SpringBootTest
 public class UserManagementApplicationTests {
 	
+	@Mock
+	UserResource userResource;
+	
    @Test
-   @Transactional
     public void testUserInsert()
     { 
-		UserResource userResource = null;
 		String first_name = "Rodrigo";
 		String last_name = "Velasco";
 		String email = "rodrigo.velasco@4thsource.com";
@@ -58,7 +60,7 @@ public class UserManagementApplicationTests {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Resultado = " + userResource.createUser(request));
+		//System.out.println("Resultado = " + userResource.createUser(request));
 		//assertEquals("Insert success", userResource.createUser(request));      
     }
 }
