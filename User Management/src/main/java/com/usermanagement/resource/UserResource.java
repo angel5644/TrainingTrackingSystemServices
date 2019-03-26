@@ -26,7 +26,6 @@ public class UserResource {
 	private UserManager userManager;
 	
 	String result;
-	User u;
 	
 	@GetMapping("/all")
     public List<User> getAll() {
@@ -42,14 +41,13 @@ public class UserResource {
 		
 		//String id = request.getParameter("id");
 		result="";
-		u = new User();
 		Boolean isOk = validateFields(theUser);
 	    
 	    if(!isOk){
         	result = "The following error occurred "+ result;
         }
         else{
-        	userManager.createUpdateUser(u);
+        	userManager.createUpdateUser(theUser);
 	        result = "Insert success";
         }
 	    
@@ -70,16 +68,10 @@ public class UserResource {
 	        	result += "The 'first_name' filed is missing. ";
 	        	isOk = false;
 	        }
-	        else{
-	        	u.setFirst_name(first_name);
-	        }
 	        
 	        if(last_name.isEmpty() || last_name == null){
 	        	result += "The 'last_name' filed is missing. ";
 	        	isOk = false;
-	        }
-	        else{
-	        	u.setLast_name(last_name);
 	        }
 	        
 	        if(email.isEmpty() || email == null){
@@ -90,9 +82,6 @@ public class UserResource {
 	        	if(!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
 	        		result += "The email entered is invalid. ";
 	        		isOk = false;
-	        	}
-	        	else{
-	        		u.setEmail(email);
 	        	}
 	        }
 	        
@@ -117,9 +106,7 @@ public class UserResource {
 	            else{
 	            	if(Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2){
 	            		result += "The 'type' field must be between 0-2";
-	            	}
-	            	else{
-	            		u.setType(Integer.parseInt(type));
+	            		isOk = false;
 	            	}
 	            }
 	        }
@@ -129,9 +116,10 @@ public class UserResource {
 		return isOk;
 	}
 	
-	@GetMapping("update/{id}")
+	@RequestMapping(value= "/update/{id}", method = RequestMethod.POST)
 	public String update(@PathVariable("id") final Integer id,@ModelAttribute("User") User theUser){
 		
+		result="";
 		User user = userManager.findById(id);
 		Boolean isOk = validateFields(user);
 		
@@ -139,7 +127,11 @@ public class UserResource {
         	result = "The following error occurred "+ result;
         }
         else{
-        	userManager.createUpdateUser(u);
+        	user.setFirst_name(theUser.getFirst_name());
+        	user.setLast_name(theUser.getLast_name());
+        	user.setEmail(theUser.getEmail());
+        	user.setType(theUser.getType());
+        	userManager.createUpdateUser(user);
 	        result = "Update success";
         }
 		
