@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,8 @@ public class UserResource {
 	@Autowired
 	private UserManager userManager;
 	
+	String result;
+	User u;
 	
 	@GetMapping("/all")
     public List<User> getAll() {
@@ -38,17 +41,31 @@ public class UserResource {
 	public String createUser(@ModelAttribute("User") User theUser){
 		
 		//String id = request.getParameter("id");
+		result="";
+		u = new User();
+		Boolean isOk = validateFields(theUser);
+	    
+	    if(!isOk){
+        	result = "The following error occurred "+ result;
+        }
+        else{
+        	userManager.createUpdateUser(u);
+	        result = "Insert success";
+        }
+	    
+	    return result;
+	}
+	
+	public Boolean validateFields(User theUser){
+		
 		String first_name= theUser.getFirst_name();
 		String last_name= theUser.getLast_name();
 		String email= theUser.getEmail();
 		String type= String.valueOf(theUser.getType());
 		
-		String result="";
 		Boolean isOk = true;
-
-	    try{
-	        User u = new User();
-	        
+		
+		try{
 	        if(first_name.isEmpty() || first_name == null){
 	        	result += "The 'first_name' filed is missing. ";
 	        	isOk = false;
@@ -106,18 +123,26 @@ public class UserResource {
 	            	}
 	            }
 	        }
-	        
-	        if(!isOk){
-	        	result = "The following error occurred "+ result;
-	        }
-	        else{
-	        	userManager.createUser(u);
-		        result = "Insert success";
-	        }
-	        
 	    }catch(Exception ex){
 	        System.out.println(ex);
 	    }
-	    return result;
+		return isOk;
+	}
+	
+	@GetMapping("update/{id}")
+	public String update(@PathVariable("id") final Integer id,@ModelAttribute("User") User theUser){
+		
+		User user = userManager.findById(id);
+		Boolean isOk = validateFields(user);
+		
+		if(!isOk){
+        	result = "The following error occurred "+ result;
+        }
+        else{
+        	userManager.createUpdateUser(u);
+	        result = "Update success";
+        }
+		
+		return result;
 	}
 }

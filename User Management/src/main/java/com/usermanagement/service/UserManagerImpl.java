@@ -23,7 +23,13 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
-	public void createUser(User theUser){
+	public User findById(int id){
+		return userRepository.findById(id).get();
+	}
+	
+	@Override
+	@Transactional
+	public void createUpdateUser(User theUser){
 		userRepository.save(theUser);
 	}
 }

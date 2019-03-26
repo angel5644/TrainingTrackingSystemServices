@@ -7,5 +7,6 @@ import com.usermanagement.model.User;
 public interface UserManager {
 
 	public List <User> getUsers();
-	public void createUser(User theUser);
+	public void createUpdateUser(User theUser);
+	public User findById(int id);
 }
