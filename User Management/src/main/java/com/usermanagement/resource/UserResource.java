@@ -2,7 +2,7 @@ package com.usermanagement.resource;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,21 +14,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usermanagement.model.User;
-import com.usermanagement.repository.UserRepository;
+//import com.usermanagement.repository.UserRepository;
+import com.usermanagement.service.UserManager;
 
 @RestController
 @RequestMapping("/user")
 public class UserResource {
 
 	@Autowired
-    UserRepository userRepository;
+	private UserManager userManager;
 	
 	
 	@GetMapping("/all")
     public List<User> getAll() {
         //usersRepository.flush();
-        System.out.println(userRepository.findAll());
-        return userRepository.findAll();
+        System.out.println(userManager.getUsers());
+        return userManager.getUsers();
     }
 	
 	@RequestMapping(value= "/create_user_post", method = RequestMethod.POST)
@@ -110,7 +111,7 @@ public class UserResource {
 	        	result = "The following error occurred "+ result;
 	        }
 	        else{
-	        	userRepository.save(u);
+	        	userManager.createUser(u);
 		        result = "Insert success";
 	        }
 	        
