@@ -71,52 +71,78 @@ public class UserResource {
 			String type= String.valueOf(theUser.getType());
 
 			try{
-		        if(first_name.isEmpty() || first_name == null){
-		        	result += "The 'first_name' filed is missing. ";
-		        	isOk = false;
-		        }
-		        
-		        if(last_name.isEmpty() || last_name == null){
-		        	result += "The 'last_name' filed is missing. ";
-		        	isOk = false;
-		        }
-		        
-		        if(email.isEmpty() || email == null){
-		        	result += "The 'email' filed is missing. ";
+		        if(first_name == null){
+		        	result += "The 'first_name' field is missing. ";
 		        	isOk = false;
 		        }
 		        else{
-		        	if(!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
-		        		result += "The email entered is invalid. ";
+		        	if(first_name.isEmpty()){
+		        		result += "The 'first_name' field is empty";
 		        		isOk = false;
 		        	}
 		        }
 		        
-		        if(type.isEmpty() || type == null){
-		        	result += "The 'type' field is missing. ";
+		        if(last_name == null){
+		        	result += "The 'last_name' field is missing.";
 		        	isOk = false;
 		        }
 		        else{
-		        	boolean isNumeric = true;
-		            try {
-	
-		                Integer.parseInt(type);
-	
-		            }catch (NumberFormatException e) {
-		                isNumeric = false;
-		            }
-		            
-		            if(!isNumeric){
-		            	result += "The 'type' field is not numeric. ";
-		            	isOk = false;
-		            }
-		            else{
-		            	if(Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2){
-		            		result += "The 'type' field must be between 0-2";
-		            		isOk = false;
-		            	}
-		            }
+		        	if(last_name.isEmpty()){
+		        		result += "The 'last_name' field is empty.";
+		        		isOk = false;
+		        	}
 		        }
+		        
+		        if(email == null){
+		        	result += "The 'email' field is missing.";
+		        	isOk = false;
+		        }
+		        else{
+		        	if(email.isEmpty()){
+		        		result += "The 'email' field is empty.";
+		        		isOk = false;
+		        	}
+		        	else{
+			        	if(!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
+			        		result += "The email entered is invalid. ";
+			        		isOk = false;
+			        	}
+			        }
+		        }
+		        
+		        
+		        if(type.isEmpty() || type == null){
+		        	result += "The 'type' field is missing.";
+		        	isOk = false;
+		        }
+		        else{
+		        	if(type.isEmpty()){
+		        		result += "The 'type' field is empty.";
+		        		isOk = false;
+		        	}
+		        	else{
+			        	boolean isNumeric = true;
+			            try {
+		
+			                Integer.parseInt(type);
+		
+			            }catch (NumberFormatException e) {
+			                isNumeric = false;
+			            }
+			            
+			            if(!isNumeric){
+			            	result += "The 'type' field is not numeric.";
+			            	isOk = false;
+			            }
+			            else{
+			            	if(Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2){
+			            		result += "The 'type' field must be between 0-2";
+			            		isOk = false;
+			            	}
+			            }
+			        }
+		        }
+		        
 		    }catch(Exception ex){
 		        System.out.println(ex);
 		    }
