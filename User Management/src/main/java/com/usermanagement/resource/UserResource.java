@@ -134,6 +134,7 @@ public class UserResource {
 			            try {
 		
 			                Integer.parseInt(type);
+			                
 			            }catch(TypeMismatchException e){
 			            	isNumeric = false;
 			            }catch (NumberFormatException e) {
@@ -165,7 +166,7 @@ public class UserResource {
 		
 		result="";
 		User user = userManager.findById(theUser.getId());
-		Boolean isOk = validateFields(user);
+		Boolean isOk = validateFields(theUser);
 		
 		if(!isOk){
         	result = "The following error occurred "+ result;
