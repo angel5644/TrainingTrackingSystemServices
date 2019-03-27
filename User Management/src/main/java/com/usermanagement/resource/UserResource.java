@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -116,11 +116,11 @@ public class UserResource {
 		return isOk;
 	}
 	
-	@RequestMapping(value= "/update/{id}", method = RequestMethod.POST)
-	public String update(@PathVariable("id") final Integer id,@ModelAttribute("User") User theUser){
+	@RequestMapping(value= "/update", method = RequestMethod.PUT)
+	public String update(@ModelAttribute("User") User theUser){
 		
 		result="";
-		User user = userManager.findById(id);
+		User user = userManager.findById(theUser.getId());
 		Boolean isOk = validateFields(user);
 		
 		if(!isOk){
