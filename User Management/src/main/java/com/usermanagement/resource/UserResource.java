@@ -5,6 +5,9 @@ import java.util.List;
 //import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+//import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +22,7 @@ import com.usermanagement.model.User;
 import com.usermanagement.service.UserManager;
 
 @RestController
-@RequestMapping("/user")
+//@RequestMapping("/user")
 public class UserResource {
 
 	@Autowired
@@ -27,17 +30,17 @@ public class UserResource {
 	
 	String result;
 	
-	@GetMapping("/all")
+	@GetMapping("/user/all")
     public List<User> getAll() {
         //usersRepository.flush();
         System.out.println(userManager.getUsers());
         return userManager.getUsers();
     }
 	
-	@RequestMapping(value= "/create_user_post", method = RequestMethod.POST)
+	@RequestMapping(value= "/user", method = RequestMethod.POST)
 	@ResponseBody
 	//Previous parameter was HttpServletRequest request
-	public String createUser(@ModelAttribute("User") User theUser){
+	public ResponseEntity<?> createUser(@ModelAttribute("User") User theUser){
 		
 		//String id = request.getParameter("id");
 		result="";
@@ -45,79 +48,84 @@ public class UserResource {
 	    
 	    if(!isOk){
         	result = "The following error occurred "+ result;
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
         else{
         	userManager.createUpdateUser(theUser);
-	        result = "Insert success";
+        	return ResponseEntity.status(HttpStatus.OK).body("");
         }
-	    
-	    return result;
 	}
 	
 	public Boolean validateFields(User theUser){
 		
-		String first_name= theUser.getFirst_name();
-		String last_name= theUser.getLast_name();
-		String email= theUser.getEmail();
-		String type= String.valueOf(theUser.getType());
-		
 		Boolean isOk = true;
 		
-		try{
-	        if(first_name.isEmpty() || first_name == null){
-	        	result += "The 'first_name' filed is missing. ";
-	        	isOk = false;
-	        }
-	        
-	        if(last_name.isEmpty() || last_name == null){
-	        	result += "The 'last_name' filed is missing. ";
-	        	isOk = false;
-	        }
-	        
-	        if(email.isEmpty() || email == null){
-	        	result += "The 'email' filed is missing. ";
-	        	isOk = false;
-	        }
-	        else{
-	        	if(!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
-	        		result += "The email entered is invalid. ";
-	        		isOk = false;
-	        	}
-	        }
-	        
-	        if(type.isEmpty() || type == null){
-	        	result += "The 'type' field is missing. ";
-	        	isOk = false;
-	        }
-	        else{
-	        	boolean isNumeric = true;
-	            try {
+		if(theUser == null){
+			result = "Invalid User type";
+			isOk = false;
+		}
+		else{
+			String first_name= theUser.getFirst_name();
+			String last_name= theUser.getLast_name();
+			String email= theUser.getEmail();
+			String type= String.valueOf(theUser.getType());
 
-	                Integer.parseInt(type);
-
-	            }catch (NumberFormatException e) {
-	                isNumeric = false;
-	            }
-	            
-	            if(!isNumeric){
-	            	result += "The 'type' field is not numeric. ";
-	            	isOk = false;
-	            }
-	            else{
-	            	if(Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2){
-	            		result += "The 'type' field must be between 0-2";
-	            		isOk = false;
-	            	}
-	            }
-	        }
-	    }catch(Exception ex){
-	        System.out.println(ex);
-	    }
+			try{
+		        if(first_name.isEmpty() || first_name == null){
+		        	result += "The 'first_name' filed is missing. ";
+		        	isOk = false;
+		        }
+		        
+		        if(last_name.isEmpty() || last_name == null){
+		        	result += "The 'last_name' filed is missing. ";
+		        	isOk = false;
+		        }
+		        
+		        if(email.isEmpty() || email == null){
+		        	result += "The 'email' filed is missing. ";
+		        	isOk = false;
+		        }
+		        else{
+		        	if(!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
+		        		result += "The email entered is invalid. ";
+		        		isOk = false;
+		        	}
+		        }
+		        
+		        if(type.isEmpty() || type == null){
+		        	result += "The 'type' field is missing. ";
+		        	isOk = false;
+		        }
+		        else{
+		        	boolean isNumeric = true;
+		            try {
+	
+		                Integer.parseInt(type);
+	
+		            }catch (NumberFormatException e) {
+		                isNumeric = false;
+		            }
+		            
+		            if(!isNumeric){
+		            	result += "The 'type' field is not numeric. ";
+		            	isOk = false;
+		            }
+		            else{
+		            	if(Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2){
+		            		result += "The 'type' field must be between 0-2";
+		            		isOk = false;
+		            	}
+		            }
+		        }
+		    }catch(Exception ex){
+		        System.out.println(ex);
+		    }
+		}
 		return isOk;
 	}
 	
-	@RequestMapping(value= "/update", method = RequestMethod.PUT)
-	public String update(@ModelAttribute("User") User theUser){
+	@RequestMapping(value= "/user", method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@ModelAttribute("User") User theUser){
 		
 		result="";
 		User user = userManager.findById(theUser.getId());
@@ -125,6 +133,7 @@ public class UserResource {
 		
 		if(!isOk){
         	result = "The following error occurred "+ result;
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
         else{
         	user.setFirst_name(theUser.getFirst_name());
@@ -133,8 +142,7 @@ public class UserResource {
         	user.setType(theUser.getType());
         	userManager.createUpdateUser(user);
 	        result = "Update success";
+	        return ResponseEntity.status(HttpStatus.OK).body("");
         }
-		
-		return result;
 	}
 }
