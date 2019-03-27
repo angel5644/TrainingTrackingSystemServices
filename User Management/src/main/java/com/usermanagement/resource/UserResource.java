@@ -2,6 +2,8 @@ package com.usermanagement.resource;
 
 import java.util.List;
 
+import org.hibernate.TypeMismatchException;
+
 //import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +63,7 @@ public class UserResource {
 		Boolean isOk = true;
 		
 		if(theUser == null){
-			result = "Invalid User type";
+			result = "Invalid User type. ";
 			isOk = false;
 		}
 		else{
@@ -77,29 +79,29 @@ public class UserResource {
 		        }
 		        else{
 		        	if(first_name.isEmpty()){
-		        		result += "The 'first_name' field is empty";
+		        		result += "The 'first_name' field is empty. ";
 		        		isOk = false;
 		        	}
 		        }
 		        
 		        if(last_name == null){
-		        	result += "The 'last_name' field is missing.";
+		        	result += "The 'last_name' field is missing. ";
 		        	isOk = false;
 		        }
 		        else{
 		        	if(last_name.isEmpty()){
-		        		result += "The 'last_name' field is empty.";
+		        		result += "The 'last_name' field is empty. ";
 		        		isOk = false;
 		        	}
 		        }
 		        
 		        if(email == null){
-		        	result += "The 'email' field is missing.";
+		        	result += "The 'email' field is missing. ";
 		        	isOk = false;
 		        }
 		        else{
 		        	if(email.isEmpty()){
-		        		result += "The 'email' field is empty.";
+		        		result += "The 'email' field is empty. ";
 		        		isOk = false;
 		        	}
 		        	else{
@@ -112,12 +114,12 @@ public class UserResource {
 		        
 		        
 		        if(type.isEmpty() || type == null){
-		        	result += "The 'type' field is missing.";
+		        	result += "The 'type' field is missing. ";
 		        	isOk = false;
 		        }
 		        else{
 		        	if(type.isEmpty()){
-		        		result += "The 'type' field is empty.";
+		        		result += "The 'type' field is empty. ";
 		        		isOk = false;
 		        	}
 		        	else{
@@ -125,18 +127,19 @@ public class UserResource {
 			            try {
 		
 			                Integer.parseInt(type);
-		
+			            }catch(TypeMismatchException e){
+			            	isNumeric = false;
 			            }catch (NumberFormatException e) {
 			                isNumeric = false;
 			            }
 			            
 			            if(!isNumeric){
-			            	result += "The 'type' field is not numeric.";
+			            	result += "The 'type' field is not numeric. ";
 			            	isOk = false;
 			            }
 			            else{
 			            	if(Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2){
-			            		result += "The 'type' field must be between 0-2";
+			            		result += "The 'type' field must be between 0-2. ";
 			            		isOk = false;
 			            	}
 			            }
