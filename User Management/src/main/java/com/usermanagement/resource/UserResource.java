@@ -33,6 +33,13 @@ public class UserResource {
         System.out.println(userManager.getUsers());
         return userManager.getUsers();
     }
+	//delete user
+	@GetMapping("/delete")
+    public String deleteCustomer(@RequestParam("id") int theId) throws ResourceNotFoundException {
+		userManager.deleteUser(id);
+		System.out.println("The user is delete" + id;
+        return userManager.getUsers();
+    }
 	
 	@RequestMapping(value= "/create_user_post", method = RequestMethod.POST)
 	@ResponseBody
@@ -137,4 +144,5 @@ public class UserResource {
 		
 		return result;
 	}
+	
 }
