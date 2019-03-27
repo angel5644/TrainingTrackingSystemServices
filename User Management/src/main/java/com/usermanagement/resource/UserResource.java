@@ -113,7 +113,7 @@ public class UserResource {
 		        }
 		        
 		        
-		        if(type.isEmpty() || type == null){
+		        if(type == null){
 		        	result += "The 'type' field is missing. ";
 		        	isOk = false;
 		        }
