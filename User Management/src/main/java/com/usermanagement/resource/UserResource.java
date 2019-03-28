@@ -40,11 +40,14 @@ public class UserResource {
         return userManager.getUsers();
     }
 	//delete user
-	@GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("id") int theId) throws ResourceNotFoundException {
-		userManager.deleteUser(id);
-		System.out.println("The user is delete" + id;
-        return userManager.getUsers();
+	@RequestMapping(value= "/user", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@ModelAttribute("User") User theUser) {
+		if(userManager.deleteUser(theUser)){
+			return ResponseEntity.status(HttpStatus.OK).body("");
+		}
+		else{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
+		}
     }
 	
 	@GetMapping("/user/find")

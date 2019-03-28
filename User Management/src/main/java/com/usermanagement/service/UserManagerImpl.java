@@ -32,4 +32,10 @@ public class UserManagerImpl implements UserManager {
 	public void createUpdateUser(User theUser){
 		userRepository.save(theUser);
 	}
+	
+	@Override
+    @Transactional
+    public void deleteUser(User theUser) {
+		userRepository.deleteById(theUser.getId());
+    }
 }
