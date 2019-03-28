@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,31 @@ public class UserResource {
         System.out.println(userManager.getUsers());
         return userManager.getUsers();
     }
+	
+	
+				
+		
+	@GetMapping("/user/find")
+	@ResponseBody
+	public void searchUsers(
+		@RequestParam(value="findUser") String findUser,
+		@RequestParam(value="searchField") String searchField,
+		@RequestParam(value="searchValue") String searchValue,
+		@RequestParam(value="orderType") String orderType,
+		@RequestParam(value="orderBy") String orderBy,
+		@RequestParam(value="pageNo") String pageNo,
+		@RequestParam(value="numberRec") String numberRec)
+	{
+		
+		//usersRepository.flush();
+				System.out.println(findUser);
+				System.out.println(searchField);
+				System.out.println(searchValue);
+				System.out.println(orderType);
+				System.out.println(orderBy);
+				System.out.println(pageNo);
+				System.out.println(numberRec);
+	}
 	
 	@RequestMapping(value= "/user", method = RequestMethod.POST)
 	@ResponseBody
