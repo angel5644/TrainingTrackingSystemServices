@@ -43,12 +43,12 @@ public class UserResource {
 	@GetMapping("/user/find")
 	@ResponseBody
 	public void searchUsers(
-		@RequestParam(value="searchField") String searchField,
-		@RequestParam(value="searchValue") String searchValue,
-		@RequestParam(value="orderType") String orderType,
-		@RequestParam(value="orderBy") String orderBy,
-		@RequestParam(value="pageNo") String pageNo,
-		@RequestParam(value="numberRec") String numberRec)
+		@RequestParam(value="searchField",required=false) String searchField,
+		@RequestParam(value="searchValue",required=false) String searchValue,
+		@RequestParam(value="orderType",defaultValue="asc",required=false) String orderType,
+		@RequestParam(value="orderBy",defaultValue="id",required=false) String orderBy,
+		@RequestParam(value="pageNo",defaultValue="1",required=false) String pageNo,
+		@RequestParam(value="numberRec",defaultValue="10",required=false) String numberRec)
 	{
 		
 		System.out.println(searchField);
