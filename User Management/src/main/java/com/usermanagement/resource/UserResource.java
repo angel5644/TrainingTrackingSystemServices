@@ -72,14 +72,14 @@ public class UserResource {
 		System.out.println("Number records: "+numberRec);
 
 		result = "";
-		Boolean isOk = validateSearchFields(searchField.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(),
+		Boolean isOk = validateSearchFields((searchField == null)?"":searchField.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(),
 				pageNo, numberRec);
 
 		if (!isOk) {
 			result = "The following error occurred: " + result;
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
 		} else {
-			userManager.findUsers(searchField.toUpperCase(), searchValue, orderBy.toUpperCase(),
+			userManager.findUsers((searchField == null)?"":searchField.toUpperCase(), searchValue, orderBy.toUpperCase(),
 					orderType.toUpperCase(), Integer.valueOf(pageNo), Integer.valueOf(numberRec));
 			return ResponseEntity.status(HttpStatus.OK).body("");
 		}
