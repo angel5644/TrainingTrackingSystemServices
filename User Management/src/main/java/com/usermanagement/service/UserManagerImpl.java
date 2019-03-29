@@ -71,29 +71,29 @@ public class UserManagerImpl implements UserManager {
 	@Transactional
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
 		
-		Integer lowerLimit, upperLimit = null;
+		/*Integer lowerLimit, upperLimit = null;
 		FindUserResponse findUserResponse = new FindUserResponse();
 		
 		lowerLimit = ((pageNo*numberRec)-numberRec)+1;
 		upperLimit = pageNo*numberRec;
 		
 		if(searchField.equals("") || searchField.isEmpty()){
-			List<User> usersFound = userRepository.findUsersWithoutField(lowerLimit, upperLimit, orderBy, orderType);
+			List<User> usersFound = userRepository.findUsersWithoutField(lowerLimit, upperLimit);
 			findUserResponse.setUsers(usersFound);
 			findUserResponse.setTotalRecords(usersFound.size());
 		}
 		else{
-			List<User> usersFound = userRepository.findUsersWithField(searchField, searchValue, lowerLimit, upperLimit, orderBy, orderType);
+			List<User> usersFound = userRepository.findUsersWithField(searchValue,lowerLimit, upperLimit);
 			findUserResponse.setUsers(usersFound);
 			findUserResponse.setTotalRecords(usersFound.size());
 		}
-		
-		/*FindUserResponse findUserResponse = new FindUserResponse();
+		*/
+		FindUserResponse findUserResponse = new FindUserResponse();
 		List<User> usersFound = userRepository.findByFirstName(searchValue);
 		//List<User> usersFound = null;
 		findUserResponse.setUsers(usersFound);
 		findUserResponse.setTotalRecords(usersFound.size());
-		*/
+		
 		
 		return findUserResponse;
 	}
