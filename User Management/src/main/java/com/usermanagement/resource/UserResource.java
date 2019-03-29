@@ -32,7 +32,7 @@ public class UserResource {
 	private UserManager userManager;
 	
 	String result;
-	
+
 	@GetMapping("/user/all")
     public List<User> getAll() {
         //usersRepository.flush();
@@ -42,7 +42,8 @@ public class UserResource {
 	//delete user
 	@RequestMapping(value= "/user", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@ModelAttribute("User") User theUser) {
-		if(userManager.deleteUser(theUser)){
+		//User user = userManager.findById(theUser.getId()); 
+		if(userManager.findById(theUser.getId()) != null && userManager.deleteUser(theUser)){
 			return ResponseEntity.status(HttpStatus.OK).body("");
 		}
 		else{
