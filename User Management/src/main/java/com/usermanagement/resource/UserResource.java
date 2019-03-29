@@ -106,7 +106,7 @@ public class UserResource {
 
 		Boolean isOk = true;
 		try {
-			if (searchField != null) {
+			if (searchField != "") {
 				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
 						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
 					result += "The 'searchField' field is not a valid column. ";
