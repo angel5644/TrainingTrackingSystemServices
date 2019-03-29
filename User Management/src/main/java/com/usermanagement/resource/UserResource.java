@@ -8,6 +8,7 @@ import org.hibernate.TypeMismatchException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 //import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,7 @@ public class UserResource {
 		}
 	}
 
-	@GetMapping("/user/find")
+	@RequestMapping(value = "/user/find", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> searchUsers(@RequestParam(value = "searchField", required = false) String searchField,
 			@RequestParam(value = "searchValue", required = false) String searchValue,
