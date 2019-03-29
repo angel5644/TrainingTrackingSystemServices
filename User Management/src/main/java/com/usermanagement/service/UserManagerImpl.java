@@ -36,11 +36,7 @@ public class UserManagerImpl implements UserManager {
 	@Override
     @Transactional
     public boolean deleteUser(User theUser) {
-		try{
-			userRepository.deleteById(theUser.getId());
-			return true;
-		}catch(Exception ex){
-			return false;
-		}
+		//Here you have to validate if theUser received is NULL or not
+		userRepository.deleteById(theUser.getId());
     }
 }

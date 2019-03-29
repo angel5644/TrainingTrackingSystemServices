@@ -43,7 +43,7 @@ public class UserResource {
 	@RequestMapping(value= "/user", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@ModelAttribute("User") User theUser) {
 		//User user = userManager.findById(theUser.getId()); 
-		if(userManager.findById(theUser.getId()) != null && userManager.deleteUser(theUser)){
+		if(userManager.deleteUser(theUser)){
 			return ResponseEntity.status(HttpStatus.OK).body("");
 		}
 		else{
