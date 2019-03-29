@@ -53,9 +53,11 @@ public class UserResource {
 		}
 	}
 
-	@RequestMapping(value = "/user/find", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user/find", method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> searchUsers(@RequestParam(value = "searchField", required = false) String searchField,
+	public ResponseEntity<?> searchUsers(
+			@RequestParam(value = "searchField", required = false) String searchField,
 			@RequestParam(value = "searchValue", required = false) String searchValue,
 			@RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
 			@RequestParam(value = "orderType", defaultValue = "asc", required = false) String orderType,
@@ -105,7 +107,7 @@ public class UserResource {
 			String numberRec) {
 
 		Boolean isOk = true;
-
+		System.out.println("ORDER TYPE ========> :"+orderType);
 		try {
 			if (searchField != null) {
 				if (searchField != "ID" && searchField != "FIRST_NAME" && searchField != "LAST_NAME"
