@@ -107,7 +107,7 @@ public class UserResource {
 			String numberRec) {
 
 		Boolean isOk = true;
-		System.out.println("ORDER TYPE ========> :"+orderType);
+		System.out.println(orderType+ " != "+"ASC? "+(orderType != "ASC"));
 		try {
 			if (searchField != null) {
 				if (searchField != "ID" && searchField != "FIRST_NAME" && searchField != "LAST_NAME"
