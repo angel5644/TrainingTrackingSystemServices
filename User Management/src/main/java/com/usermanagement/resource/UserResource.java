@@ -107,25 +107,24 @@ public class UserResource {
 			String numberRec) {
 
 		Boolean isOk = true;
-		System.out.println(orderType+ " != "+"ASC? "+(orderType != "ASC"));
 		try {
 			if (searchField != null) {
-				if (searchField != "ID" && searchField != "FIRST_NAME" && searchField != "LAST_NAME"
-						&& searchField != "EMAIL" && searchField != "TYPE") {
+				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
+						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
 					result += "The 'searchField' field is not a valid column. ";
 					isOk = false;
 				}
 			}
 			
 			if (orderBy != null) {
-				if (orderBy != "ID" && orderBy != "FIRST_NAME" && orderBy != "LAST_NAME"
-						&& orderBy != "EMAIL" && orderBy != "TYPE") {
+				if (!orderBy.equals("ID") && !orderBy.equals("FIRST_NAME") && !orderBy.equals("LAST_NAME")
+						&& !orderBy.equals("EMAIL") && !orderBy.equals("TYPE")) {
 					result += "The 'orderBy' field is not a valid column. ";
 					isOk = false;
 				}
 			}
 
-			if (orderType != "ASC" && orderType != "DESC") {
+			if (!orderType.equals("ASC") && !orderType.equals("DESC")) {
 				result += "The 'orderType' field is invalid (must be asc or desc). ";
 				isOk = false;
 			}
