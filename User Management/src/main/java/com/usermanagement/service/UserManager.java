@@ -2,6 +2,7 @@ package com.usermanagement.service;
 
 import java.util.List;
 
+import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.User;
 
 public interface UserManager {
@@ -9,6 +10,7 @@ public interface UserManager {
 	public void createUpdateUser(User theUser);
 	public User findById(int id);
 	public boolean deleteUser(User theUser);
+	public List<FindUserResponse> findUsers();
 }
 
 

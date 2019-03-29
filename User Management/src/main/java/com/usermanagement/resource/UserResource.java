@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.User;
 //import com.usermanagement.repository.UserRepository;
 import com.usermanagement.service.UserManager;
@@ -53,7 +54,7 @@ public class UserResource {
 	
 	@GetMapping("/user/find")
 	@ResponseBody
-	public void searchUsers(
+	public List<FindUserResponse> searchUsers(
 		@RequestParam(value="searchField",required=false) String searchField,
 		@RequestParam(value="searchValue",required=false) String searchValue,
 		@RequestParam(value="orderType",defaultValue="asc",required=false) String orderType,
@@ -68,6 +69,8 @@ public class UserResource {
 		System.out.println(orderBy);
 		System.out.println(pageNo);
 		System.out.println(numberRec);
+		
+		return userManager.findUsers(searchField,searchValue,orderBy,orderType,pageNo,numberRec);
 	}
 	
 	@RequestMapping(value= "/user", method = RequestMethod.POST)
