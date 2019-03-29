@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "USERS", catalog = "XE")
@@ -18,9 +19,9 @@ public class User {
 	@SequenceGenerator(name = "SEQUENCE_NAME", sequenceName = "SEQUENCE_NAME", allocationSize = 1, initialValue = 1)
 	private Integer id;
 	@Column(name = "first_name",nullable = false, length = 50)
-	private String first_name;
+	private String firstName;
 	@Column(name = "last_name",nullable = false, length = 50)
-	private String last_name;
+	private String lastName;
 	@Column(name = "email",nullable = false, length = 50)
 	private String email;
 	@Column(name = "type",nullable = false, length =4 )
@@ -36,20 +37,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -67,8 +68,6 @@ public class User {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-
-	
 	
 	
 }

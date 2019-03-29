@@ -80,9 +80,8 @@ public class UserResource {
 			result = "The following error occurred: " + result;
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
 		} else {
-			userManager.findUsers((searchField == null)?"":searchField.toUpperCase(), searchValue, orderBy.toUpperCase(),
-					orderType.toUpperCase(), Integer.valueOf(pageNo), Integer.valueOf(numberRec));
-			return ResponseEntity.status(HttpStatus.OK).body("");
+			return ResponseEntity.status(HttpStatus.OK).body(userManager.findUsers((searchField == null)?"":searchField.toUpperCase(), searchValue, orderBy.toUpperCase(),
+					orderType.toUpperCase(), Integer.valueOf(pageNo), Integer.valueOf(numberRec)));
 		}
 	}
 
@@ -175,8 +174,8 @@ public class UserResource {
 			result = "Invalid User type. ";
 			isOk = false;
 		} else {
-			String first_name = theUser.getFirst_name();
-			String last_name = theUser.getLast_name();
+			String first_name = theUser.getFirstName();
+			String last_name = theUser.getLastName();
 			String email = theUser.getEmail();
 			String type = String.valueOf(theUser.getType());
 
@@ -265,8 +264,8 @@ public class UserResource {
 			result = "The following error occurred: " + result;
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
 		} else {
-			user.setFirst_name(theUser.getFirst_name());
-			user.setLast_name(theUser.getLast_name());
+			user.setFirstName(theUser.getFirstName());
+			user.setLastName(theUser.getLastName());
 			user.setEmail(theUser.getEmail());
 			user.setType(theUser.getType());
 			userManager.createUpdateUser(user);

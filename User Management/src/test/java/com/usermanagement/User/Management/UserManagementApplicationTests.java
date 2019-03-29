@@ -30,8 +30,8 @@ public class UserManagementApplicationTests {
 		int type = 0;
 		
 		User user = new User();
-		user.setFirst_name(first_name);
-		user.setLast_name(last_name);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 
@@ -48,8 +48,8 @@ public class UserManagementApplicationTests {
 		int type = 0;
 		
 		User user = new User();
-		user.setFirst_name(first_name);
-		user.setLast_name(last_name);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 		
@@ -68,8 +68,8 @@ public class UserManagementApplicationTests {
 		
 		User user = new User();
 		user.setId(id);
-		user.setFirst_name(first_name);
-		user.setLast_name(last_name);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 		
@@ -80,8 +80,8 @@ public class UserManagementApplicationTests {
 		email = "luis.robles@4thsource.com";
 		type = 1;
 		
-		user.setFirst_name(first_name);
-		user.setLast_name(last_name);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 		
@@ -100,8 +100,8 @@ public class UserManagementApplicationTests {
 	    User user = new User();
 	    
 	    user.setId(1);
-		user.setFirst_name(first_name);
-		user.setLast_name(last_name);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 		

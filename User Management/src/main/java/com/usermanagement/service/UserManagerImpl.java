@@ -30,6 +30,32 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
+	public List<User> findByFirstName(String first_name){
+		return userRepository.findByFirstName(first_name);
+		//return null;
+	}
+	
+	@Override
+	@Transactional
+	public List<User> findByLastName(String last_name){
+		return userRepository.findByLastName(last_name);
+		//return null;
+	}
+	
+	@Override
+	@Transactional
+	public List<User> findByEmail(String email){
+		return userRepository.findByEmail(email);
+	}
+	
+	@Override
+	@Transactional
+	public List<User> findByType(Integer type){
+		return userRepository.findByType(type);
+	}
+	
+	@Override
+	@Transactional
 	public void createUpdateUser(User theUser){
 		userRepository.save(theUser);
 	}
@@ -43,7 +69,14 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
-	public List<FindUserResponse> findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
-		return null;
+	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
+		
+		FindUserResponse findUserResponse = null;
+		List<User> usersFound =userRepository.findByFirstName(searchValue);
+		//List<User> usersFound = null;
+		findUserResponse.setUsers(usersFound);
+		findUserResponse.setTotalRecords(usersFound.size());
+		
+		return findUserResponse;
 	}
 }
