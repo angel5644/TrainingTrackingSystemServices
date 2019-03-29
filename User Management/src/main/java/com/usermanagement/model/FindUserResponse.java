@@ -6,17 +6,9 @@ import lombok.Data;
 @Data
 public class FindUserResponse {
 
-	private List<UserInfo> Users;
-    private int TotalRecords;
+	private int totalRecords;
+	private List<User> users;
     
-    @Data
-    public class UserInfo {
-    	private Integer id;
-    	private String firstName;
-    	private String lastName;
-    	private String email;
-    	private Integer type;
-    }
 }
 
 

@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.User;
 //import com.usermanagement.repository.UserRepository;
 import com.usermanagement.service.UserManager;

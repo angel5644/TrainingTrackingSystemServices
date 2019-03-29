@@ -2,6 +2,7 @@ package com.usermanagement.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.User;
 
@@ -14,6 +15,7 @@ public interface UserManager {
 	public List<User> findByEmail(String email);
 	public List<User> findByType(Integer type);
 	public boolean deleteUser(User theUser);
+	
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec);
 }
 
