@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.usermanagement.model.FindUserResponse;
+import com.usermanagement.model.FindUserResponse.UserInfo;
 import com.usermanagement.model.User;
 import com.usermanagement.repository.UserRepository;
 
@@ -72,9 +73,9 @@ public class UserManagerImpl implements UserManager {
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
 		
 		FindUserResponse findUserResponse = null;
-		List<User> usersFound =userRepository.findByFirstName(searchValue);
+		List<UserInfo> usersFound = ;
 		//List<User> usersFound = null;
-		findUserResponse.setUsers(usersFound);
+		findUserResponse.setUsers(userRepository.findByFirstName(searchValue));
 		findUserResponse.setTotalRecords(usersFound.size());
 		
 		return findUserResponse;

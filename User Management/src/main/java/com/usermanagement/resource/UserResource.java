@@ -64,13 +64,13 @@ public class UserResource {
 			@RequestParam(value = "pageNo", defaultValue = "1", required = false) String pageNo,
 			@RequestParam(value = "numberRec", defaultValue = "10", required = false) String numberRec) {
 
-		/*System.out.println("Search Field: "+searchField);
+		System.out.println("Search Field: "+searchField);
 		System.out.println("Search Value :"+searchValue);
 		System.out.println("Order Type: "+orderType);
 		System.out.println("Order By: "+orderBy);
 		System.out.println("Page Number: "+pageNo);
 		System.out.println("Number records: "+numberRec);
-		*/
+		
 
 		result = "";
 		Boolean isOk = validateSearchFields((searchField == null)?"":searchField.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(),
