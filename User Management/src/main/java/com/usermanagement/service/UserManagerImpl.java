@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.User;
 import com.usermanagement.repository.UserRepository;
 
@@ -39,4 +40,10 @@ public class UserManagerImpl implements UserManager {
 		//Here you have to validate if theUser received is NULL or not
 		userRepository.deleteById(theUser.getId());
     }
+	
+	@Override
+	@Transactional
+	public List<FindUserResponse> findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
+		return null;
+	}
 }

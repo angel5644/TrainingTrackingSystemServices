@@ -10,7 +10,7 @@ public interface UserManager {
 	public void createUpdateUser(User theUser);
 	public User findById(int id);
 	public boolean deleteUser(User theUser);
-	public List<FindUserResponse> findUsers();
+	public List<FindUserResponse> findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec);
 }
 
 
