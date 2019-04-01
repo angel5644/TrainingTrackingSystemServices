@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -114,13 +115,7 @@ public class UserManagementApplicationTests {
 	@Test
 	public void sendGET() throws IOException {
 		
-		URL obj = new URL("http://localhost:9091/user/find?orderBy=&orderType&searchValue=Luis Alberto&numberRec&pageNo&searchField=first_name");
-		try {
-			Thread.sleep(7000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		/*URL obj = new URL("http://localhost:9091/user/find?orderBy=&orderType&searchValue=Luis Alberto&numberRec&pageNo&searchField=first_name");
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
 		con.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -142,7 +137,42 @@ public class UserManagementApplicationTests {
 		} else {
 			System.out.println("GET request not worked");
 		}
+		*/
+		
+		HttpURLConnection con = null;
 
+        try {
+        	URL url = new URL("http://localhost:9091/user/find?orderBy=&orderType&searchValue=Luis Alberto&numberRec&pageNo&searchField=first_name");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+    		int responseCode = con.getResponseCode();
+    		System.out.println("GET Response Code :: " + responseCode);
+    		if (responseCode == HttpURLConnection.HTTP_OK) { // success
+    			BufferedReader in = new BufferedReader(new InputStreamReader(
+    					con.getInputStream()));
+    			String inputLine;
+    			StringBuffer response = new StringBuffer();
+
+    			while ((inputLine = in.readLine()) != null) {
+    				response.append(inputLine);
+    			}
+    			in.close();
+
+    			// print result
+    			System.out.println(response.toString());
+    		} else {
+    			System.out.println("GET request not worked");
+    		}
+        } catch (MalformedURLException e) {
+            System.out.println("########################## Internal error: "+ e);
+        } catch (IOException e) {
+        	System.out.println("########################## Internal error: "+ e);
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
+        }
 	}
 
 }
