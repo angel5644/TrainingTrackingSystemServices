@@ -112,14 +112,14 @@ public class UserManagementApplicationTests {
 	}
 
 	@Test
-	public void findUser() {
+	public void testSearchUsers() {
 		
 		
 		
 		StringBuilder result = new StringBuilder();
 		
 		try {
-			URL url = new URL("http://localhost:9091/user/find/get?searchField&searchValue&orderBy&orderType&pageNo=1&numberRec=10");
+			URL url = new URL("http://localhost:9091/user/find?searchField&searchValue&orderBy&orderType&pageNo=1&numberRec=10");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
