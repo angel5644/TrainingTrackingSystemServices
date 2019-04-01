@@ -51,35 +51,35 @@ public class UserResource {
 		}
 	}
 
-	@RequestMapping(value = "/user/find", method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user/find", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> searchUsers(
-			@RequestParam(value = "searchField", required = false) String searchField,
+	public ResponseEntity<?> searchUsers(@RequestParam(value = "searchField", required = false) String searchField,
 			@RequestParam(value = "searchValue", required = false) String searchValue,
 			@RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
 			@RequestParam(value = "orderType", defaultValue = "asc", required = false) String orderType,
 			@RequestParam(value = "pageNo", defaultValue = "1", required = false) String pageNo,
 			@RequestParam(value = "numberRec", defaultValue = "10", required = false) String numberRec) {
 
-		System.out.println("Search Field: "+searchField);
-		System.out.println("Search Value :"+searchValue);
-		System.out.println("Order Type: "+orderType);
-		System.out.println("Order By: "+orderBy);
-		System.out.println("Page Number: "+pageNo);
-		System.out.println("Number records: "+numberRec);
-		
+		System.out.println("Search Field: " + searchField);
+		System.out.println("Search Value :" + searchValue);
+		System.out.println("Order Type: " + orderType);
+		System.out.println("Order By: " + orderBy);
+		System.out.println("Page Number: " + pageNo);
+		System.out.println("Number records: " + numberRec);
 
 		result = "";
-		Boolean isOk = validateSearchFields((searchField == null)?"":searchField.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(),
-				pageNo, numberRec);
+		Boolean isOk = validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 
 		if (!isOk) {
 			result = "The following error occurred: " + result;
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
 		} else {
-			return ResponseEntity.status(HttpStatus.OK).body(userManager.findUsers((searchField == null)?"":searchField.toUpperCase(), searchValue, orderBy.toUpperCase(),
-					orderType.toUpperCase(), Integer.valueOf(pageNo), Integer.valueOf(numberRec)));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(userManager.findUsers((searchField == null) ? "" : searchField.toUpperCase(),
+							(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(),
+							Integer.valueOf(pageNo), Integer.valueOf(numberRec)));
 		}
 	}
 
@@ -101,8 +101,8 @@ public class UserResource {
 		}
 	}
 
-	public Boolean validateSearchFields(String searchField, String orderBy, String orderType, String pageNo,
-			String numberRec) {
+	public Boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,
+			String pageNo, String numberRec) {
 
 		Boolean isOk = true;
 		try {
@@ -111,9 +111,65 @@ public class UserResource {
 						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
 					result += "The 'searchField' field is not a valid column. ";
 					isOk = false;
+				} else {
+
+					if (searchValue.isEmpty()) {
+						result += "The value entered for the column " + searchField + " is empty. ";
+					} else {
+						switch (searchField) {
+
+						case "ID":
+							boolean isIdNumeric = true;
+							try {
+								Integer.parseInt(searchValue);
+							} catch (TypeMismatchException e) {
+								isIdNumeric = false;
+							} catch (NumberFormatException e) {
+								isIdNumeric = false;
+							}
+
+							if (!isIdNumeric) {
+								result += "The ID value entered is not a number. ";
+								isOk = false;
+							}
+						break;
+
+						// For first name and last name are already validated
+						// (Those fields must not be empty, if field is
+						// specified)
+
+						case "EMAIL":
+							if (!searchValue.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
+								result += "The email value is invalid. ";
+								isOk = false;
+							}
+						break;
+
+						case "TYPE":
+							boolean isTypeNumeric = true;
+							try {
+								Integer.parseInt(searchValue);
+							} catch (TypeMismatchException e) {
+								isTypeNumeric = false;
+							} catch (NumberFormatException e) {
+								isTypeNumeric = false;
+							}
+
+							if (!isTypeNumeric) {
+								result += "The type value is not numeric. ";
+								isOk = false;
+							} else {
+								if (Integer.valueOf(searchValue) < 0 || Integer.valueOf(searchValue) > 2) {
+									result += "The type value must be between 0-2. ";
+									isOk = false;
+								}
+							}
+						break;
+						}
+					}
 				}
 			}
-			
+
 			if (orderBy != null) {
 				if (!orderBy.equals("ID") && !orderBy.equals("FIRST_NAME") && !orderBy.equals("LAST_NAME")
 						&& !orderBy.equals("EMAIL") && !orderBy.equals("TYPE")) {
@@ -135,7 +191,7 @@ public class UserResource {
 			} catch (NumberFormatException e) {
 				isPageNoNumeric = false;
 			}
-			
+
 			boolean isNumberRecNumeric = true;
 			try {
 				Integer.parseInt(numberRec);
@@ -149,18 +205,16 @@ public class UserResource {
 				result += "The 'pageNo' field is not numeric. ";
 				isOk = false;
 			}
-			
-			if(!isNumberRecNumeric){
-				result +="The 'numberRec' field is not numeric. ";
+
+			if (!isNumberRecNumeric) {
+				result += "The 'numberRec' field is not numeric. ";
 				isOk = false;
 			}
-			
-			
 
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		
+
 		return isOk;
 	}
 
