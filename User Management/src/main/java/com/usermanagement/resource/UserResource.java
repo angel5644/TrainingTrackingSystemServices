@@ -132,6 +132,12 @@ public class UserResource {
 								result += "The ID value entered is not a number. ";
 								isOk = false;
 							}
+							else{
+								if(Integer.valueOf(searchValue) <= 0){
+									result += "The ID value must be higher than 0. ";
+									isOk = false;
+								}
+							}
 						break;
 
 						// For first name and last name are already validated
