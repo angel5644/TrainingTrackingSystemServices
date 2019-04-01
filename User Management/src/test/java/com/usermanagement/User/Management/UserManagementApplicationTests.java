@@ -112,27 +112,37 @@ public class UserManagementApplicationTests {
 	}
 
 	@Test
-	public void testSearchUsers() {
+	public void sendGET() throws IOException {
 		
-		
-		
-		StringBuilder result = new StringBuilder();
-		
+		URL obj = new URL("http://localhost:9091/user/find?orderBy=&orderType&searchValue=Luis Alberto&numberRec&pageNo&searchField=first_name");
 		try {
-			URL url = new URL("http://localhost:9091/user/find?searchField&searchValue&orderBy&orderType&pageNo=1&numberRec=10");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} catch (MalformedURLException e) {
+			Thread.sleep(7000);
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+		int responseCode = con.getResponseCode();
+		System.out.println("GET Response Code :: " + responseCode);
+		if (responseCode == HttpURLConnection.HTTP_OK) { // success
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			// print result
+			System.out.println(response.toString());
+		} else {
+			System.out.println("GET request not worked");
 		}
-		
-		System.out.println(result.toString());
+
 	}
 
 }
