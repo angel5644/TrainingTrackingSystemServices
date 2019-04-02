@@ -135,7 +135,7 @@ public class UserResource {
 			if (searchField != "") {
 				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
 						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
-					result += "The 'searchField' field is not a valid column. ";
+					result += "The 'searchField' entered is not a valid column. ";
 					isOk = false;
 				} else {
 
