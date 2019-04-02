@@ -265,21 +265,21 @@ public class UserResource {
 
 			try {
 				if (first_name == null) {
-					result += "The 'first_name' field is missing. ";
+					result += "The 'firstName' field is missing. ";
 					isOk = false;
 				} else {
 					if (first_name.isEmpty()) {
-						result += "The 'first_name' field is empty. ";
+						result += "The 'firstName' field is empty. ";
 						isOk = false;
 					}
 				}
 
 				if (last_name == null) {
-					result += "The 'last_name' field is missing. ";
+					result += "The 'lastName' field is missing. ";
 					isOk = false;
 				} else {
 					if (last_name.isEmpty()) {
-						result += "The 'last_name' field is empty. ";
+						result += "The 'lastName' field is empty. ";
 						isOk = false;
 					}
 				}
