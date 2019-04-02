@@ -16,15 +16,53 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	Optional<Users> findById(Integer id);
 	
 	//When searchField is not specified
-	@Query("SELECT u FROM Users u WHERE Id = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Id ASC")
 	List<Users> findOrderByIdASC(long lowerLimit, long upperLimit);
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Id DESC")
+	List<Users> findOrderByIdDESC(long lowerLimit, long upperLimit);
+	
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY First_Name ASC")
+	List<Users> findOrderByFirstNameASC(long lowerLimit, long upperLimit);
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY First_Name DESC")
+	List<Users> findOrderByFirstNameDESC(long lowerLimit, long upperLimit);
+	
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Last_name ASC")
+	List<Users> findOrderByLastNameASC(long lowerLimit, long upperLimit);
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Last_name DESC")
+	List<Users> findOrderByLastNameDESC(long lowerLimit, long upperLimit);
+	
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Email ASC")
+	List<Users> findOrderByEmailASC(long lowerLimit, long upperLimit);
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Email DESC")
+	List<Users> findOrderByEmailDESC(long lowerLimit, long upperLimit);
+	
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Type ASC")
+	List<Users> findOrderByTypeASC(long lowerLimit, long upperLimit);
+	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Type DESC")
+	List<Users> findOrderByTypeDESC(long lowerLimit, long upperLimit);
 	//-----------------------------
 	
-	@Query("SELECT u FROM Users u WHERE Id = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
-	List<Users> findByIdOrderByIdASC(long searchValue,long lowerLimit, long upperLimit);
-	
+	//When searchField ID is specified
 	@Query("SELECT u FROM Users u WHERE Id = ?1")
 	List<Users> findById(long searchValue);
+	
+	//When searchField FIRSTNAME is specified
+	
+	//When searchField LASTNAME is specified
+	
+	//When searchField EMAIL is specified
+	
+	//When searchField TYPE is specified
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//@Query("SELECT u FROM USERS u WHERE ?1 = ?2 AND rownum BETWEEN ?3 AND ?4 ORDER BY ?5 ?6")
 

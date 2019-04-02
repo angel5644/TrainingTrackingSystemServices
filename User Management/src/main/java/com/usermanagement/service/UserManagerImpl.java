@@ -99,46 +99,46 @@ public class UserManagerImpl implements UserManager {
 			switch(orderBy){
 				case "ID":
 					if(orderType.equals("ASC")){
-						
+						usersFound = userRepository.findOrderByIdASC((long) lowerLimit, (long) upperLimit);
 					}
 					else{
-						
+						usersFound = userRepository.findOrderByIdDESC((long) lowerLimit, (long) upperLimit);
 					}
 				break;
 				
 				case "FIRST_NAME":
 					if(orderType.equals("ASC")){
-						
+						usersFound = userRepository.findOrderByFirstNameASC((long) lowerLimit, (long) upperLimit);
 					}
 					else{
-						
+						usersFound = userRepository.findOrderByFirstNameDESC((long) lowerLimit, (long) upperLimit);
 					}
 				break;
 					
 				case "LAST_NAME":
 					if(orderType.equals("ASC")){
-						
+						usersFound = userRepository.findOrderByLastNameASC((long) lowerLimit, (long) upperLimit);
 					}
 					else{
-						
+						usersFound = userRepository.findOrderByLastNameDESC((long) lowerLimit, (long) upperLimit);
 					}
 				break;
 					
 				case "EMAIL":
 					if(orderType.equals("ASC")){
-						
+						usersFound = userRepository.findOrderByEmailASC((long) lowerLimit, (long) upperLimit);
 					}
 					else{
-						
+						usersFound = userRepository.findOrderByEmailDESC((long) lowerLimit, (long) upperLimit);
 					}
 				break;
 					
 				case "TYPE":
 					if(orderType.equals("ASC")){
-						
+						usersFound = userRepository.findOrderByTypeASC((long) lowerLimit, (long) upperLimit);
 					}
 					else{
-						
+						usersFound = userRepository.findOrderByTypeDESC((long) lowerLimit, (long) upperLimit);
 					}
 				break;
 			}
