@@ -144,58 +144,10 @@ public class UserManagerImpl implements UserManager {
 			}
 		}
 		else{
-			System.out.println("Search Field is not blank");
+			//System.out.println("Search Field is not blank");
 			switch(searchField){
 				case "ID":
-					System.out.println("Search Field is ID");
-					switch(orderBy){
-					case "ID":
-						System.out.println("Order by is ID");
-						if(orderType.equals("ASC")){
-							System.out.println("Order Type is ASC");
-							usersFound = userRepository.findByIdOrderByIdASC((long) Integer.valueOf(searchValue), (long)lowerLimit,(long)upperLimit);
-						}
-						else{
-							
-						}
-					break;
-					
-					case "FIRST_NAME":
-						if(orderType.equals("ASC")){
-							
-						}
-						else{
-							
-						}
-					break;
-						
-					case "LAST_NAME":
-						if(orderType.equals("ASC")){
-							
-						}
-						else{
-							
-						}
-					break;
-						
-					case "EMAIL":
-						if(orderType.equals("ASC")){
-							
-						}
-						else{
-							
-						}
-					break;
-						
-					case "TYPE":
-						if(orderType.equals("ASC")){
-							
-						}
-						else{
-							
-						}
-					break;
-				}
+					usersFound = userRepository.findById((long) Integer.valueOf(searchValue));
 				break;
 				
 				case "FIRST_NAME":
