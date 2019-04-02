@@ -27,7 +27,7 @@ public class UserManagerImplTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	/*
 	@Test
 	
 	public void test_validateSearchField_Should_ReturnFalse_When_serachFieldIsInvalid() {
@@ -183,7 +183,7 @@ public class UserManagerImplTest {
 			 }
 		
 			
-
+*/
 		}
 
 
