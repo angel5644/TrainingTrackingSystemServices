@@ -376,6 +376,50 @@ public class UserManagerImpl implements UserManager {
 		
 		
 		return findUserResponse;
+		}
+
+	public boolean validateSearchFields(String searchField, String searchValue, String orderBy,String orderType, int pageNo, int numberRec)
+	{
+		String result="";
+		boolean isOk= true;
+		if (searchField != ""){
+			if (
+					//!searchField.toUpperCase().equals("ID") && 
+					!searchField.toUpperCase().equals("FIRST_NAME") &&
+					!searchField.toUpperCase().equals("LAST_NAME")&&
+					!searchField.toUpperCase().equals("EMAIL") &&
+					!searchField.toUpperCase().equals("TYPE")) {
+				result += "The 'searchField' field is not a valid column. ";
+				isOk = false;
+			}
+		}
+
+			// Validate search value when search field is TYPE
+			if(searchField.toUpperCase().equals("TYPE")){
+			if(searchValue != "0" || searchValue != "1" || searchValue != "2"){
+			isOk = false;
+			}
+			}
+			if (orderBy != "") {
+				if (
+			//!searchField.toUpperCase().equals("ID") && 
+			!orderBy.toUpperCase().equals("FIRST_NAME") &&
+			!orderBy.toUpperCase().equals("LAST_NAME")&&
+			!orderBy.toUpperCase().equals("EMAIL") &&
+			!orderBy.toUpperCase().equals("TYPE")) {
+					result += "The 'orderBy' field is not a valid column. ";
+			isOk = false;
+			}
+		}
+			if (orderType != "") {
+			if (
+			!orderType.toUpperCase().equals("ASC") &&
+			!orderType.toUpperCase().equals("DESC")) {
+				result += "The 'orderType' field is invalid (must be asc or desc).";
+				isOk = false;
+			}
+		}
 		
+			return isOk;
 	}
 }
