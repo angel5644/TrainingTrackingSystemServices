@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.lang3.StringUtils;
 
 import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.User;
@@ -76,6 +77,20 @@ public class UserManagerImpl implements UserManager {
 	@Transactional
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
 		
+		/*
+			CONDITIONS FOR THE QUERIES:
+			
+			-If searchField and searchValue are not specified, must return every record
+			 (With the exception of the limits per page and order type)
+			 
+		*/
+		
+		//If there is no WHERE sentence, it will return every record
+		// with the exception of the limits per page they can have
+		if(StringUtils.isBlank(searchField)){
+			
+		}
+		
 		/*Integer lowerLimit, upperLimit = null;
 		FindUserResponse findUserResponse = new FindUserResponse();
 		
@@ -101,5 +116,6 @@ public class UserManagerImpl implements UserManager {
 		
 		
 		return findUserResponse;
+		
 	}
 }

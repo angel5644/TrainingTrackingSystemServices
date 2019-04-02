@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.TypeMismatchException;
 
 //import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.usermanagement.model.User;
 //import com.usermanagement.repository.UserRepository;
 import com.usermanagement.service.UserManager;
+import org.apache.commons.lang3.StringUtils;
 
 @RestController
 // @RequestMapping("/user")
@@ -104,6 +104,30 @@ public class UserResource {
 	public Boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,
 			String pageNo, String numberRec) {
 
+		/*Conditions for searchField (If specified):
+		- The searchField must be a valid column (ID, FIRST_NAME,
+		  LAST_NAME, EMAIL, TYPE)
+	
+	  Conditions for searchValue (If Specified):
+	  	- For ID:
+	  		+ Must be numeric and higher than 0
+	  	- For First_name and Last_Name:
+	  		+ Must contain characters (not empty)
+	  	- For Email:
+	  		+ Must contain characters (not empty)
+	  		+ Must be a valid email address
+	  	- For Type:
+	  		+ Must be numeric and between 0 and 2.
+	  		
+	  Conditions for orderBy (If specified):
+	  	- The orderBy must be a valid column (ID, FIRST_NAME,
+		  LAST_NAME, EMAIL, TYPE)
+	  	 
+	  Conditions for orderType (If specified):
+	  	-The orderType must be "ASC" or "DESC"
+	  	
+	  	*/
+		
 		Boolean isOk = true;
 		try {
 			if (searchField != "") {
