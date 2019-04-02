@@ -65,7 +65,7 @@ public class UserManagementApplicationTests {
 	// Test UserUpdate function
 	@Test
 	public void testUserUpdate() {
-		int id = 1;
+		Integer id = 1;
 		String first_name = "Rodrigo";
 		String last_name = "Velasco";
 		String email = "rodrigo.velasco@4thsource.com";

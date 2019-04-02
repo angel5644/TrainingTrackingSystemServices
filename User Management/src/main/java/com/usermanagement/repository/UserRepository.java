@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	Optional<Users> findById(Integer id);
 	
 	@Query("SELECT u FROM Users u WHERE Id = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
-	List<Users> findByIdOrderByIdASC(String searchValue, Integer lowerLimit, Integer upperLimit);
+	List<Users> findByIdOrderByIdASC(long searchValue,long lowerLimit, long upperLimit);
 	
 	//@Query("SELECT u FROM USERS u WHERE ?1 = ?2 AND rownum BETWEEN ?3 AND ?4 ORDER BY ?5 ?6")
 

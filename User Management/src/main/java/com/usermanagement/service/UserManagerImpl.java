@@ -26,7 +26,7 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
-	public Users findById(int id){
+	public Users findById(Integer id){
 		return userRepository.findById(id).get();
 	}
 	
@@ -94,7 +94,7 @@ public class UserManagerImpl implements UserManager {
 		
 		//If there is no WHERE sentence, it will return every record
 		// with the exception of the limits per page they can have
-		
+		System.out.println("######SERVICE LAYER#######");
 		if(StringUtils.isBlank(searchField)){
 			switch(orderBy){
 				case "ID":
@@ -144,13 +144,16 @@ public class UserManagerImpl implements UserManager {
 			}
 		}
 		else{
+			System.out.println("Search Field is not blank");
 			switch(searchField){
-			
 				case "ID":
+					System.out.println("Search Field is ID");
 					switch(orderBy){
 					case "ID":
+						System.out.println("Order by is ID");
 						if(orderType.equals("ASC")){
-							usersFound = userRepository.findByIdOrderByIdASC(searchValue,lowerLimit,upperLimit);
+							System.out.println("Order Type is ASC");
+							usersFound = userRepository.findByIdOrderByIdASC((long) Integer.valueOf(searchValue), (long)lowerLimit,(long)upperLimit);
 						}
 						else{
 							
