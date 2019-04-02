@@ -6,14 +6,17 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.usermanagement.model.User;
+import com.usermanagement.model.Users;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-	List<User> findByFirstName(String first_name);
-	List<User> findByLastName(String last_name);
-	List<User> findByEmail(String email);
-	List<User> findByType(Integer type);
-	Optional<User> findById(Integer id);
+public interface UserRepository extends JpaRepository<Users, Integer> {
+	List<Users> findByFirstName(String first_name);
+	List<Users> findByLastName(String last_name);
+	List<Users> findByEmail(String email);
+	List<Users> findByType(Integer type);
+	Optional<Users> findById(Integer id);
+	
+	@Query("SELECT u FROM Users u WHERE Id = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
+	List<Users> findByIdOrderByIdASC(String searchValue, Integer lowerLimit, Integer upperLimit);
 	
 	//@Query("SELECT u FROM USERS u WHERE ?1 = ?2 AND rownum BETWEEN ?3 AND ?4 ORDER BY ?5 ?6")
 

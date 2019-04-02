@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.usermanagement.model.User;
+import com.usermanagement.model.Users;
 import com.usermanagement.resource.UserResource;
 
 @RunWith(SpringRunner.class)
@@ -36,7 +36,7 @@ public class UserManagementApplicationTests {
 		String email = "rodrigo.velasco@4thsource.com";
 		int type = 0;
 
-		User user = new User();
+		Users user = new Users();
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
 		user.setEmail(email);
@@ -53,7 +53,7 @@ public class UserManagementApplicationTests {
 		String email = "";
 		int type = 0;
 
-		User user = new User();
+		Users user = new Users();
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
 		user.setEmail(email);
@@ -71,7 +71,7 @@ public class UserManagementApplicationTests {
 		String email = "rodrigo.velasco@4thsource.com";
 		int type = 0;
 
-		User user = new User();
+		Users user = new Users();
 		user.setId(id);
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
@@ -101,7 +101,7 @@ public class UserManagementApplicationTests {
 		String email = "";
 		int type = 0;
 
-		User user = new User();
+		Users user = new Users();
 
 		user.setId(1);
 		user.setFirstName(first_name);
