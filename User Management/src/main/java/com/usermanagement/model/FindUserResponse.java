@@ -7,7 +7,7 @@ import lombok.Data;
 public class FindUserResponse {
 
 	private int totalRecords;
-	private List<User> users;
+	private List<Users> users;
     
 }
 
