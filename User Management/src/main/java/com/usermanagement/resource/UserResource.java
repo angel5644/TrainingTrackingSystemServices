@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.usermanagement.model.User;
+import com.usermanagement.model.Users;
 //import com.usermanagement.repository.UserRepository;
 import com.usermanagement.service.UserManager;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +34,7 @@ public class UserResource {
 	String result;
 
 	@GetMapping("/user/all")
-	public List<User> getAll() {
+	public List<Users> getAll() {
 		// usersRepository.flush();
 		System.out.println(userManager.getUsers());
 		return userManager.getUsers();
@@ -42,7 +42,7 @@ public class UserResource {
 
 	// delete user
 	@RequestMapping(value = "/user", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteUser(@ModelAttribute("User") User theUser) {
+	public ResponseEntity<?> deleteUser(@ModelAttribute("User") Users theUser) {
 		// User user = userManager.findById(theUser.getId());
 		if (userManager.deleteUser(theUser)) {
 			return ResponseEntity.status(HttpStatus.OK).body("");
@@ -86,7 +86,7 @@ public class UserResource {
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	@ResponseBody
 	// Previous parameter was HttpServletRequest request
-	public ResponseEntity<?> createUser(@ModelAttribute("User") User theUser) {
+	public ResponseEntity<?> createUser(@ModelAttribute("User") Users theUser) {
 
 		// String id = request.getParameter("id");
 		result = "";
@@ -248,7 +248,7 @@ public class UserResource {
 		return isOk;
 	}
 
-	public Boolean validateFields(User theUser) {
+	public Boolean validateFields(Users theUser) {
 
 		Boolean isOk = true;
 
@@ -336,10 +336,10 @@ public class UserResource {
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.PUT)
-	public ResponseEntity<?> update(@ModelAttribute("User") User theUser) {
+	public ResponseEntity<?> update(@ModelAttribute("User") Users theUser) {
 
 		result = "";
-		User user = userManager.findById(theUser.getId());
+		Users user = userManager.findById(theUser.getId());
 		Boolean isOk = validateFields(theUser);
 
 		if (!isOk) {

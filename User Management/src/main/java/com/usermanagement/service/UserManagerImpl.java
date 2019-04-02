@@ -1,5 +1,6 @@
 package com.usermanagement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import com.usermanagement.model.FindUserResponse;
-import com.usermanagement.model.User;
+import com.usermanagement.model.Users;
 import com.usermanagement.repository.UserRepository;
 
 @Service
@@ -19,51 +20,51 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
-	public List <User> getUsers(){
+	public List <Users> getUsers(){
 		return userRepository.findAll();
 	}
 	
 	@Override
 	@Transactional
-	public User findById(int id){
+	public Users findById(int id){
 		return userRepository.findById(id).get();
 	}
 	
 	@Override
 	@Transactional
-	public List<User> findByFirstName(String first_name){
+	public List<Users> findByFirstName(String first_name){
 		return userRepository.findByFirstName(first_name);
 		//return null;
 	}
 	
 	@Override
 	@Transactional
-	public List<User> findByLastName(String last_name){
+	public List<Users> findByLastName(String last_name){
 		return userRepository.findByLastName(last_name);
 		//return null;
 	}
 	
 	@Override
 	@Transactional
-	public List<User> findByEmail(String email){
+	public List<Users> findByEmail(String email){
 		return userRepository.findByEmail(email);
 	}
 	
 	@Override
 	@Transactional
-	public List<User> findByType(Integer type){
+	public List<Users> findByType(Integer type){
 		return userRepository.findByType(type);
 	}
 	
 	@Override
 	@Transactional
-	public void createUpdateUser(User theUser){
+	public void createUpdateUser(Users theUser){
 		userRepository.save(theUser);
 	}
 	
 	@Override
     @Transactional
-    public boolean deleteUser(User theUser) {
+    public boolean deleteUser(Users theUser) {
 		if(findById(theUser.getId()) == null){
 			return false;
 		}
@@ -84,12 +85,316 @@ public class UserManagerImpl implements UserManager {
 			 (With the exception of the limits per page and order type)
 			 
 		*/
+		Integer lowerLimit, upperLimit = null;
+		FindUserResponse findUserResponse = new FindUserResponse();
+		List<Users> usersFound = new ArrayList<Users>();
+		
+		lowerLimit = ((pageNo*numberRec)-numberRec)+1;
+		upperLimit = pageNo*numberRec;
 		
 		//If there is no WHERE sentence, it will return every record
 		// with the exception of the limits per page they can have
+		
 		if(StringUtils.isBlank(searchField)){
-			
+			switch(orderBy){
+				case "ID":
+					if(orderType.equals("ASC")){
+						
+					}
+					else{
+						
+					}
+				break;
+				
+				case "FIRST_NAME":
+					if(orderType.equals("ASC")){
+						
+					}
+					else{
+						
+					}
+				break;
+					
+				case "LAST_NAME":
+					if(orderType.equals("ASC")){
+						
+					}
+					else{
+						
+					}
+				break;
+					
+				case "EMAIL":
+					if(orderType.equals("ASC")){
+						
+					}
+					else{
+						
+					}
+				break;
+					
+				case "TYPE":
+					if(orderType.equals("ASC")){
+						
+					}
+					else{
+						
+					}
+				break;
+			}
 		}
+		else{
+			switch(searchField){
+			
+				case "ID":
+					switch(orderBy){
+					case "ID":
+						if(orderType.equals("ASC")){
+							usersFound = userRepository.findByIdOrderByIdASC(searchValue,lowerLimit,upperLimit);
+						}
+						else{
+							
+						}
+					break;
+					
+					case "FIRST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "LAST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "EMAIL":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "TYPE":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+				}
+				break;
+				
+				case "FIRST_NAME":
+					switch(orderBy){
+					case "ID":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+					
+					case "FIRST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "LAST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "EMAIL":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "TYPE":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+				}
+				break;
+					
+				case "LAST_NAME":
+					switch(orderBy){
+					case "ID":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+					
+					case "FIRST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "LAST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "EMAIL":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "TYPE":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+				}
+				break;
+					
+				case "EMAIL":
+					switch(orderBy){
+					case "ID":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+					
+					case "FIRST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "LAST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "EMAIL":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "TYPE":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+				}
+				break;
+					
+				case "TYPE":
+					switch(orderBy){
+					case "ID":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+					
+					case "FIRST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "LAST_NAME":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "EMAIL":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+						
+					case "TYPE":
+						if(orderType.equals("ASC")){
+							
+						}
+						else{
+							
+						}
+					break;
+				}
+				break;
+			}
+		}
+		
+		findUserResponse.setUsers(usersFound);
+		findUserResponse.setTotalRecords(usersFound.size());
 		
 		/*Integer lowerLimit, upperLimit = null;
 		FindUserResponse findUserResponse = new FindUserResponse();
@@ -108,11 +413,11 @@ public class UserManagerImpl implements UserManager {
 			findUserResponse.setTotalRecords(usersFound.size());
 		}
 		*/
-		FindUserResponse findUserResponse = new FindUserResponse();
-		List<User> usersFound = userRepository.findByFirstName(searchValue);
+		//FindUserResponse findUserResponse = new FindUserResponse();
+		//List<User> usersFound = userRepository.findByFirstName(searchValue);
 		//List<User> usersFound = null;
-		findUserResponse.setUsers(usersFound);
-		findUserResponse.setTotalRecords(usersFound.size());
+		//findUserResponse.setUsers(usersFound);
+		//findUserResponse.setTotalRecords(usersFound.size());
 		
 		
 		return findUserResponse;
