@@ -75,11 +75,6 @@ public class UserManagerImpl implements UserManager {
     }
 	
 	@Override
-    @Transactional
-	public List<Users> viewUser(String id){
-			return (userRepository.findById(Integer.valueOf(id)) == null)? null: userRepository.findById((long)Integer.valueOf(id));
-	}
-	@Override
 	@Transactional
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec){
 		
@@ -159,46 +154,46 @@ public class UserManagerImpl implements UserManager {
 					switch(orderBy){
 					case "ID":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByFirstNameOrderByIdASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByFirstNameOrderByIdDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 					
 					case "FIRST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByFirstNameOrderByFirstNameASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByFirstNameOrderByFirstNameDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "LAST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByFirstNameOrderByLastNameASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByFirstNameOrderByLastNameDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "EMAIL":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByFirstNameOrderByEmailASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByFirstNameOrderByEmailDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "TYPE":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByFirstNameOrderByTypeASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByFirstNameOrderByTypeDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 				}
@@ -208,46 +203,46 @@ public class UserManagerImpl implements UserManager {
 					switch(orderBy){
 					case "ID":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByLastNameOrderByIdASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByLastNameOrderByIdDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 					
 					case "FIRST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByLastNameOrderByFirstNameASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByLastNameOrderByFirstNameDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "LAST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByLastNameOrderByLastNameASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByLastNameOrderByLastNameDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "EMAIL":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByLastNameOrderByEmailASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByLastNameOrderByEmailDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "TYPE":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByLastNameOrderByTypeASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByLastNameOrderByTypeDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 				}
@@ -257,46 +252,46 @@ public class UserManagerImpl implements UserManager {
 					switch(orderBy){
 					case "ID":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByEmailOrderByIdASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByEmailOrderByIdDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 					
 					case "FIRST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByEmailOrderByFirstNameASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByEmailOrderByFirstNameDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "LAST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByEmailOrderByLastNameASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByEmailOrderByLastNameDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "EMAIL":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByEmailOrderByEmailASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByEmailOrderByEmailDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "TYPE":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByEmailOrderByTypeASC(searchValue, lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByEmailOrderByTypeDESC(searchValue, lowerLimit, upperLimit);
 						}
 					break;
 				}
@@ -306,46 +301,46 @@ public class UserManagerImpl implements UserManager {
 					switch(orderBy){
 					case "ID":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByTypeOrderByIdASC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByTypeOrderByIdDESC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 					break;
 					
 					case "FIRST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByTypeOrderByFirstNameASC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByTypeOrderByFirstNameDESC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "LAST_NAME":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByTypeOrderByLastNameASC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByTypeOrderByLastNameDESC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "EMAIL":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByTypeOrderByEmailASC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByTypeOrderByEmailDESC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 					break;
 						
 					case "TYPE":
 						if(orderType.equals("ASC")){
-							
+							usersFound = userRepository.findByTypeOrderByTypeASC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 						else{
-							
+							usersFound = userRepository.findByTypeOrderByTypeDESC((long) Integer.valueOf(searchValue), lowerLimit, upperLimit);
 						}
 					break;
 				}
@@ -381,50 +376,6 @@ public class UserManagerImpl implements UserManager {
 		
 		
 		return findUserResponse;
-		}
-
-	public boolean validateSearchFields(String searchField, String searchValue, String orderBy,String orderType, int pageNo, int numberRec)
-	{
-		String result="";
-		boolean isOk= true;
-		if (searchField != ""){
-			if (
-					//!searchField.toUpperCase().equals("ID") && 
-					!searchField.toUpperCase().equals("FIRST_NAME") &&
-					!searchField.toUpperCase().equals("LAST_NAME")&&
-					!searchField.toUpperCase().equals("EMAIL") &&
-					!searchField.toUpperCase().equals("TYPE")) {
-				result += "The 'searchField' field is not a valid column. ";
-				isOk = false;
-			}
-		}
-
-			// Validate search value when search field is TYPE
-			if(searchField.toUpperCase().equals("TYPE")){
-			if(searchValue != "0" || searchValue != "1" || searchValue != "2"){
-			isOk = false;
-			}
-			}
-			if (orderBy != "") {
-				if (
-			//!searchField.toUpperCase().equals("ID") && 
-			!orderBy.toUpperCase().equals("FIRST_NAME") &&
-			!orderBy.toUpperCase().equals("LAST_NAME")&&
-			!orderBy.toUpperCase().equals("EMAIL") &&
-			!orderBy.toUpperCase().equals("TYPE")) {
-					result += "The 'orderBy' field is not a valid column. ";
-			isOk = false;
-			}
-		}
-			if (orderType != "") {
-			if (
-			!orderType.toUpperCase().equals("ASC") &&
-			!orderType.toUpperCase().equals("DESC")) {
-				result += "The 'orderType' field is invalid (must be asc or desc).";
-				isOk = false;
-			}
-		}
 		
-			return isOk;
 	}
 }
