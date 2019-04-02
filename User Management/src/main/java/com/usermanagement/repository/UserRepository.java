@@ -47,110 +47,110 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	List<Users> findById(long searchValue);
 	
 	//When searchField FIRSTNAME is specified
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
 	List<Users> findByFirstNameOrderByIdASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
 	List<Users> findByFirstNameOrderByIdDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
 	List<Users> findByFirstNameOrderByFirstNameASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
 	List<Users> findByFirstNameOrderByFirstNameDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
 	List<Users> findByFirstNameOrderByLastNameASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
 	List<Users> findByFirstNameOrderByLastNameDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
 	List<Users> findByFirstNameOrderByEmailASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
 	List<Users> findByFirstNameOrderByEmailDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
 	List<Users> findByFirstNameOrderByTypeASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE first_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
+	@Query("SELECT u FROM Users u WHERE first_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
 	List<Users> findByFirstNameOrderByTypeDESC(String searchValue,long lowerLimit, long upperLimit);
 	//----------------------------------------
 	
 	//When searchField LASTNAME is specified
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
 	List<Users> findByLastNameOrderByIdASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
 	List<Users> findByLastNameOrderByIdDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
 	List<Users> findByLastNameOrderByFirstNameASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
 	List<Users> findByLastNameOrderByFirstNameDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
 	List<Users> findByLastNameOrderByLastNameASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
 	List<Users> findByLastNameOrderByLastNameDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
 	List<Users> findByLastNameOrderByEmailASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
 	List<Users> findByLastNameOrderByEmailDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
 	List<Users> findByLastNameOrderByTypeASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE last_name = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
+	@Query("SELECT u FROM Users u WHERE last_name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
 	List<Users> findByLastNameOrderByTypeDESC(String searchValue,long lowerLimit, long upperLimit);
 	//----------------------------------------
 	
 	//When searchField EMAIL is specified
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
 	List<Users> findByEmailOrderByIdASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
 	List<Users> findByEmailOrderByIdDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
 	List<Users> findByEmailOrderByFirstNameASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
 	List<Users> findByEmailOrderByFirstNameDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
 	List<Users> findByEmailOrderByLastNameASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
 	List<Users> findByEmailOrderByLastNameDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
 	List<Users> findByEmailOrderByEmailASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
 	List<Users> findByEmailOrderByEmailDESC(String searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
 	List<Users> findByEmailOrderByTypeASC(String searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE email = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
+	@Query("SELECT u FROM Users u WHERE email = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
 	List<Users> findByEmailOrderByTypeDESC(String searchValue,long lowerLimit, long upperLimit);
 	//----------------------------------------
 	
 	//When searchField TYPE is specified
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
 	List<Users> findByTypeOrderByIdASC(long searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
 	List<Users> findByTypeOrderByIdDESC(long searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
 	List<Users> findByTypeOrderByFirstNameASC(long searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
 	List<Users> findByTypeOrderByFirstNameDESC(long searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
 	List<Users> findByTypeOrderByLastNameASC(long searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
 	List<Users> findByTypeOrderByLastNameDESC(long searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
 	List<Users> findByTypeOrderByEmailASC(long searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
 	List<Users> findByTypeOrderByEmailDESC(long searchValue,long lowerLimit, long upperLimit);
 	
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
 	List<Users> findByTypeOrderByTypeASC(long searchValue,long lowerLimit, long upperLimit);
-	@Query("SELECT u FROM Users u WHERE type = ?1 rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
+	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
 	List<Users> findByTypeOrderByTypeDESC(long searchValue,long lowerLimit, long upperLimit);
 	//----------------------------------------
 	
