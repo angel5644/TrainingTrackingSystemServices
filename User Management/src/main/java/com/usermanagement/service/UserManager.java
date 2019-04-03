@@ -16,6 +16,8 @@ public interface UserManager {
 	public List<Users> viewUser(String id);
 	
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec);
+	public boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,
+			String pageNo, String numberRec);
 }
 
 

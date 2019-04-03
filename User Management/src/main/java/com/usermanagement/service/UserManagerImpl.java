@@ -1,5 +1,6 @@
 package com.usermanagement.service;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.TypeMismatchException;
 
 import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.Users;
@@ -380,8 +382,161 @@ public class UserManagerImpl implements UserManager {
 		//findUserResponse.setUsers(usersFound);
 		//findUserResponse.setTotalRecords(usersFound.size());
 		
-		
 		return findUserResponse;
 		
+	}
+	
+	public boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,
+			String pageNo, String numberRec) throws InvalidParameterException {
+
+		/*Conditions for searchField (If specified):
+		- The searchField must be a valid column (ID, FIRST_NAME,
+		  LAST_NAME, EMAIL, TYPE)
+	
+	  Conditions for searchValue (If Specified):
+	  	- For ID:
+	  		+ Must be numeric and higher than 0
+	  	- For First_name and Last_Name:
+	  		+ Must contain characters (not empty)
+	  	- For Email:
+	  		+ Must contain characters (not empty)
+	  		+ Must be a valid email address
+	  	- For Type:
+	  		+ Must be numeric and between 0 and 2.
+	  		
+	  Conditions for orderBy (If specified):
+	  	- The orderBy must be a valid column (ID, FIRST_NAME,
+		  LAST_NAME, EMAIL, TYPE)
+	  	 
+	  Conditions for orderType (If specified):
+	  	-The orderType must be "ASC" or "DESC"
+	  	
+	  	*/
+		
+		Boolean isOk = true;
+		String result ="";
+		try {
+			if (!StringUtils.isBlank(searchField)){
+				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
+						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
+					result += "The 'searchField' entered is not a valid column. ";
+					isOk = false;
+				} else {
+					if (StringUtils.isBlank(searchValue)) {
+						result += "The value entered for the column " + searchField + " is empty. ";
+						isOk = false;
+					} else {
+						switch (searchField) {
+
+						case "ID":
+							boolean isIdNumeric = true;
+							try {
+								Integer.parseInt(searchValue);
+							} catch (TypeMismatchException e) {
+								isIdNumeric = false;
+							} catch (NumberFormatException e) {
+								isIdNumeric = false;
+							}
+
+							if (!isIdNumeric) {
+								result += "The ID value entered is not a number. ";
+								isOk = false;
+							}
+							else{
+								if(Integer.valueOf(searchValue) <= 0){
+									result += "The ID value must be higher than 0. ";
+									isOk = false;
+								}
+							}
+						break;
+
+						// For first name and last name are already validated
+						// (Those fields must not be empty, if field is
+						// specified)
+
+						case "EMAIL":
+							if (!searchValue.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
+								result += "The email value is invalid. ";
+								isOk = false;
+							}
+						break;
+
+						case "TYPE":
+							boolean isTypeNumeric = true;
+							try {
+								Integer.parseInt(searchValue);
+							} catch (TypeMismatchException e) {
+								isTypeNumeric = false;
+							} catch (NumberFormatException e) {
+								isTypeNumeric = false;
+							}
+
+							if (!isTypeNumeric) {
+								result += "The type value is not numeric. ";
+								isOk = false;
+							} else {
+								if (Integer.valueOf(searchValue) < 0 || Integer.valueOf(searchValue) > 2) {
+									result += "The type value must be between 0-2. ";
+									isOk = false;
+								}
+							}
+						break;
+						}
+					}
+				}
+			}
+
+			if (orderBy != null) {
+				if (!orderBy.equals("ID") && !orderBy.equals("FIRST_NAME") && !orderBy.equals("LAST_NAME")
+						&& !orderBy.equals("EMAIL") && !orderBy.equals("TYPE")) {
+					result += "The 'orderBy' field is not a valid column. ";
+					isOk = false;
+				}
+			}
+
+			if (!orderType.equals("ASC") && !orderType.equals("DESC")) {
+				result += "The 'orderType' field is invalid (must be asc or desc). ";
+				isOk = false;
+			}
+
+			boolean isPageNoNumeric = true;
+			try {
+				Integer.parseInt(pageNo);
+			} catch (TypeMismatchException e) {
+				isPageNoNumeric = false;
+			} catch (NumberFormatException e) {
+				isPageNoNumeric = false;
+			}
+
+			boolean isNumberRecNumeric = true;
+			try {
+				Integer.parseInt(numberRec);
+			} catch (TypeMismatchException e) {
+				isNumberRecNumeric = false;
+			} catch (NumberFormatException e) {
+				isNumberRecNumeric = false;
+			}
+
+			if (!isPageNoNumeric) {
+				result += "The 'pageNo' field is not numeric. ";
+				isOk = false;
+			}
+
+			if (!isNumberRecNumeric) {
+				result += "The 'numberRec' field is not numeric. ";
+				isOk = false;
+			}
+			
+			if(!isOk){
+				result = "The following error occurred: " + result;
+				throw new InvalidParameterException(result); 
+			}
+
+		} catch (InvalidParameterException ex) {
+			System.out.println(ex);
+			return false;
+		}
+
+		return isOk;
 	}
 }
