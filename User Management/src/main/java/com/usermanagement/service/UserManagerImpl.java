@@ -105,7 +105,7 @@ public class UserManagerImpl implements UserManager {
 		//If there is no WHERE sentence, it will return every record
 		// with the exception of the limits per page they can have
 		System.out.println("######SERVICE LAYER#######");
-		if(StringUtils.isBlank(searchField)){
+		if(StringUtils.isBlank(searchField) || searchField.trim().equals("") || searchValue.trim().equals("")){
 			switch(orderBy){
 				case "ID":
 					if(orderType.equals("ASC")){
@@ -155,7 +155,8 @@ public class UserManagerImpl implements UserManager {
 		}
 		else{
 			//System.out.println("Search Field is not blank");
-			switch(searchField){
+			switch(searchField.trim()){
+			
 				case "ID":
 					usersFound = userRepository.findById((long) Integer.valueOf(searchValue));
 				break;
@@ -420,7 +421,7 @@ public class UserManagerImpl implements UserManager {
 		try {
 			if (!StringUtils.isBlank(searchField)){
 				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
-						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
+						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE") && !searchField.trim().equals("")) {
 					result += "The 'searchField' entered is not a valid column. ";
 					isOk = false;
 				} else {
@@ -524,7 +525,7 @@ public class UserManagerImpl implements UserManager {
 				isOk = false;
 			}
 			else {
-				if (Integer.valueOf(pageNo) < 0) {
+				if (Integer.valueOf(pageNo) <= 0) {
 					result += "The 'pageNo' must be greater than 0. ";
 					isOk = false;
 				}
@@ -535,7 +536,7 @@ public class UserManagerImpl implements UserManager {
 				isOk = false;
 			}
 			else {
-				if (Integer.valueOf(numberRec) < 0) {
+				if (Integer.valueOf(numberRec) <= 0) {
 					result += "The 'numberRec' must be greater than 0. ";
 					isOk = false;
 				}
