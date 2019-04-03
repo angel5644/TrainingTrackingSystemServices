@@ -59,8 +59,8 @@ public class UserManagerImplTest {
 		UserManagerImpl obj = new UserManagerImpl();
 		String searchField = "first_name"; //first_name
 		String searchValue = "";
-		String orderBy = "";
-		String orderType = "";
+		String orderBy = "id";
+		String orderType = "asc";
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = true;
