@@ -54,7 +54,7 @@ public class UserManagerImplTest {
 
 
 		@Test
-		public void test_validateSearchFields_Should_ReturnTrue_When_SearchFieldIsValid() {
+		public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsValid() {
 		// arrange 
 		UserManagerImpl obj = new UserManagerImpl();
 		String searchField = "first_name"; //first_name
@@ -74,7 +74,7 @@ public class UserManagerImplTest {
 		assertEquals(expected, result);
 		}
 		@Test
-		public void test_validateSearchValue_Should_ReturnTrue_When_SearchFieldIsFirstNameAndSearchValueIsAnyString() {
+		public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsFirstNameAndSearchValueIsAnyString() {
 		// arrange 
 		UserManagerImpl obj = new UserManagerImpl();
 		String searchField = "first_name";
@@ -95,7 +95,7 @@ public class UserManagerImplTest {
 		}
 
 @Test
-		public void test_validateSearchValue_Should_ReturnTrue_When_SearchFieldIsTypeAndSearchValueIsValid() {
+		public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsTypeAndSearchValueIsValid() {
 	// arrange 
 		 UserManagerImpl obj = new UserManagerImpl();
 		 String searchField = "Type";
@@ -115,7 +115,7 @@ public class UserManagerImplTest {
 		assertEquals(expected, result);
 		}
 		@Test
-	public void test_validateorderby_Should_ReturnFalse_When_orderByIsInvalid() {
+	public void test_validateSearchField_Should_ReturnFalse_When_orderByIsInvalid() {
 		// arrange 
 		UserManagerImpl obj = new UserManagerImpl();
 		String searchField = "";
@@ -137,7 +137,7 @@ public class UserManagerImplTest {
 
 
 		@Test
-		public void test_validateordeBy_Should_ReturnTrue_When_orderByIsValid() {
+		public void test_validateSearchField_Should_ReturnTrue_When_orderByIsValid() {
 		// arrange 
 		 UserManagerImpl obj = new UserManagerImpl();
 		String searchField = ""; //first_name
@@ -157,7 +157,7 @@ public class UserManagerImplTest {
 		assertEquals(expected, result);
 		}
 		@Test
-		public void test_validateorderType_Should_ReturnFalse_When_orderTypeIsInvalid() {
+		public void test_validateSearchField_Should_ReturnFalse_When_orderTypeIsInvalid() {
 		
 			// arrange 
 			UserManagerImpl obj = new UserManagerImpl();
@@ -178,7 +178,7 @@ public class UserManagerImplTest {
 			assertEquals(result, expected);
 			}
 @Test
-		public void test_validateorderType_Should_ReturnTrue_When_SearchOrderTypeIsValid() {
+		public void test_validateSearchField_Should_ReturnTrue_When_SearchOrderTypeIsValid() {
 			// arrange 
 			UserManagerImpl obj = new UserManagerImpl();
 			 String searchField = ""; //first_name
