@@ -20,6 +20,8 @@ public class UserManagerImpl implements UserManager {
 	@Autowired
     UserRepository userRepository;
 	
+	private String result;
+	
 	@Override
 	@Transactional
 	public List <Users> getUsers(){
@@ -414,7 +416,7 @@ public class UserManagerImpl implements UserManager {
 	  	*/
 		
 		Boolean isOk = true;
-		String result ="";
+		result ="";
 		try {
 			if (!StringUtils.isBlank(searchField)){
 				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
@@ -538,5 +540,9 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return isOk;
+	}
+	
+	public String getResult(){
+		return this.result;
 	}
 }

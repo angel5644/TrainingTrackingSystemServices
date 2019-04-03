@@ -73,8 +73,7 @@ public class UserResource {
 				numberRec);
 
 		if (!isOk) {
-			result = "The following error occurred: " + result;
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userManager.getResult());
 		} else {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(userManager.findUsers((searchField == null) ? "" : searchField.toUpperCase(),

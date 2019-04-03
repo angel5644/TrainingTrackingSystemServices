@@ -5,6 +5,7 @@ import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.Users;
 
 public interface UserManager {
+		
 	public List <Users> getUsers();
 	public void createUpdateUser(Users theUser);
 	public Users findById(Integer id);
@@ -18,6 +19,7 @@ public interface UserManager {
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec);
 	public boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,
 			String pageNo, String numberRec);
+	public String getResult();
 }
 
 
