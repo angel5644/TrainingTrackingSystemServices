@@ -85,7 +85,8 @@ public class UserResource {
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	@ResponseBody
 	// Previous parameter was HttpServletRequest request
-	public ResponseEntity<?> createUser(@ModelAttribute("User") Users theUser) {
+	//public ResponseEntity<?> createUser(@ModelAttribute("CreateUserRequest") CreateUserRequest theUser) {
+	public ResponseEntity<?> createUser(@ModelAttribute("Users") Users theUser) {
 
 		// String id = request.getParameter("id");
 		result = "";

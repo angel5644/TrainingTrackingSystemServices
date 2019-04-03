@@ -425,8 +425,8 @@ public class UserManagerImpl implements UserManager {
 					isOk = false;
 				} else {
 					if (StringUtils.isBlank(searchValue)) {
-						result += "The value entered for the column " + searchField + " is empty. ";
-						isOk = false;
+						result += "The value entered for the column " + searchField + " is empty. Getting empty result. ";
+						//isOk = false;
 					} else {
 						switch (searchField) {
 
