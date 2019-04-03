@@ -142,7 +142,7 @@ public class UserManagementApplicationTests {
 		HttpURLConnection con = null;
 
         try {
-        	URL url = new URL("http://localhost:9091/user/find?orderBy=&orderType&searchValue=Luis Alberto&numberRec&pageNo&searchField=first_name");
+        	URL url = new URL("https://localhost:9091/user/find?orderBy=&orderType&searchValue=Luis Alberto&numberRec&pageNo&searchField=first_name");
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
