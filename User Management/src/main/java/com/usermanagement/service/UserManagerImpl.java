@@ -523,10 +523,22 @@ public class UserManagerImpl implements UserManager {
 				result += "The 'pageNo' field is not numeric. ";
 				isOk = false;
 			}
+			else {
+				if (Integer.valueOf(pageNo) < 0) {
+					result += "The 'pageNo' must be greater than 0. ";
+					isOk = false;
+				}
+			}
 
 			if (!isNumberRecNumeric) {
 				result += "The 'numberRec' field is not numeric. ";
 				isOk = false;
+			}
+			else {
+				if (Integer.valueOf(numberRec) < 0) {
+					result += "The 'numberRec' must be greater than 0. ";
+					isOk = false;
+				}
 			}
 			
 			if(!isOk){
