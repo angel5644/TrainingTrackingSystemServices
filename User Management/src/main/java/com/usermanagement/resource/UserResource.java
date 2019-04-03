@@ -138,9 +138,10 @@ public class UserResource {
 					result += "The 'searchField' entered is not a valid column. ";
 					isOk = false;
 				} else {
-
-					if (!StringUtils.isBlank(searchValue)) {
+					System.out.println("searchField is a valid column");
+					if (StringUtils.isBlank(searchValue)) {
 						result += "The value entered for the column " + searchField + " is empty. ";
+						isOk = false;
 					} else {
 						switch (searchField) {
 
