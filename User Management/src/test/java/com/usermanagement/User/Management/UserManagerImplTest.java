@@ -27,7 +27,7 @@ public class UserManagerImplTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	/*
+
 	@Test
 	
 	public void test_validateSearchField_Should_ReturnFalse_When_serachFieldIsInvalid() {
@@ -38,8 +38,8 @@ public class UserManagerImplTest {
 		String searchValue = "";
 		String orderBy = "";
 		String orderType = "";
-		int pageNo = 1;
-		int numberRec = 10;
+		String pageNo = "1";
+		String numberRec = "10";
 		boolean expected = false;
 		
 		 // act
@@ -59,8 +59,8 @@ public class UserManagerImplTest {
 		String searchValue = "";
 		String orderBy = "";
 		String orderType = "";
-		int pageNo = 1;
-		int numberRec = 10;
+		String pageNo = "1";
+		String numberRec = "10";
 		boolean expected = true;
 		
 	// act
@@ -76,9 +76,9 @@ public class UserManagerImplTest {
 		String searchField = "first_name";
 		String searchValue = "any_string_different_known_valid_fields";
 		String orderBy = "";
-		 String orderType = "";
-		int pageNo = 1;
-		int numberRec = 10;
+		String orderType = "";
+		String pageNo = "1";
+		String numberRec = "10";
 		boolean expected = true;
 		
 		// act
@@ -96,8 +96,8 @@ public class UserManagerImplTest {
 		 String searchValue = "2";
 		 String orderBy = "";
 		 String orderType = "";
-		int pageNo = 1;
-		int numberRec = 10;
+		 String pageNo = "1";
+		 String numberRec = "10";
 		 boolean expected = false;
 		
 		// act
@@ -114,8 +114,8 @@ public class UserManagerImplTest {
 		String searchValue = "";
 		String orderBy = "any_string_different_known_valid_fields";
 		String orderType = "";
-		int pageNo = 1;
-		int numberRec = 10;
+		String pageNo = "1";
+		String numberRec = "10";
 		boolean expected = false;
 		
 		// act
@@ -134,8 +134,8 @@ public class UserManagerImplTest {
 		String searchValue = "";
 		String orderBy = "first_name";
 		String orderType = "";
-		int pageNo = 1;
-		int numberRec = 10;
+		String pageNo = "1";
+		String numberRec = "10";
 		boolean expected = true;
 		
 		// act
@@ -153,8 +153,8 @@ public class UserManagerImplTest {
 			String searchValue = "";
 			String orderBy = "";
 			String orderType = "asva";
-			int pageNo = 1;
-			int numberRec = 10;
+			String pageNo = "1";
+			String numberRec = "10";
 			boolean expected = false;
 				
 			// act
@@ -171,8 +171,8 @@ public class UserManagerImplTest {
 			 String searchValue = "";
 			 String orderBy = "";
 			 String orderType = "ASC";
-			 int pageNo = 1;
-			 int numberRec = 10;
+			 String pageNo = "1";
+			 String numberRec = "10";
 			 boolean expected = true;
 			
 			 // act
@@ -183,7 +183,7 @@ public class UserManagerImplTest {
 			 }
 		
 			
-*/
+
 		}
 
 

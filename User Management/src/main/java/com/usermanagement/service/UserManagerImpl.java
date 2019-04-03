@@ -430,7 +430,7 @@ public class UserManagerImpl implements UserManager {
 					} else {
 						switch (searchField) {
 
-						case "ID":
+						/*case "ID":
 							boolean isIdNumeric = true;
 							try {
 								Integer.parseInt(searchValue);
@@ -450,7 +450,7 @@ public class UserManagerImpl implements UserManager {
 									isOk = false;
 								}
 							}
-						break;
+						break;*/
 
 						// For first name and last name are already validated
 						// (Those fields must not be empty, if field is
