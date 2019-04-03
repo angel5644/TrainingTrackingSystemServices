@@ -132,14 +132,14 @@ public class UserResource {
 		
 		Boolean isOk = true;
 		try {
-			if (searchField != "") {
+			if (!StringUtils.isBlank(searchField)){
 				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
 						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE")) {
 					result += "The 'searchField' entered is not a valid column. ";
 					isOk = false;
 				} else {
 
-					if (searchValue.isEmpty()) {
+					if (!StringUtils.isBlank(searchValue)) {
 						result += "The value entered for the column " + searchField + " is empty. ";
 					} else {
 						switch (searchField) {
