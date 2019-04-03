@@ -129,29 +129,29 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	
 	//When searchField TYPE is specified
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
-	List<Users> findByTypeOrderByIdASC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByIdASC(Integer searchValue,long lowerLimit, long upperLimit);
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id DESC")
-	List<Users> findByTypeOrderByIdDESC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByIdDESC(Integer searchValue,long lowerLimit, long upperLimit);
 	
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name ASC")
-	List<Users> findByTypeOrderByFirstNameASC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByFirstNameASC(Integer searchValue,long lowerLimit, long upperLimit);
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY first_name DESC")
-	List<Users> findByTypeOrderByFirstNameDESC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByFirstNameDESC(Integer searchValue,long lowerLimit, long upperLimit);
 	
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name ASC")
-	List<Users> findByTypeOrderByLastNameASC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByLastNameASC(Integer searchValue,long lowerLimit, long upperLimit);
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY last_name DESC")
-	List<Users> findByTypeOrderByLastNameDESC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByLastNameDESC(Integer searchValue,long lowerLimit, long upperLimit);
 	
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email ASC")
-	List<Users> findByTypeOrderByEmailASC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByEmailASC(Integer searchValue,long lowerLimit, long upperLimit);
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY email DESC")
-	List<Users> findByTypeOrderByEmailDESC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByEmailDESC(Integer searchValue,long lowerLimit, long upperLimit);
 	
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type ASC")
-	List<Users> findByTypeOrderByTypeASC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByTypeASC(Integer searchValue,long lowerLimit, long upperLimit);
 	@Query("SELECT u FROM Users u WHERE type = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY type DESC")
-	List<Users> findByTypeOrderByTypeDESC(long searchValue,long lowerLimit, long upperLimit);
+	List<Users> findByTypeOrderByTypeDESC(Integer searchValue,long lowerLimit, long upperLimit);
 	//----------------------------------------
 	
 	
