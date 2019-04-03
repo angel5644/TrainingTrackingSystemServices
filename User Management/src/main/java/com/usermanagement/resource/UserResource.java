@@ -50,7 +50,7 @@ public class UserResource {
 		}
 	}
 
-	@RequestMapping(value = "/user/find", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> searchUsers(@RequestParam(value = "searchField", required = false) String searchField,
 			@RequestParam(value = "searchValue", required = false) String searchValue,
@@ -90,104 +90,14 @@ public class UserResource {
 
 		// String id = request.getParameter("id");
 		result = "";
-		Boolean isOk = validateFields(theUser);
+		Boolean isOk = userManager.validateFields(theUser);
 
 		if (!isOk) {
-			result = "The following error occurred: " + result;
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userManager.getResult());
 		} else {
 			userManager.createUpdateUser(theUser);
 			return ResponseEntity.status(HttpStatus.OK).body("");
 		}
-	}
-
-	
-
-	public Boolean validateFields(Users theUser) {
-
-		Boolean isOk = true;
-
-		if (theUser == null) {
-			result = "Invalid User type. ";
-			isOk = false;
-		} else {
-			String first_name = theUser.getFirstName();
-			String last_name = theUser.getLastName();
-			String email = theUser.getEmail();
-			String type = String.valueOf(theUser.getType());
-
-			try {
-				if (first_name == null) {
-					result += "The 'firstName' field is missing. ";
-					isOk = false;
-				} else {
-					if (first_name.isEmpty()) {
-						result += "The 'firstName' field is empty. ";
-						isOk = false;
-					}
-				}
-
-				if (last_name == null) {
-					result += "The 'lastName' field is missing. ";
-					isOk = false;
-				} else {
-					if (last_name.isEmpty()) {
-						result += "The 'lastName' field is empty. ";
-						isOk = false;
-					}
-				}
-
-				if (email == null) {
-					result += "The 'email' field is missing. ";
-					isOk = false;
-				} else {
-					if (email.isEmpty()) {
-						result += "The 'email' field is empty. ";
-						isOk = false;
-					} else {
-						if (!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
-							result += "The email entered is invalid. ";
-							isOk = false;
-						}
-					}
-				}
-
-				if (type == null) {
-					result += "The 'type' field is missing. ";
-					isOk = false;
-				} else {
-					if (type.isEmpty()) {
-						result += "The 'type' field is empty. ";
-						isOk = false;
-					} else {
-						boolean isNumeric = true;
-						try {
-
-							Integer.parseInt(type);
-
-						} catch (TypeMismatchException e) {
-							isNumeric = false;
-						} catch (NumberFormatException e) {
-							isNumeric = false;
-						}
-
-						if (!isNumeric) {
-							result += "The 'type' field is not numeric. ";
-							isOk = false;
-						} else {
-							if (Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2) {
-								result += "The 'type' field must be between 0-2. ";
-								isOk = false;
-							}
-						}
-					}
-				}
-
-			} catch (Exception ex) {
-				System.out.println(ex);
-			}
-		}
-		return isOk;
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.PUT)
@@ -195,11 +105,10 @@ public class UserResource {
 
 		result = "";
 		Users user = userManager.findById(theUser.getId());
-		Boolean isOk = validateFields(theUser);
+		Boolean isOk = userManager.validateFields(theUser);
 
 		if (!isOk) {
-			result = "The following error occurred: " + result;
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userManager.getResult());
 		} else {
 			user.setFirstName(theUser.getFirstName());
 			user.setLastName(theUser.getLastName());

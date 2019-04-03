@@ -542,6 +542,102 @@ public class UserManagerImpl implements UserManager {
 		return isOk;
 	}
 	
+	public Boolean validateFields(Users theUser) throws InvalidParameterException{
+
+		Boolean isOk = true;
+		result = "";
+
+		try {
+			if (theUser == null) {
+				result = "Invalid User type. ";
+				return false;
+				
+			} else {
+				String first_name = theUser.getFirstName();
+				String last_name = theUser.getLastName();
+				String email = theUser.getEmail();
+				String type = String.valueOf(theUser.getType());
+	
+				
+				if (first_name == null) {
+					result += "The 'firstName' field is missing. ";
+					isOk = false;
+				} else {
+					if (first_name.isEmpty()) {
+						result += "The 'firstName' field is empty. ";
+						isOk = false;
+					}
+				}
+	
+				if (last_name == null) {
+					result += "The 'lastName' field is missing. ";
+					isOk = false;
+				} else {
+					if (last_name.isEmpty()) {
+						result += "The 'lastName' field is empty. ";
+						isOk = false;
+					}
+				}
+	
+				if (email == null) {
+					result += "The 'email' field is missing. ";
+					isOk = false;
+				} else {
+					if (email.isEmpty()) {
+						result += "The 'email' field is empty. ";
+						isOk = false;
+					} else {
+						if (!email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
+							result += "The email entered is invalid. ";
+							isOk = false;
+						}
+					}
+				}
+	
+				if (type == null) {
+					result += "The 'type' field is missing. ";
+					isOk = false;
+				} else {
+					if (type.isEmpty()) {
+						result += "The 'type' field is empty. ";
+						isOk = false;
+					} else {
+						boolean isNumeric = true;
+						try {
+	
+							Integer.parseInt(type);
+	
+						} catch (TypeMismatchException e) {
+							isNumeric = false;
+						} catch (NumberFormatException e) {
+							isNumeric = false;
+						}
+	
+						if (!isNumeric) {
+							result += "The 'type' field is not numeric. ";
+							isOk = false;
+						} else {
+							if (Integer.valueOf(type) < 0 || Integer.valueOf(type) > 2) {
+								result += "The 'type' field must be between 0-2. ";
+								isOk = false;
+							}
+						}
+					}
+				}
+			}
+			
+			if(!isOk){
+				result = "The following error occurred: " + result;
+				throw new InvalidParameterException(result); 
+			}
+			
+		} catch (InvalidParameterException ex) {
+			System.out.println(ex);
+			return false;
+		}
+		return isOk;
+	}
+	
 	public String getResult(){
 		return this.result;
 	}
