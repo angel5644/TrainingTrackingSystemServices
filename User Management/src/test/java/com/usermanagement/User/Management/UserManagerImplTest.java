@@ -43,7 +43,9 @@ public class UserManagerImplTest {
 		boolean expected = false;
 		
 		 // act
-		boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 		
 		// assert
 		assertEquals(result, expected);
@@ -64,7 +66,9 @@ public class UserManagerImplTest {
 		boolean expected = true;
 		
 	// act
-		boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 		
 		// assert
 		assertEquals(expected, result);
@@ -75,33 +79,37 @@ public class UserManagerImplTest {
 		UserManagerImpl obj = new UserManagerImpl();
 		String searchField = "first_name";
 		String searchValue = "any_string_different_known_valid_fields";
-		String orderBy = "";
-		String orderType = "";
+		String orderBy = "id";
+		String orderType = "asc";
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = true;
 		
 		// act
-		boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 		
 	// assert
 		assertEquals(result, expected);
 		}
 
 @Test
-		public void test_validateSearchValue_Should_ReturnFalse_When_SearchFieldIsTypeAndSearchValueIsValid() {
+		public void test_validateSearchValue_Should_ReturnTrue_When_SearchFieldIsTypeAndSearchValueIsValid() {
 	// arrange 
 		 UserManagerImpl obj = new UserManagerImpl();
 		 String searchField = "Type";
 		 String searchValue = "2";
-		 String orderBy = "";
-		 String orderType = "";
+		 String orderBy = "id";
+		 String orderType = "asc";
 		 String pageNo = "1";
 		 String numberRec = "10";
-		 boolean expected = false;
+		 boolean expected = true;
 		
 		// act
-		boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 		
 		// assert
 		assertEquals(expected, result);
@@ -113,13 +121,15 @@ public class UserManagerImplTest {
 		String searchField = "";
 		String searchValue = "";
 		String orderBy = "any_string_different_known_valid_fields";
-		String orderType = "";
+		String orderType = "dfgdfg";
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = false;
 		
 		// act
-		 boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		 boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+					(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+							numberRec);
 		
 		// assert
 		 assertEquals(result, expected);
@@ -133,13 +143,15 @@ public class UserManagerImplTest {
 		String searchField = ""; //first_name
 		String searchValue = "";
 		String orderBy = "first_name";
-		String orderType = "";
+		String orderType = "asc";
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = true;
 		
 		// act
-		boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 		
 		// assert
 		assertEquals(expected, result);
@@ -151,14 +163,16 @@ public class UserManagerImplTest {
 			UserManagerImpl obj = new UserManagerImpl();
 			String searchField = "";
 			String searchValue = "";
-			String orderBy = "";
+			String orderBy = "id";
 			String orderType = "asva";
 			String pageNo = "1";
 			String numberRec = "10";
 			boolean expected = false;
 				
 			// act
-			boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+			boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+					(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+							numberRec);
 			
 			// assert
 			assertEquals(result, expected);
@@ -169,14 +183,16 @@ public class UserManagerImplTest {
 			UserManagerImpl obj = new UserManagerImpl();
 			 String searchField = ""; //first_name
 			 String searchValue = "";
-			 String orderBy = "";
+			 String orderBy = "id";
 			 String orderType = "ASC";
 			 String pageNo = "1";
 			 String numberRec = "10";
 			 boolean expected = true;
 			
 			 // act
-			 boolean result = obj.validateSearchFields(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+			 boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+						(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+								numberRec);
 		
 			 // assert
 			 assertEquals(expected, result);
