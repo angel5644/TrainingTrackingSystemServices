@@ -167,7 +167,32 @@ public class UserManagementApplicationTests {
 
 		assertEquals(HttpStatus.BAD_REQUEST, userResource.deleteUser(user).getStatusCode());	
 	}
-
+	
+	@Test
+	public void testviewUser_When_View_Its_OK(){
+		String first_name = "Rodrigo";
+		String last_name = "Velasco";
+		String email = "rodrigo.velasco@4thsource.com";
+		int type = 0;
+		
+		Users user = new Users();
+		user.setId(1);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
+		user.setEmail(email);
+		user.setType(type);
+		
+		userResource.createUser(user);
+		
+		Users theUser = new Users();
+		assertEquals(HttpStatus.OK, userResource.viewUser(user).getStatusCode());
+	}
+	
+	@Test
+	public void testviewUser_When_View_Its_BAD_REQUEST(){
+		//assertEquals(HttpStatus.BAD_REQUEST, userResource.viewUser(user).getStatusCode());
+	}
+	
 	@Test
 	public void sendGET() throws IOException {
 		

@@ -49,6 +49,15 @@ public class UserResource {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
 		}
 	}
+	//View User
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public ResponseEntity<?> viewUser(@ModelAttribute("User") Users theUser) {
+		if (userManager.ViewUser(id)) {
+			return ResponseEntity.status(HttpStatus.OK).body("");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
+		}
+	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
