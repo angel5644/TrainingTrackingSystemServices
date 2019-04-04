@@ -15,7 +15,6 @@ public interface UserManager {
 	public List<Users> findByType(Integer type);
 	public boolean deleteUser(Users theUser);
 	public List<Users> viewUser(String id);
-	public List<Users> getLastUserInserted();
 	
 	public FindUserResponse findUsers(String searchField,String searchValue,String orderBy,String orderType,Integer pageNo,Integer numberRec);
 	public boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,

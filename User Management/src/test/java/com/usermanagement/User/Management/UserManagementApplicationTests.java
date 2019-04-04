@@ -28,6 +28,8 @@ public class UserManagementApplicationTests {
 
 	@Mock
 	UserResource userResource;
+	@Mock
+	UserManagerImpl userManager;
 
 	// Test UserInsert function
 	@Test
@@ -79,22 +81,19 @@ public class UserManagementApplicationTests {
 
 		userResource.createUser(user);
 		
-		UserManagerImpl userManager = new UserManagerImpl();
-		List<Users> userInserted = userManager.getLastUserInserted();
-		
 		first_name = "Luis";
 		last_name = "Robles";
 		email = "luis.robles@4thsource.com";
 		type = 1;
 
-		userInserted.get(userInserted.size()-1).setFirstName(first_name);
-		userInserted.get(userInserted.size()-1).setLastName(last_name);
-		userInserted.get(userInserted.size()-1).setEmail(email);
-		userInserted.get(userInserted.size()-1).setType(type);
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
+		user.setEmail(email);
+		user.setType(type);
 
-		assertEquals(HttpStatus.OK, userResource.update(userInserted.get(userInserted.size()-1)).getStatusCode());
+		assertEquals(HttpStatus.OK, userResource.update(user).getStatusCode());
 		
-		userResource.deleteUser(userInserted.get(userInserted.size()-1));
+		userResource.deleteUser(user);
 	}
 
 	// Test UserUpdate function, sending empty or null fields
