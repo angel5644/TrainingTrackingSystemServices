@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +51,7 @@ public class UserResource {
 	}
 	//View User
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> viewUser(String id) {
+	public ResponseEntity<?> viewUser(@PathVariable("id") final String id) {
 		if (userManager.viewUser(id) != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(userManager.viewUser(id));
 		} else {

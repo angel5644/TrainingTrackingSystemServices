@@ -170,22 +170,7 @@ public class UserManagementApplicationTests {
 	
 	@Test
 	public void testviewUser_When_View_Its_OK(){
-		String first_name = "Rodrigo";
-		String last_name = "Velasco";
-		String email = "rodrigo.velasco@4thsource.com";
-		int type = 0;
-		
-		Users user = new Users();
-		user.setId(1);
-		user.setFirstName(first_name);
-		user.setLastName(last_name);
-		user.setEmail(email);
-		user.setType(type);
-		
-		userResource.createUser(user);
-		
-		Users theUser = new Users();
-		assertEquals(HttpStatus.OK, userResource.viewUser(user).getStatusCode());
+		assertEquals(HttpStatus.OK, userResource.viewUser("1").getStatusCode());
 	}
 	
 	@Test
@@ -257,28 +242,41 @@ public class UserManagementApplicationTests {
 	}
 	
 	@Test
-	public void findUsers(){
+	public void findUsersByFirstNameOrderByLastNameASC(){
+		String searchField = "first_name";
+		String searchValue = "Luis Alberto";
+		String orderBy = "last_name";
+		String orderType ="asc";
+		Integer pageNo = 1;
+		Integer numberRec = 2;
 		
+		UserManagerImpl userManager = new UserManagerImpl();
+		
+		userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+		
+		
+
 	}
 	
 	@Test
-	public void findUsersWithDefaultValues(){
-		
-	}
-	
-	@Test
-	public void findUsersWithEmptyFields(){
+	public void findUsersWithDefaultValuesAndEmptySearchField(){
 		String searchField = "";
-		String searchValie = "";
-		String orderBy = "";
-		String orderType ="";
-		String pageNo = "";
-		String numberRec = "";
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType ="asc";
+		Integer pageNo = 1;
+		Integer numberRec = 10;
 	}
 	
+	
 	@Test
-	public void findUsersWithInvalidFieldValues(){
-		
+	public void findUsersByTypeOrderByEmailDesc(){
+		String searchField = "type";
+		String searchValue = "1";
+		String orderBy = "email";
+		String orderType ="desc";
+		Integer pageNo = 1;
+		Integer numberRec = 5;
 	}
 
 }
