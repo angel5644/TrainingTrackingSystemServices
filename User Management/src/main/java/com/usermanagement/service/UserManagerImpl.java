@@ -69,12 +69,17 @@ public class UserManagerImpl implements UserManager {
 	@Override
     @Transactional
     public boolean deleteUser(Users theUser) {
-		if(findById(theUser.getId()) == null){
+		if(theUser == null){
 			return false;
 		}
 		else{
-			userRepository.deleteById(theUser.getId());
-			return true;
+			if(findById(theUser.getId()) == null){
+				return false;
+			}
+			else{
+				userRepository.deleteById(theUser.getId());
+				return true;
+			}
 		}
     }
 	

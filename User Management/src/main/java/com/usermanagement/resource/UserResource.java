@@ -2,7 +2,7 @@ package com.usermanagement.resource;
 
 import java.util.List;
 
-import org.hibernate.TypeMismatchException;
+//import org.hibernate.TypeMismatchException;
 //import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

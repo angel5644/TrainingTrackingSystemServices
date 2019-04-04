@@ -1,15 +1,13 @@
 package com.usermanagement.User.Management;
 
 import static org.junit.Assert.assertEquals;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-
+//import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -99,20 +97,25 @@ public class UserManagementApplicationTests {
 	// Test UserUpdate function, sending empty or null fields
 	@Test
 	public void testUserUpdateWithEmptyFields() {
-		String first_name = null;
-		String last_name = "";
-		String email = "";
+		String first_name = "Rodrigo";
+		String last_name = "Velasco";
+		String email = "rodrigo.velasco@4thsource.com";
 		int type = 0;
 
 		Users user = new Users();
-
-		user.setId(1);
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 
-		assertEquals(HttpStatus.BAD_REQUEST, userResource.deleteUser(user).getStatusCode());
+		userResource.createUser(user);
+		
+		user.setFirstName("");
+		user.setLastName("");
+		user.setEmail("");
+		user.setType(null);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, userResource.update(user).getStatusCode());
 	}
 	
 	@Test
@@ -144,7 +147,7 @@ public class UserManagementApplicationTests {
 	}
 	
 	@Test
-	public void testdeleteUser_When_Delete_Its_BAD_REQUEST(){
+	public void testdeleteUserWhenNotFound(){
 		
 		String first_name = "Rodrigo";
 		String last_name = "Velasco";
@@ -152,7 +155,6 @@ public class UserManagementApplicationTests {
 		int type = 0;
 		
 		Users user = new Users();
-		user.setId(1);
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
 		user.setEmail(email);
@@ -161,13 +163,9 @@ public class UserManagementApplicationTests {
 		userResource.createUser(user);
 		
 		Users theUser = new Users();
-		theUser.setId(2);
-		theUser.setFirstName(first_name);
-		theUser.setLastName(last_name);
-		theUser.setEmail(email);
-		theUser.setType(type);
+		theUser = userManager.findById(user.getId()+100);
 
-		assertEquals(HttpStatus.BAD_REQUEST, userResource.deleteUser(user).getStatusCode());	
+		assertEquals(HttpStatus.NOT_FOUND, userResource.deleteUser(theUser).getStatusCode());	
 	}
 	
 	@Test
@@ -233,9 +231,9 @@ public class UserManagementApplicationTests {
     			System.out.println("GET request not worked");
     		}
         } catch (MalformedURLException e) {
-            System.out.println("########################## Internal error: "+ e);
+            System.out.println("##########################1 Internal error: "+ e);
         } catch (IOException e) {
-        	System.out.println("########################## Internal error: "+ e);
+        	System.out.println("##########################2 Internal error: "+ e);
         } finally {
             if (con != null) {
                 con.disconnect();
