@@ -80,7 +80,6 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
-	
 	public List<Users> getLastUserInserted(){
 		return userRepository.findLastUserInserted();
 	}

@@ -15,8 +15,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	List<Users> findByType(Integer type);
 	Optional<Users> findById(Integer id);
 	
-	//@Query("SELECT u FROM Users u WHERE u.id=(SELECT MAX(u1.id) FROM Users u1)")
-	@Query("SELECT u FROM Users u")
+	@Query("SELECT u FROM Users u WHERE u.id=(SELECT MAX(u1.id) FROM Users u1)")
 	List<Users> findLastUserInserted();
 	
 	//When searchField is not specified
