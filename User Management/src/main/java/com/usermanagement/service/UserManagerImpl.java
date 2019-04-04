@@ -420,7 +420,7 @@ public class UserManagerImpl implements UserManager {
 		result ="";
 		try {
 			if (!StringUtils.isBlank(searchField)){
-				if (!searchField.equals("ID") && !searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
+				if (!searchField.equals("FIRST_NAME") && !searchField.equals("LAST_NAME")
 						&& !searchField.equals("EMAIL") && !searchField.equals("TYPE") && !searchField.trim().equals("")) {
 					result += "The 'searchField' entered is not a valid column. ";
 					isOk = false;
