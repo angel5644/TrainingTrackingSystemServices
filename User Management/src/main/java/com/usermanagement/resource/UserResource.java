@@ -2,6 +2,7 @@ package com.usermanagement.resource;
 
 import java.util.List;
 
+import org.hibernate.TypeMismatchException;
 //import org.hibernate.TypeMismatchException;
 //import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,10 +53,24 @@ public class UserResource {
 	//View User
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> viewUser(@PathVariable("id") final String id) {
-		if (userManager.viewUser(id) != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(userManager.viewUser(id));
+		
+		boolean isTypeNumeric = true;
+		try {
+			Integer.parseInt(id);
+		} catch (TypeMismatchException e) {
+			isTypeNumeric = false;
+		} catch (NumberFormatException e) {
+			isTypeNumeric = false;
+		}
+
+		if (!isTypeNumeric) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The following error(s) occurred: The id entered is not a valid number. ");
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+			if (userManager.findById(Integer.valueOf(id)) != null) {
+				return ResponseEntity.status(HttpStatus.OK).body(userManager.viewUser(id));
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+			}
 		}
 	}
 

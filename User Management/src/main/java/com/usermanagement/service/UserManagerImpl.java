@@ -31,7 +31,7 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	@Transactional
 	public Users findById(Integer id){
-		return userRepository.findById(id).get();
+		return (userRepository.findById(id).isPresent())?userRepository.findById(id).get():null;
 	}
 	
 	@Override
