@@ -80,6 +80,13 @@ public class UserManagerImpl implements UserManager {
 	
 	@Override
 	@Transactional
+	
+	public Users getLastUserInserted(){
+		return userRepository.findTopByOrderByIdDesc();
+	}
+	
+	@Override
+	@Transactional
 	public List<Users> viewUser(String id){
 		return (userRepository.findById(Integer.valueOf(id)) == null)? null: userRepository.findById((long)Integer.valueOf(id));
 	}

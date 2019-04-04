@@ -65,32 +65,35 @@ public class UserManagementApplicationTests {
 	// Test UserUpdate function
 	@Test
 	public void testUserUpdate() {
-		Integer id = 1;
 		String first_name = "Rodrigo";
 		String last_name = "Velasco";
 		String email = "rodrigo.velasco@4thsource.com";
 		int type = 0;
 
 		Users user = new Users();
-		user.setId(id);
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
 		user.setEmail(email);
 		user.setType(type);
 
 		userResource.createUser(user);
+		
+		UserManagerImpl userManager = new UserManagerImpl();
+		Users userInserted = userManager.getLastUserInserted();
 
 		first_name = "Luis";
 		last_name = "Robles";
 		email = "luis.robles@4thsource.com";
 		type = 1;
 
-		user.setFirstName(first_name);
-		user.setLastName(last_name);
-		user.setEmail(email);
-		user.setType(type);
+		userInserted.setFirstName(first_name);
+		userInserted.setLastName(last_name);
+		userInserted.setEmail(email);
+		userInserted.setType(type);
 
-		assertEquals(HttpStatus.OK, userResource.update(user).getStatusCode());
+		assertEquals(HttpStatus.OK, userResource.update(userInserted).getStatusCode());
+		
+		userResource.deleteUser(userInserted);
 	}
 
 	// Test UserUpdate function, sending empty or null fields
@@ -121,7 +124,6 @@ public class UserManagementApplicationTests {
 		int type = 0;
 		
 		Users user = new Users();
-		user.setId(1);
 		user.setFirstName(first_name);
 		user.setLastName(last_name);
 		user.setEmail(email);
@@ -251,11 +253,9 @@ public class UserManagementApplicationTests {
 		Integer numberRec = 2;
 		
 		UserManagerImpl userManager = new UserManagerImpl();
+		boolean isNull = userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) == null;
 		
-		userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec);
-		
-		
-
+		assertEquals(false, isNull);
 	}
 	
 	@Test
@@ -266,6 +266,11 @@ public class UserManagementApplicationTests {
 		String orderType ="asc";
 		Integer pageNo = 1;
 		Integer numberRec = 10;
+		
+		UserManagerImpl userManager = new UserManagerImpl();
+		boolean isNull = userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) == null;
+		
+		assertEquals(false, isNull);
 	}
 	
 	
@@ -277,6 +282,11 @@ public class UserManagementApplicationTests {
 		String orderType ="desc";
 		Integer pageNo = 1;
 		Integer numberRec = 5;
+		
+		UserManagerImpl userManager = new UserManagerImpl();
+		boolean isNull = userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) == null;
+		
+		assertEquals(false, isNull);
 	}
 
 }

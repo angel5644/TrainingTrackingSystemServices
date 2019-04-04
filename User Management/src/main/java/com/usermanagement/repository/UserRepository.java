@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	List<Users> findByEmail(String email);
 	List<Users> findByType(Integer type);
 	Optional<Users> findById(Integer id);
+	Users findTopByOrderByIdDesc();
 	
 	//When searchField is not specified
 	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Id ASC")
