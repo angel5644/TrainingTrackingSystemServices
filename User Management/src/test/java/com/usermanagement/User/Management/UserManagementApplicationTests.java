@@ -255,5 +255,30 @@ public class UserManagementApplicationTests {
             }
         }
 	}
+	
+	@Test
+	public void findUsers(){
+		
+	}
+	
+	@Test
+	public void findUsersWithDefaultValues(){
+		
+	}
+	
+	@Test
+	public void findUsersWithEmptyFields(){
+		String searchField = "";
+		String searchValie = "";
+		String orderBy = "";
+		String orderType ="";
+		String pageNo = "";
+		String numberRec = "";
+	}
+	
+	@Test
+	public void findUsersWithInvalidFieldValues(){
+		
+	}
 
 }
