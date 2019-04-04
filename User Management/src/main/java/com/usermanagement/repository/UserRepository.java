@@ -14,7 +14,10 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	List<Users> findByEmail(String email);
 	List<Users> findByType(Integer type);
 	Optional<Users> findById(Integer id);
-	Users findTopByOrderByIdDesc();
+	
+	//@Query("SELECT u FROM Users u WHERE u.id=(SELECT MAX(u1.id) FROM Users u1)")
+	@Query("SELECT u FROM Users u")
+	List<Users> findLastUserInserted();
 	
 	//When searchField is not specified
 	@Query("SELECT u FROM Users u WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Id ASC")

@@ -81,8 +81,8 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	@Transactional
 	
-	public Users getLastUserInserted(){
-		return userRepository.findTopByOrderByIdDesc();
+	public List<Users> getLastUserInserted(){
+		return userRepository.findLastUserInserted();
 	}
 	
 	@Override

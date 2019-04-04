@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,21 +80,21 @@ public class UserManagementApplicationTests {
 		userResource.createUser(user);
 		
 		UserManagerImpl userManager = new UserManagerImpl();
-		Users userInserted = userManager.getLastUserInserted();
-
+		List<Users> userInserted = userManager.getLastUserInserted();
+		
 		first_name = "Luis";
 		last_name = "Robles";
 		email = "luis.robles@4thsource.com";
 		type = 1;
 
-		userInserted.setFirstName(first_name);
-		userInserted.setLastName(last_name);
-		userInserted.setEmail(email);
-		userInserted.setType(type);
+		userInserted.get(userInserted.size()-1).setFirstName(first_name);
+		userInserted.get(userInserted.size()-1).setLastName(last_name);
+		userInserted.get(userInserted.size()-1).setEmail(email);
+		userInserted.get(userInserted.size()-1).setType(type);
 
-		assertEquals(HttpStatus.OK, userResource.update(userInserted).getStatusCode());
+		assertEquals(HttpStatus.OK, userResource.update(userInserted.get(userInserted.size()-1)).getStatusCode());
 		
-		userResource.deleteUser(userInserted);
+		userResource.deleteUser(userInserted.get(userInserted.size()-1));
 	}
 
 	// Test UserUpdate function, sending empty or null fields
