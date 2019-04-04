@@ -49,12 +49,12 @@ public class UserResource {
 		}
 	}
 	//View User
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public ResponseEntity<?> viewUser(@ModelAttribute("User") Users theUser) {
-		if (userManager.ViewUser(id)) {
-			return ResponseEntity.status(HttpStatus.OK).body("");
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> viewUser(String id) {
+		if (userManager.viewUser(id) != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(userManager.viewUser(id));
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
 		}
 	}
 
