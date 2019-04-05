@@ -29,11 +29,11 @@ public class UserManagerImplTest {
 	}
 
 	@Test
-	
+
 	public void test_validateSearchField_Should_ReturnFalse_When_serachFieldIsInvalid() {
-		//arrange
+		// arrange
 		UserManagerImpl obj = new UserManagerImpl();
-	
+
 		String searchField = "any_string_different_known_valid_fields";
 		String searchValue = "";
 		String orderBy = "";
@@ -41,40 +41,39 @@ public class UserManagerImplTest {
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = false;
-		
-		 // act
+
+		// act
 		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
 				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
 				numberRec);
-		
+
 		// assert
 		assertEquals(result, expected);
-		}
+	}
 
-
-
-		@Test
-		public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsValid() {
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsValid() {
 		// arrange 
 		UserManagerImpl obj = new UserManagerImpl();
-		String searchField = "first_name"; //first_name
+		String searchField = "first_name"; // first_name
 		String searchValue = "";
 		String orderBy = "id";
 		String orderType = "asc";
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = true;
-		
-	// act
+
+		// act
 		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
 				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
 				numberRec);
-		
+
 		// assert
 		assertEquals(expected, result);
-		}
-		@Test
-		public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsFirstNameAndSearchValueIsAnyString() {
+	}
+
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsFirstNameAndSearchValueIsAnyString() {
 		// arrange 
 		UserManagerImpl obj = new UserManagerImpl();
 		String searchField = "first_name";
@@ -84,37 +83,38 @@ public class UserManagerImplTest {
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = true;
-		
-		// act
-		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-				numberRec);
-		
-	// assert
-		assertEquals(result, expected);
-		}
 
-@Test
-		public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsTypeAndSearchValueIsValid() {
-	// arrange 
-		 UserManagerImpl obj = new UserManagerImpl();
-		 String searchField = "Type";
-		 String searchValue = "2";
-		 String orderBy = "id";
-		 String orderType = "asc";
-		 String pageNo = "1";
-		 String numberRec = "10";
-		 boolean expected = true;
-		
 		// act
 		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
 				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
 				numberRec);
-		
+
+		// assert
+		assertEquals(result, expected);
+	}
+
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_SearchFieldIsTypeAndSearchValueIsValid() {
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = "Type";
+		String searchValue = "2";
+		String orderBy = "id";
+		String orderType = "asc";
+		String pageNo = "1";
+		String numberRec = "10";
+		boolean expected = true;
+
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
+
 		// assert
 		assertEquals(expected, result);
-		}
-		@Test
+	}
+
+	@Test
 	public void test_validateSearchField_Should_ReturnFalse_When_orderByIsInvalid() {
 		// arrange 
 		UserManagerImpl obj = new UserManagerImpl();
@@ -125,168 +125,164 @@ public class UserManagerImplTest {
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = false;
-		
+
 		// act
-		 boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-					(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-							numberRec);
-		
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
+
 		// assert
-		 assertEquals(result, expected);
-		 }
+		assertEquals(result, expected);
+	}
 
-
-		@Test
-		public void test_validateSearchField_Should_ReturnTrue_When_orderByIsValid() {
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_orderByIsValid() {
 		// arrange 
-		 UserManagerImpl obj = new UserManagerImpl();
-		String searchField = ""; //first_name
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = ""; // first_name
 		String searchValue = "";
 		String orderBy = "first_name";
 		String orderType = "asc";
 		String pageNo = "1";
 		String numberRec = "10";
 		boolean expected = true;
-		
+
 		// act
 		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
 				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
 				numberRec);
-		
+
 		// assert
 		assertEquals(expected, result);
-		}
-		@Test
-		public void test_validateSearchField_Should_ReturnFalse_When_orderTypeIsInvalid() {
-		
-			// arrange 
-			UserManagerImpl obj = new UserManagerImpl();
-			String searchField = "";
-			String searchValue = "";
-			String orderBy = "id";
-			String orderType = "any_string_different_known_valid_fields";
-			String pageNo = "1";
-			String numberRec = "10";
-			boolean expected = false;
-				
-			// act
-			boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-					(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-							numberRec);
-			
-			// assert
-			assertEquals(result, expected);
-			}
-@Test
-		public void test_validateSearchField_Should_ReturnTrue_When_orderTypeIsValid() {
-			// arrange 
-			UserManagerImpl obj = new UserManagerImpl();
-			 String searchField = ""; //first_name
-			 String searchValue = "";
-			 String orderBy = "id";
-			 String orderType = "ASC";
-			 String pageNo = "1";
-			 String numberRec = "10";
-			 boolean expected = true;
-			
-			 // act
-			 boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-						(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-								numberRec);
-		
-			 // assert
-			 assertEquals(expected, result);
-			 }
-		
-			
-@Test
-public void test_validateSearchField_Should_ReturnFalse_When_pageNoIsInvalid() {
-
-	// arrange 
-	UserManagerImpl obj = new UserManagerImpl();
-	String searchField = "";
-	String searchValue = "";
-	String orderBy = "id";
-	String orderType = "ASC";
-	String pageNo = "any_string_different_known_valid_fields";
-	String numberRec = "10";
-	boolean expected = false;
-		
-	// act
-	boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-			(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-					numberRec);
-	
-	// assert
-	assertEquals(result, expected);
 	}
-@Test
-public void test_validateSearchField_Should_ReturnTrue_When_pageNoIsValid() {
-	// arrange 
-	UserManagerImpl obj = new UserManagerImpl();
-	 String searchField = ""; //first_name
-	 String searchValue = "";
-	 String orderBy = "id";
-	 String orderType = "ASC";
-	 String pageNo = "1";
-	 String numberRec = "10";
-	 boolean expected = true;
-	
-	 // act
-	 boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+
+	@Test
+	public void test_validateSearchField_Should_ReturnFalse_When_orderTypeIsInvalid() {
+
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = "";
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType = "any_string_different_known_valid_fields";
+		String pageNo = "1";
+		String numberRec = "10";
+		boolean expected = false;
+
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
 				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-						numberRec);
+				numberRec);
 
-	 // assert
-	 assertEquals(expected, result);
-	 }
-
-@Test
-public void test_validateSearchField_Should_ReturnFalse_When_numberRecIsInvalid() {
-
-	// arrange 
-	UserManagerImpl obj = new UserManagerImpl();
-	String searchField = "";
-	String searchValue = "";
-	String orderBy = "id";
-	String orderType = "ASC";
-	String pageNo = "1";
-	String numberRec = "any_string_different_known_valid_fields";
-	boolean expected = false;
-		
-	// act
-	boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-			(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-					numberRec);
-	
-	// assert
-	assertEquals(result, expected);
+		// assert
+		assertEquals(result, expected);
 	}
-@Test
-public void test_validateSearchField_Should_ReturnTrue_When_numberRecIsValid() {
-	// arrange 
-	UserManagerImpl obj = new UserManagerImpl();
-	 String searchField = ""; //first_name
-	 String searchValue = "";
-	 String orderBy = "id";
-	 String orderType = "ASC";
-	 String pageNo = "1";
-	 String numberRec = "10";
-	 boolean expected = true;
-	
-	 // act
-	 boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_orderTypeIsValid() {
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = ""; // first_name
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType = "ASC";
+		String pageNo = "1";
+		String numberRec = "10";
+		boolean expected = true;
+
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
 				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
-						numberRec);
+				numberRec);
 
-	 // assert
-	 assertEquals(expected, result);
-	 }
+		// assert
+		assertEquals(expected, result);
+	}
 
-	
+	@Test
+	public void test_validateSearchField_Should_ReturnFalse_When_pageNoIsInvalid() {
 
-		}
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = "";
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType = "ASC";
+		String pageNo = "any_string_different_known_valid_fields";
+		String numberRec = "10";
+		boolean expected = false;
 
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
 
+		// assert
+		assertEquals(result, expected);
+	}
 
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_pageNoIsValid() {
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = ""; // first_name
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType = "ASC";
+		String pageNo = "1";
+		String numberRec = "10";
+		boolean expected = true;
 
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
+
+		// assert
+		assertEquals(expected, result);
+	}
+
+	@Test
+	public void test_validateSearchField_Should_ReturnFalse_When_numberRecIsInvalid() {
+
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = "";
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType = "ASC";
+		String pageNo = "1";
+		String numberRec = "any_string_different_known_valid_fields";
+		boolean expected = false;
+
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
+
+		// assert
+		assertEquals(result, expected);
+	}
+
+	@Test
+	public void test_validateSearchField_Should_ReturnTrue_When_numberRecIsValid() {
+		// arrange 
+		UserManagerImpl obj = new UserManagerImpl();
+		String searchField = ""; // first_name
+		String searchValue = "";
+		String orderBy = "id";
+		String orderType = "ASC";
+		String pageNo = "1";
+		String numberRec = "10";
+		boolean expected = true;
+
+		// act
+		boolean result = obj.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue, orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
+
+		// assert
+		assertEquals(expected, result);
+	}
+
+}

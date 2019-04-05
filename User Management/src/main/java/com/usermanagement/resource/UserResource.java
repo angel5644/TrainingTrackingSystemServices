@@ -40,7 +40,7 @@ public class UserResource {
 		return userManager.getUsers();
 	}
 
-	// delete user
+	//Delete User
 	@RequestMapping(value = "/user", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteUser(@ModelAttribute("User") Users theUser) {
 		// User user = userManager.findById(theUser.getId());

@@ -1,6 +1,8 @@
 package com.usermanagement.User.Management;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.usermanagement.model.FindUserResponse;
 import com.usermanagement.model.Users;
 import com.usermanagement.resource.UserResource;
 import com.usermanagement.service.UserManagerImpl;
+
+import aj.org.objectweb.asm.Type;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -170,7 +176,7 @@ public class UserManagementApplicationTests {
 	
 	@Test
 	public void testviewUser_When_View_Its_OK(){
-		assertEquals(HttpStatus.OK, userResource.viewUser("1").getStatusCode());
+		assertEquals(HttpStatus.OK, userResource.viewUser("7").getStatusCode());
 	}
 	
 	@Test
@@ -250,10 +256,9 @@ public class UserManagementApplicationTests {
 		Integer pageNo = 1;
 		Integer numberRec = 2;
 		
-		UserManagerImpl userManager = new UserManagerImpl();
-		boolean isNull = userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) == null;
+		UserManagerImpl userManager = new UserManagerImpl();	
 		
-		assertEquals(false, isNull);
+		assertTrue(userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) instanceof FindUserResponse);
 	}
 	
 	@Test
