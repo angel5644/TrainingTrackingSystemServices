@@ -271,9 +271,8 @@ public class UserManagementApplicationTests {
 		Integer numberRec = 10;
 		
 		UserManagerImpl userManager = new UserManagerImpl();
-		boolean isNull = userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) == null;
 		
-		assertEquals(false, isNull);
+		assertTrue(userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) instanceof FindUserResponse);
 	}
 	
 	
@@ -287,9 +286,22 @@ public class UserManagementApplicationTests {
 		Integer numberRec = 5;
 		
 		UserManagerImpl userManager = new UserManagerImpl();
-		boolean isNull = userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) == null;
 		
-		assertEquals(false, isNull);
+		assertTrue(userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) instanceof FindUserResponse);
+	}
+	
+	@Test
+	public void findUsersByUnknownColumn(){
+		String searchField = "types";
+		String searchValue = "1";
+		String orderBy = "email";
+		String orderType ="desc";
+		Integer pageNo = 1;
+		Integer numberRec = 5;
+		
+		UserManagerImpl userManager = new UserManagerImpl();
+		
+		assertTrue(!(userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) instanceof FindUserResponse));
 	}
 
 }

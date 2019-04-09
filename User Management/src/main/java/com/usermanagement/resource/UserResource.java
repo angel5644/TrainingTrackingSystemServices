@@ -120,7 +120,7 @@ public class UserResource {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userManager.getResult());
 		} else {
 			userManager.createUpdateUser(theUser);
-			return ResponseEntity.status(HttpStatus.OK).body("");
+			return ResponseEntity.status(HttpStatus.OK).body(theUser);
 		}
 	}
 
