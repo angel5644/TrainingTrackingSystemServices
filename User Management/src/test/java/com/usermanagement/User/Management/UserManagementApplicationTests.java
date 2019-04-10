@@ -289,19 +289,5 @@ public class UserManagementApplicationTests {
 		
 		assertTrue(userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) instanceof FindUserResponse);
 	}
-	
-	@Test
-	public void findUsersByUnknownColumn(){
-		String searchField = "types";
-		String searchValue = "1";
-		String orderBy = "email";
-		String orderType ="desc";
-		Integer pageNo = 1;
-		Integer numberRec = 5;
-		
-		UserManagerImpl userManager = new UserManagerImpl();
-		
-		assertTrue(!(userManager.findUsers(searchField, searchValue, orderBy, orderType, pageNo, numberRec) instanceof FindUserResponse));
-	}
 
 }
