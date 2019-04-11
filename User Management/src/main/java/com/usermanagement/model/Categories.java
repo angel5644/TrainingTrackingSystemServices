@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Table(name = "CATEGORIES", catalog = "XE")
 @Data
-public class Category {
+public class Categories {
 	
 	@Id
 	@Column(name = "id",length=32, unique = true, nullable = false, insertable = false, updatable = false)
@@ -25,7 +25,7 @@ public class Category {
 	@Column(name = "description",nullable = false, length = 500)
 	private String description;
 	
-	public Category(){}
+	public Categories(){}
 
 
 }
