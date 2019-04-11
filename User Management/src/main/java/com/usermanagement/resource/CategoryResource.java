@@ -37,8 +37,12 @@ public class CategoryResource {
 		if (!isOk) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(categoryManager.getResult());
 		} else {
-			categoryManager.createUpdateCategory(theCategory);
-			return ResponseEntity.status(HttpStatus.OK).body(theCategory);
+			if(!categoryManager.createUpdateCategory(theCategory)){
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(categoryManager.getResult());
+			}
+			else{
+				return ResponseEntity.status(HttpStatus.OK).body(theCategory);
+			}
 		}
 	}
 }

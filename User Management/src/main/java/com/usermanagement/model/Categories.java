@@ -20,7 +20,7 @@ public class Categories {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_NAME")
 	@SequenceGenerator(name = "SEQUENCE_NAME", sequenceName = "SEQUENCE_NAME", allocationSize = 1, initialValue = 1)
 	private Integer id;
-	@Column(name = "name",nullable = false, length = 50)
+	@Column(name = "name",nullable = false, length = 50, unique=true)
 	private String name;
 	@Column(name = "description",nullable = false, length = 500)
 	private String description;

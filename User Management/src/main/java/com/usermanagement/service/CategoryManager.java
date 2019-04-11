@@ -7,6 +7,6 @@ public interface CategoryManager {
 	
 	public List <Categories> getCategories();
 	public String getResult();
-	public void createUpdateCategory(Categories theCategory);
+	public Boolean createUpdateCategory(Categories theCategory);
 	public Boolean validateFields(Categories theCategory);
 }
