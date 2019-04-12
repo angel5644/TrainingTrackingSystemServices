@@ -26,17 +26,6 @@ public class CategoryResource {
 		return categoryManager.getCategories();
 	}
 	
-	//Delete Category
-		@RequestMapping(value = "/category", method = RequestMethod.DELETE)
-		public ResponseEntity<?> deleteCategory(@ModelAttribute("Categories") Categories theCategory) {
-			// User user = userManager.findById(theUser.getId());
-			if (categoryManager.deleteCategory(theCategory)) {
-				return ResponseEntity.status(HttpStatus.OK).body("");
-			} else {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found. ");
-			}
-		}
-	
 	//Create Category
 	@RequestMapping(value = "/category", method = RequestMethod.POST)
 	@ResponseBody
