@@ -15,28 +15,28 @@ import com.usermanagement.resource.CategoryResource;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CreateCategoryManagementApplicationTests {
+public class UpdateCategoryManagementApplicationTests {
 
 	@Mock
 	CategoryResource categoryResource;
 
 	// Test UserInsert function
 	@Test
-	public void insertCategorySuccessfully() {
+	public void updateCategorySuccessfully() {
 		String name = "A category title N";
 		String description = "A category desription D";
 
 		Categories category = new Categories();
 		category.setName(name);
 		category.setDescription(description);
-
-		when(categoryResource.createCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 		
-		assertEquals(HttpStatus.OK, categoryResource.createCategory(category).getStatusCode());
+		when(categoryResource.updateCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
+		
+		assertEquals(HttpStatus.CREATED, categoryResource.updateCategory(category).getStatusCode());
 	}
 
 	@Test
-	public void insertCategoryWhenNameAndDescriptionExceedsTheirSize() {
+	public void updateCategoryWhenNameAndDescriptionExceedsTheirSize() {
 		String name = "This is a category title name with more than 50 characters.";
 		String description = "This is a category description with more than 500 characters"
 							+"Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
@@ -52,9 +52,9 @@ public class CreateCategoryManagementApplicationTests {
 		category.setName(name);
 		category.setDescription(description);
 
-		when(categoryResource.createCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+		when(categoryResource.updateCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
 		
-		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.createCategory(category).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.updateCategory(category).getStatusCode());
 	}
 	
 	@Test
@@ -62,24 +62,12 @@ public class CreateCategoryManagementApplicationTests {
 		String name = "A category title 1";
 		String description = "A category desription 1";
 
-		Categories category1 = new Categories();
-		category1.setName(name);
-		category1.setDescription(description);
-		System.out.println("Creating category...");
-		when(categoryResource.createCategory(category1)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
-		if(categoryResource.createCategory(category1).getStatusCode() == HttpStatus.OK){
-			System.out.println("Category created!");
-		}
-		else{
-			System.out.println("The following error(s) occurred: category1 could not be created");
-		}
+		Categories category = new Categories();
+		category.setName(name);
+		category.setDescription(description);
+		System.out.println("Updating a duplicate category...");
+		when(categoryResource.updateCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.CONFLICT));
 		
-		System.out.println("Creating a duplicate category...");
-		Categories category2 = new Categories();
-		category2.setName(name);
-		category2.setDescription(description);
-		when(categoryResource.createCategory(category2)).thenReturn(new ResponseEntity<>(HttpStatus.CONFLICT));
-
-		assertEquals(HttpStatus.CONFLICT, categoryResource.createCategory(category2).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, categoryResource.updateCategory(category).getStatusCode());
 	}
 }

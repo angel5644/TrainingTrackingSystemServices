@@ -27,20 +27,20 @@ public class CategoryResource {
 	}
 	
 	//Create Category
-	@RequestMapping(value = "/category", method = RequestMethod.POST)
+	@RequestMapping(value = "/category", method = RequestMethod.PUT)
 	@ResponseBody
-	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Categories theCategory) {
+	public ResponseEntity<?> updateCategory(@ModelAttribute("Categories") Categories theCategory) {
 
 		Boolean isOk = categoryManager.validateFields(theCategory);
 
 		if (!isOk) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The following error(s) occurred: "+categoryManager.getResult());
 		} else {
-			if(!categoryManager.createUpdateCategory(theCategory)){
+			if(!categoryManager.updateCategory(theCategory)){
 				return ResponseEntity.status(HttpStatus.CONFLICT).body("The following error(s) occurred: "+categoryManager.getResult());
 			}
 			else{
-				return ResponseEntity.status(HttpStatus.OK).body(theCategory);
+				return ResponseEntity.status(HttpStatus.CREATED).body(theCategory);
 			}
 		}
 	}

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.usermanagement.model.Categories;
 import com.usermanagement.repository.CategoryRepository;
 
@@ -28,16 +27,26 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	@Override
 	@Transactional
-	public Boolean createUpdateCategory(Categories theCategory) throws DuplicateKeyException{
+	public Boolean updateCategory(Categories theCategory) throws DuplicateKeyException{
 		result = "";
 		Boolean isOk = true;
 		try{
-			if(categoryRepository.findByName(theCategory.getName()).size() > 0){
-				result = "There is already a category with that name. ";
+			Categories category = (categoryRepository.findById(theCategory.getId()).isPresent())?categoryRepository.findById(theCategory.getId()).get():null;
+			
+			if(category == null){
+				result =" The category to be edited was not found in the database. ";
 				isOk = false;
 			}
 			else{
-				categoryRepository.save(theCategory);
+				if(categoryRepository.findByName(theCategory.getName()).size() > 0){
+					result = " There is already a category with that name. ";
+					isOk = false;
+				}
+				else{
+					category.setName(theCategory.getName());
+					category.setDescription(theCategory.getDescription());
+					categoryRepository.save(category);
+				}
 			}
 			
 			if(!isOk){
