@@ -30,9 +30,9 @@ public class CreateCategoryManagementApplicationTests {
 		category.setName(name);
 		category.setDescription(description);
 
-		when(categoryResource.createCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
+		when(categoryResource.createCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
 		
-		assertEquals(HttpStatus.OK, categoryResource.createCategory(category).getStatusCode());
+		assertEquals(HttpStatus.CREATED, categoryResource.createCategory(category).getStatusCode());
 	}
 
 	@Test
@@ -66,8 +66,8 @@ public class CreateCategoryManagementApplicationTests {
 		category1.setName(name);
 		category1.setDescription(description);
 		System.out.println("Creating category...");
-		when(categoryResource.createCategory(category1)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
-		if(categoryResource.createCategory(category1).getStatusCode() == HttpStatus.OK){
+		when(categoryResource.createCategory(category1)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
+		if(categoryResource.createCategory(category1).getStatusCode() == HttpStatus.CREATED){
 			System.out.println("Category created!");
 		}
 		else{

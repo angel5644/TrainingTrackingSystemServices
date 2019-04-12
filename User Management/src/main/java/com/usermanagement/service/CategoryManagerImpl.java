@@ -28,7 +28,7 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	@Override
 	@Transactional
-	public Boolean createUpdateCategory(Categories theCategory) throws DuplicateKeyException{
+	public Boolean createCategory(Categories theCategory) throws DuplicateKeyException{
 		result = "";
 		Boolean isOk = true;
 		try{

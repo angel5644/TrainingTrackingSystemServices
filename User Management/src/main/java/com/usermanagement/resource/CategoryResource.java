@@ -36,11 +36,11 @@ public class CategoryResource {
 		if (!isOk) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The following error(s) occurred: "+categoryManager.getResult());
 		} else {
-			if(!categoryManager.createUpdateCategory(theCategory)){
+			if(!categoryManager.createCategory(theCategory)){
 				return ResponseEntity.status(HttpStatus.CONFLICT).body("The following error(s) occurred: "+categoryManager.getResult());
 			}
 			else{
-				return ResponseEntity.status(HttpStatus.OK).body(theCategory);
+				return ResponseEntity.status(HttpStatus.CREATED).body(theCategory);
 			}
 		}
 	}
