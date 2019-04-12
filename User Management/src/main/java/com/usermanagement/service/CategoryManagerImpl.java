@@ -28,6 +28,23 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	@Override
 	@Transactional
+	public Boolean deleteCategory(Categories theCategory){
+		if(theCategory == null){
+			return false;
+		}
+		else{
+			if(categoryRepository.findById(theCategory.getId()) == null){
+				return false;
+			}
+			else{
+				categoryRepository.deleteById(theCategory.getId());
+				return true;
+			}
+		}
+	}
+	
+	@Override
+	@Transactional
 	public Boolean createUpdateCategory(Categories theCategory) throws DuplicateKeyException{
 		result = "";
 		Boolean isOk = true;

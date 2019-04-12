@@ -1,7 +1,6 @@
 package com.usermanagement.resource;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.usermanagement.model.Categories;
 import com.usermanagement.service.CategoryManager;
 
@@ -28,6 +26,18 @@ public class CategoryResource {
 		return categoryManager.getCategories();
 	}
 	
+	//Delete Category
+		@RequestMapping(value = "/category", method = RequestMethod.DELETE)
+		public ResponseEntity<?> deleteCategory(@ModelAttribute("Categories") Categories theCategory) {
+			// User user = userManager.findById(theUser.getId());
+			if (categoryManager.deleteCategory(theCategory)) {
+				return ResponseEntity.status(HttpStatus.OK).body("");
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found. ");
+			}
+		}
+	
+	//Create Category
 	@RequestMapping(value = "/category", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Categories theCategory) {

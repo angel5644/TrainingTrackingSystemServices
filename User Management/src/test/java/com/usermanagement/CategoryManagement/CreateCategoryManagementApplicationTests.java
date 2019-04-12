@@ -1,41 +1,37 @@
 package com.usermanagement.CategoryManagement;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.usermanagement.model.Categories;
 import com.usermanagement.resource.CategoryResource;
-import com.usermanagement.service.CategoryManagerImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CreateCategoryManagementApplicationTests {
 
-	@Autowired
-
 	@Mock
 	CategoryResource categoryResource;
-	@Mock
-	CategoryManagerImpl categoryManager;
 
 	// Test UserInsert function
 	@Test
 	public void insertCategorySuccessfully() {
-		//Delete part is missing
-		String name = "A category title";
-		String description = "A category desription";
+		String name = "A category title N";
+		String description = "A category desription D";
 
 		Categories category = new Categories();
 		category.setName(name);
 		category.setDescription(description);
 
+		when(categoryResource.createCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
+		
 		assertEquals(HttpStatus.OK, categoryResource.createCategory(category).getStatusCode());
 	}
 
@@ -56,19 +52,34 @@ public class CreateCategoryManagementApplicationTests {
 		category.setName(name);
 		category.setDescription(description);
 
+		when(categoryResource.createCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+		
 		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.createCategory(category).getStatusCode());
 	}
 	
 	@Test
 	public void insertCategoryWhenNameIsAlreadyRegistered(){
-		//Missing parts where have to create another category and then delete it
-		String name = "A category title";
-		String description = "A category desription";
+		String name = "A category title 1";
+		String description = "A category desription 1";
 
-		Categories category = new Categories();
-		category.setName(name);
-		category.setDescription(description);
+		Categories category1 = new Categories();
+		category1.setName(name);
+		category1.setDescription(description);
+		System.out.println("Creating category...");
+		when(categoryResource.createCategory(category1)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
+		if(categoryResource.createCategory(category1).getStatusCode() == HttpStatus.OK){
+			System.out.println("Category created!");
+		}
+		else{
+			System.out.println("The following error(s) occurred: category1 could not be created");
+		}
+		
+		System.out.println("Creating a duplicate category...");
+		Categories category2 = new Categories();
+		category2.setName(name);
+		category2.setDescription(description);
+		when(categoryResource.createCategory(category2)).thenReturn(new ResponseEntity<>(HttpStatus.CONFLICT));
 
-		assertEquals(HttpStatus.CONFLICT, categoryResource.createCategory(category).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, categoryResource.createCategory(category2).getStatusCode());
 	}
 }
