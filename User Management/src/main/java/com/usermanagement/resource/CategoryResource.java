@@ -30,7 +30,7 @@ public class CategoryResource {
 	
 	@RequestMapping(value = "/category", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> createUser(@ModelAttribute("Categories") Categories theCategory) {
+	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Categories theCategory) {
 
 		Boolean isOk = categoryManager.validateFields(theCategory);
 
