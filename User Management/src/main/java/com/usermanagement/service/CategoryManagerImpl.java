@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.usermanagement.model.Categories;
 import com.usermanagement.repository.CategoryRepository;
 
+@Service
 public class CategoryManagerImpl implements CategoryManager {
 
 	@Autowired
@@ -25,16 +28,28 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	@Override
 	@Transactional
-	public Boolean createUpdateCategory(Categories theCategory){
+	public Boolean createUpdateCategory(Categories theCategory) throws DuplicateKeyException{
 		result = "";
-		if(categoryRepository.findByName(theCategory.getName()).size() == 0){
-			result = "There is already a category with that name. ";
+		Boolean isOk = true;
+		try{
+			if(categoryRepository.findByName(theCategory.getName()).size() > 0){
+				result = "There is already a category with that name. ";
+				isOk = false;
+			}
+			else{
+				categoryRepository.save(theCategory);
+			}
+			
+			if(!isOk){
+				result = "The following error(s) occurred: " + result;
+				throw new DuplicateKeyException(result); 
+			}
+		}
+		catch(DuplicateKeyException ex){
+			System.out.println(ex);
 			return false;
 		}
-		else{
-			categoryRepository.save(theCategory);
-			return true;
-		}
+		return isOk;
 	}
 	
 	public Boolean validateFields(Categories theCategory) throws InvalidParameterException{

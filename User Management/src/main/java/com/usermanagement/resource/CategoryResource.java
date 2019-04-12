@@ -35,10 +35,10 @@ public class CategoryResource {
 		Boolean isOk = categoryManager.validateFields(theCategory);
 
 		if (!isOk) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(categoryManager.getResult());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The following error(s) occurred: "+categoryManager.getResult());
 		} else {
 			if(!categoryManager.createUpdateCategory(theCategory)){
-				return ResponseEntity.status(HttpStatus.CONFLICT).body(categoryManager.getResult());
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("The following error(s) occurred: "+categoryManager.getResult());
 			}
 			else{
 				return ResponseEntity.status(HttpStatus.OK).body(theCategory);
