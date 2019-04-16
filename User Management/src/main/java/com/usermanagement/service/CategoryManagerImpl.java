@@ -23,6 +23,6 @@ public class CategoryManagerImpl implements CategoryManager {
 	@Override
 	@Transactional
 	public List <Categories> listCategories(){
-		return null;
+		return categoryRepository.findAll();
 	}
 }
