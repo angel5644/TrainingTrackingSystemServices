@@ -30,9 +30,9 @@ public class UpdateCategoryManagementApplicationTests {
 		category.setName(name);
 		category.setDescription(description);
 		
-		when(categoryResource.updateCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
+		when(categoryResource.updateCategory(category.getId(),category.getName(),category.getDescription())).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 		
-		assertEquals(HttpStatus.CREATED, categoryResource.updateCategory(category).getStatusCode());
+		assertEquals(HttpStatus.OK, categoryResource.updateCategory(category.getId(),category.getName(),category.getDescription()).getStatusCode());
 	}
 
 	@Test
@@ -52,13 +52,13 @@ public class UpdateCategoryManagementApplicationTests {
 		category.setName(name);
 		category.setDescription(description);
 
-		when(categoryResource.updateCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+		when(categoryResource.updateCategory(category.getId(),category.getName(),category.getDescription())).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
 		
-		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.updateCategory(category).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.updateCategory(category.getId(),category.getName(),category.getDescription()).getStatusCode());
 	}
 	
 	@Test
-	public void insertCategoryWhenNameIsAlreadyRegistered(){
+	public void updateCategoryWhenNameIsAlreadyRegistered(){
 		String name = "A category title 1";
 		String description = "A category desription 1";
 
@@ -66,8 +66,8 @@ public class UpdateCategoryManagementApplicationTests {
 		category.setName(name);
 		category.setDescription(description);
 		System.out.println("Updating a duplicate category...");
-		when(categoryResource.updateCategory(category)).thenReturn(new ResponseEntity<>(HttpStatus.CONFLICT));
+		when(categoryResource.updateCategory(category.getId(),category.getName(),category.getDescription())).thenReturn(new ResponseEntity<>(HttpStatus.CONFLICT));
 		
-		assertEquals(HttpStatus.CONFLICT, categoryResource.updateCategory(category).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, categoryResource.updateCategory(category.getId(),category.getName(),category.getDescription()).getStatusCode());
 	}
 }
