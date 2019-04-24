@@ -2,6 +2,8 @@ package com.usermanagement.service;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,15 @@ public class CategoryManagerImpl implements CategoryManager {
 					if(name.length() > 50){
 						result += "The 'name' field has more than 50 characters. ";
 						isOk = false;
+					}
+					else{
+						Pattern specialChars = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+						Matcher hasSpecialChars = specialChars.matcher(name);
+
+						if (hasSpecialChars.find()) {
+							result += "The 'name' field doesn't accept special characters. ";
+							isOk = false;
+						}
 					}
 				}
 				

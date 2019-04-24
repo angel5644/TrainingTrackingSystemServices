@@ -31,6 +31,8 @@ public class CategoryResource {
 	@ResponseBody
 	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Categories theCategory) {
 
+		theCategory.setName(theCategory.getName().trim().toUpperCase());
+		theCategory.setDescription(theCategory.getDescription().trim().toUpperCase());
 		Boolean isOk = categoryManager.validateFields(theCategory);
 
 		if (!isOk) {
