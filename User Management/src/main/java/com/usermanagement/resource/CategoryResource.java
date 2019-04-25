@@ -3,10 +3,12 @@ package com.usermanagement.resource;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.usermanagement.model.Categories;
@@ -26,9 +28,26 @@ public class CategoryResource {
 	}
 	
 	//List Category
-	@RequestMapping(value = "/category", method = RequestMethod.GET)
+	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> listCategories() {
-		return ResponseEntity.status(HttpStatus.OK).body(categoryManager.listCategories());		
+	public ResponseEntity<?> listCategories(@RequestParam(value = "searchField", required = false) String searchField,
+			@RequestParam(value = "searchValue", required = false) String searchValue,
+			@RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
+			@RequestParam(value = "orderType", defaultValue = "asc", required = false) String orderType,
+			@RequestParam(value = "pageNo", defaultValue = "1", required = false) String pageNo,
+			@RequestParam(value = "numberRec", defaultValue = "10", required = false) String numberRec) {
+		
+		boolean isOk = categoryManager.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
+				(searchValue == null) ? "" : searchValue.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+				numberRec);
+
+		if (!isOk) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(categoryManager.getResult());
+		} else {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(categoryManager.findCategories((searchField == null) ? "" : searchField.toUpperCase(),
+							(searchValue == null) ? "" : searchValue.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(),
+							Integer.valueOf(pageNo), Integer.valueOf(numberRec)));
+		}	
 	}
 }

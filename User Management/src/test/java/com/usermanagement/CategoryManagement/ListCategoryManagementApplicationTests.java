@@ -21,7 +21,36 @@ public class ListCategoryManagementApplicationTests {
 
 	@Test
 	public void listCategories() {
-		assertEquals(HttpStatus.OK, categoryResource.listCategories().getStatusCode());
+		assertEquals(HttpStatus.OK, categoryResource.listCategories("","","ID","ASC","1","10").getStatusCode());
 	}
 
+	@Test
+	public void searchCategoriesByAKnownColumn(){
+		assertEquals(HttpStatus.OK, categoryResource.listCategories("ID","44","ID","ASC","1","10").getStatusCode());
+	}
+	
+	@Test
+	public void searchCategoriesByAUnknownColumn(){
+		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.listCategories("ID2","44","ID","ASC","1","10").getStatusCode());
+	}
+	
+	@Test
+	public void searchCategoriesWhenIdNotFound(){
+		assertEquals(HttpStatus.OK, categoryResource.listCategories("ID","1","ID","ASC","1","10").getStatusCode());
+	}
+	
+	@Test
+	public void searchCategoriesWhenNameNotFound(){
+		assertEquals(HttpStatus.OK, categoryResource.listCategories("NAME","NAME NOT RECORDED","ID","ASC","1","10").getStatusCode());
+	}
+	
+	@Test
+	public void searchCategoriesWhenPageNoIsInvalid(){
+		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.listCategories("","","ID","ASC","-10","10").getStatusCode());
+	}
+	
+	@Test
+	public void searchCategoriesWhenIdIsInvalid(){
+		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.listCategories("ID","-5","ID","ASC","1","10").getStatusCode());
+	}
 }
