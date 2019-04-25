@@ -21,6 +21,7 @@ public class CategoryManagerImpl implements CategoryManager {
     CategoryRepository categoryRepository;
 	
 	private String result;
+	private long totalRecordsFound;
 	
 	@Override
 	@Transactional
@@ -45,6 +46,7 @@ public class CategoryManagerImpl implements CategoryManager {
 			 (With the exception of the limits per page and order type)
 			 
 		*/
+		totalRecordsFound = 0;
 		Integer lowerLimit, upperLimit = null;
 		FindCategoryResponse findCategoryResponse = new FindCategoryResponse();
 		List<Categories> categoriesFound = new ArrayList<Categories>();
@@ -56,6 +58,7 @@ public class CategoryManagerImpl implements CategoryManager {
 		// with the exception of the limits per page they can have
 		System.out.println("######SERVICE LAYER#######");
 		if(StringUtils.isBlank(searchField) || searchField.trim().equals("") || searchValue.trim().equals("")){
+			totalRecordsFound = categoryRepository.count();
 			switch(orderBy){
 				case "ID":
 					if(orderType.equals("ASC")){
@@ -81,10 +84,12 @@ public class CategoryManagerImpl implements CategoryManager {
 			switch(searchField.trim()){
 			
 				case "ID":
+					totalRecordsFound = 1; //It will always be one, because a search by Id returns 1 result.
 					categoriesFound = categoryRepository.findById((long) Integer.valueOf(searchValue));
 				break;
 				
 				case "NAME":
+					totalRecordsFound = categoryRepository.countByName(searchValue);
 					switch(orderBy){
 					case "ID":
 						if(orderType.equals("ASC")){
@@ -109,7 +114,7 @@ public class CategoryManagerImpl implements CategoryManager {
 		}
 		
 		findCategoryResponse.setCategories(categoriesFound);
-		findCategoryResponse.setTotalRecords(categoriesFound.size());
+		findCategoryResponse.setTotalRecords((int)this.totalRecordsFound);
 		
 		return findCategoryResponse;
 		
@@ -117,7 +122,7 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	public boolean validateSearchFields(String searchField, String searchValue, String orderBy, String orderType,
 			String pageNo, String numberRec) throws InvalidParameterException {
-
+		
 		/*Conditions for searchField (If specified):
 		- The searchField must be a valid column (ID, NAME)
 	
@@ -146,7 +151,6 @@ public class CategoryManagerImpl implements CategoryManager {
 				} else {
 					if (StringUtils.isBlank(searchValue)) {
 						result += "The value entered for the column " + searchField + " is empty. Getting all results. ";
-						//isOk = false;
 					} else {
 						switch (searchField) {
 

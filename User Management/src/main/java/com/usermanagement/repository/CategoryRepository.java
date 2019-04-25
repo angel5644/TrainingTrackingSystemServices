@@ -9,6 +9,7 @@ import com.usermanagement.model.Categories;
 
 public interface CategoryRepository extends JpaRepository<Categories, Integer> {
 
+	long count();
 	// When searchField is not specified
 	@Query("SELECT c FROM Categories c WHERE rownum BETWEEN ?1 AND ?2 ORDER BY Id ASC")
 	List<Categories> findOrderByIdASC(long lowerLimit, long upperLimit);
@@ -29,6 +30,7 @@ public interface CategoryRepository extends JpaRepository<Categories, Integer> {
 	// -----------------------------
 
 	// When searchField NAME is specified
+	long countByName(String searchValue);
 	@Query("SELECT c FROM Categories c WHERE name = ?1 AND rownum BETWEEN ?2 AND ?3 ORDER BY Id ASC")
 	List<Categories> findByNameOrderByIdASC(String searchValue, long lowerLimit, long upperLimit);
 
