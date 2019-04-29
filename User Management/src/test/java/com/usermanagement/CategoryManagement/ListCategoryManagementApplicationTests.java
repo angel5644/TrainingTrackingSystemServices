@@ -30,7 +30,7 @@ public class ListCategoryManagementApplicationTests {
 	}
 	
 	@Test
-	public void searchCategoriesByAUnknownColumn(){
+	public void searchCategoriesByAnUnknownColumn(){
 		assertEquals(HttpStatus.BAD_REQUEST, categoryResource.listCategories("ID2","44","ID","ASC","1","10").getStatusCode());
 	}
 	

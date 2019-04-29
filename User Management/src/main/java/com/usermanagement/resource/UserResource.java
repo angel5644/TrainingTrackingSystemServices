@@ -26,7 +26,7 @@ import com.usermanagement.service.UserManager;
 
 @RestController
 // @RequestMapping("/user")
-public class UserResource {
+public class UserResource{
 
 	@Autowired
 	private UserManager userManager;
