@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 //import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,9 +25,10 @@ import com.usermanagement.model.Users;
 //import com.usermanagement.repository.UserRepository;
 import com.usermanagement.service.UserManager;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 // @RequestMapping("/user")
-public class UserResource {
+public class UserResource{
 
 	@Autowired
 	private UserManager userManager;
