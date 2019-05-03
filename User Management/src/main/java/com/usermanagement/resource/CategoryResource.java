@@ -33,9 +33,11 @@ public class CategoryResource {
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<?> updateCategory(@PathVariable("id") final Integer id,
-			@RequestParam(value = "name", required = true) String name,
-			@RequestParam(value = "description", required = true) String description) {
-
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "description", required = false) String description) {
+		
+		name = (name == null)? "" : name;
+		description = (description == null)? "" : description;
 		Boolean isOk = categoryManager.validateFields(name,description);
 
 		if (!isOk) {

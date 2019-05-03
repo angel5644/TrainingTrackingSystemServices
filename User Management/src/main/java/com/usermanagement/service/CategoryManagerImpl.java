@@ -40,12 +40,16 @@ public class CategoryManagerImpl implements CategoryManager {
 				result = " The category to be edited was not found in the database. ";
 				isOk = false;
 			} else {
-				if (categoryRepository.findDuplicate(theCategory.getName(),theCategory.getId()).size() > 0) {
+				if (categoryRepository.findDuplicate(theCategory.getName(), theCategory.getId()).size() > 0) {
 					result = " There is already a category with that name. ";
 					isOk = false;
 				} else {
-					category.setName(theCategory.getName().trim().toUpperCase());
-					category.setDescription(theCategory.getDescription().trim().toUpperCase());
+					if (!StringUtils.isEmpty(theCategory.getName().trim().toUpperCase())) {
+						category.setName(theCategory.getName().trim().toUpperCase());
+					}
+					if (!StringUtils.isEmpty(theCategory.getDescription().trim().toUpperCase())) {
+						category.setDescription(theCategory.getDescription().trim().toUpperCase());
+					}
 					categoryRepository.save(category);
 				}
 			}
@@ -66,31 +70,34 @@ public class CategoryManagerImpl implements CategoryManager {
 		result = "";
 
 		try {
-			if (StringUtils.isBlank(name)) {
-				result += "The 'name' field is empty or missing. ";
-				isOk = false;
-			} else {
-				if (name.length() > 50) {
-					result += "The 'name' field has more than 50 characters. ";
-					isOk = false;
-				} else {
-					Pattern specialChars = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
-					Matcher hasSpecialChars = specialChars.matcher(name);
 
-					if (hasSpecialChars.find()) {
-						result += "The 'name' field doesn't accept special characters. ";
+			if (StringUtils.isBlank(name) && StringUtils.isBlank(description)) {
+
+				result += "There are no fields to be edited. ";
+				isOk = false;
+
+			} else {
+
+				if (!StringUtils.isBlank(name)) {
+					if (name.length() > 50) {
+						result += "The 'name' field has more than 50 characters. ";
 						isOk = false;
+					} else {
+						Pattern specialChars = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+						Matcher hasSpecialChars = specialChars.matcher(name);
+
+						if (hasSpecialChars.find()) {
+							result += "The 'name' field doesn't accept special characters. ";
+							isOk = false;
+						}
 					}
 				}
-			}
 
-			if (StringUtils.isBlank(description)) {
-				result += "The 'description' field is empty or missing. ";
-				isOk = false;
-			} else {
-				if (description.length() > 500) {
-					result += "The 'description' field has more than 500 characters. ";
-					isOk = false;
+				if (!StringUtils.isBlank(description)) {
+					if (description.length() > 500) {
+						result += "The 'description' field has more than 500 characters. ";
+						isOk = false;
+					}
 				}
 			}
 
