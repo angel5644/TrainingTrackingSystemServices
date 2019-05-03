@@ -37,16 +37,16 @@ public class CategoryResource {
 			@RequestParam(value = "pageNo", defaultValue = "1", required = false) String pageNo,
 			@RequestParam(value = "numberRec", defaultValue = "10", required = false) String numberRec) {
 		
-		boolean isOk = categoryManager.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase(),
-				(searchValue == null) ? "" : searchValue.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(), pageNo,
+		boolean isOk = categoryManager.validateSearchFields((searchField == null) ? "" : searchField.toUpperCase().trim(),
+				(searchValue == null) ? "" : searchValue.toUpperCase().trim(), orderBy.toUpperCase().trim(), orderType.toUpperCase().trim(), pageNo,
 				numberRec);
 
 		if (!isOk) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(categoryManager.getResult());
 		} else {
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(categoryManager.findCategories((searchField == null) ? "" : searchField.toUpperCase(),
-							(searchValue == null) ? "" : searchValue.toUpperCase(), orderBy.toUpperCase(), orderType.toUpperCase(),
+					.body(categoryManager.findCategories((searchField == null) ? "" : searchField.toUpperCase().trim(),
+							(searchValue == null) ? "" : searchValue.toUpperCase().trim(), orderBy.toUpperCase().trim(), orderType.toUpperCase().trim(),
 							Integer.valueOf(pageNo), Integer.valueOf(numberRec)));
 		}	
 	}
