@@ -84,8 +84,10 @@ public class CategoryManagerImpl implements CategoryManager {
 			switch(searchField.trim()){
 			
 				case "ID":
-					totalRecordsFound = 1; //It will always be one, because a search by Id returns 1 result.
 					categoriesFound = categoryRepository.findById((long) Integer.valueOf(searchValue));
+					if(categoriesFound.size() > 0){
+						totalRecordsFound = 1; //It will always be one, because a search by Id returns 1 result.
+					}
 				break;
 				
 				case "NAME":
