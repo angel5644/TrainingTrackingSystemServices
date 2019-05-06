@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import config.jpaConfig;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableJpaRepositories(basePackages="com.usermanagement.repository")
-
+@EnableSwagger2
 @SpringBootApplication
 @Import(jpaConfig.class)
 public class UserManagementApplication implements WebMvcConfigurer{

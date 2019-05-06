@@ -3,6 +3,8 @@ package config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -23,8 +25,12 @@ public class jpaConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo("Training Tracking System", "Some custom description of API.", "API TOS", "Terms of service",
-				new Contact("4th Source", "localhost:9091", "example@example.com"), "License of API",
-				"API license URL");
+		return new ApiInfoBuilder().title("Training Tracking System")
+	            .description("Training Tracking System Rest API")
+	            .contact(new Contact("4th Source", "www.example.com", "example@example.com"))
+	            .license("Apache 2.0")
+	            .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+	            .version("1.0.0")
+	            .build();
 	}
 }
