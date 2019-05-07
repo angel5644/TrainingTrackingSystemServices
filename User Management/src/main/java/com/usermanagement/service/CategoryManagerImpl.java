@@ -87,10 +87,10 @@ public class CategoryManagerImpl implements CategoryManager {
 						isOk = false;
 					}
 					else{
-						Pattern specialChars = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
-						Matcher hasSpecialChars = specialChars.matcher(name);
+						Pattern specialChars = Pattern.compile("^[A-Za-z0-9 ]+$");
+						Matcher hasNotSpecialChars = specialChars.matcher(name);
 
-						if (hasSpecialChars.find()) {
+						if (!hasNotSpecialChars.find()) {
 							result += "The 'name' field doesn't accept special characters. ";
 							isOk = false;
 						}

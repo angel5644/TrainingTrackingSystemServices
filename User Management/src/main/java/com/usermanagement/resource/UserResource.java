@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 //import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,12 @@ import com.usermanagement.model.Users;
 //import com.usermanagement.repository.UserRepository;
 import com.usermanagement.service.UserManager;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@CrossOrigin(maxAge = 3600)
 @RestController
+@Api(value="User Management System")
 // @RequestMapping("/user")
 public class UserResource{
 
@@ -33,6 +39,8 @@ public class UserResource{
 
 	String result;
 
+
+	@ApiOperation(value = "View a list of available users", response = List.class)
 	@GetMapping("/user/all")
 	public List<Users> getAll() {
 		// usersRepository.flush();

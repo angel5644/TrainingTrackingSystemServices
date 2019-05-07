@@ -17,13 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.usermanagement.model.Categories;
 import com.usermanagement.service.CategoryManager;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(maxAge = 3600)
+@Api(value="Category Management System")
 @RestController
 public class CategoryResource {
 
 	@Autowired
 	private CategoryManager categoryManager;
 
+	@ApiOperation(value = "View a list of available categories", response = List.class)
 	@GetMapping("/category/all")
 	public List<Categories> getAll() {
 		// usersRepository.flush();
@@ -32,6 +37,7 @@ public class CategoryResource {
 	}
 
 	// Create Category
+	@ApiOperation(value = "Creates a new category", response = ResponseEntity.class)
 	@RequestMapping(value = "/category", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Categories theCategory) {
@@ -54,6 +60,7 @@ public class CategoryResource {
 	}
 
 	// Update Category
+	@ApiOperation(value = "Edit an existing category", response = ResponseEntity.class)
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<?> updateCategory(@PathVariable("id") final Integer id,
@@ -82,6 +89,7 @@ public class CategoryResource {
 	}
 
 	// List Category
+	@ApiOperation(value = "Performs a custom search to find specific(s) categorie(s)", response = ResponseEntity.class)
 	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> listCategories(@RequestParam(value = "searchField", required = false) String searchField,
