@@ -2,74 +2,95 @@ package com.usermanagement.service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.usermanagement.model.Courses;
 import com.usermanagement.model.CourseRequest;
+import com.usermanagement.repository.CategoryRepository;
 import com.usermanagement.repository.CourseRepository;
 
 @Service
 public class CourseManagerImpl implements CourseManager {
+
+	@Autowired
+	CourseRepository courseRepository;
 	
 	@Autowired
-    CourseRepository courseRepository;
-	
+    CategoryRepository categoryRepository;
+
 	private String result;
 	private List<Courses> courses;
-	
-	public String getResult(){
+
+	public String getResult() {
 		return this.result;
 	}
-	
-	public List<Courses> getCourses(){
+
+	public List<Courses> getCourses() {
 		return this.courses;
 	}
-	
+
 	@Override
 	@Transactional
-	public Boolean createCourse(CourseRequest theCourse) throws DuplicateKeyException{
+	public Boolean createCourse(CourseRequest theCourse) throws DuplicateKeyException {
 		result = "";
 		Boolean isOk = true;
-		try{
-			if(courseRepository.findByName(theCourse.getName()).size() > 0){
-				result = "There is already a course with that name. ";
+		try {
+			if (courseRepository.findByName(theCourse.getName()).size() > 0) {
+				result += "There is already a course with that name. ";
 				isOk = false;
-			}
-			else{
-				courses.clear();
-				// For loop to created each course with its own category
-				// Content field should be encrypted with base64 encode
+			} else {
+				
+				//This will check if the categories inserted exists in the Categorie's Table
+				Boolean categoryNumbersExist = true;
+				
 				for(int i = 0; i < theCourse.getCategories().length; i++){
-					Courses tempCourse = new Courses();
-					tempCourse.setName(theCourse.getName());
-					tempCourse.setDescription(theCourse.getDescription());
-					tempCourse.setCategories(theCourse.getCategories()[i]);
-					tempCourse.setContent(Base64.getEncoder().encodeToString(theCourse.getContent().getBytes(StandardCharsets.UTF_8)));
-					courses.add(tempCourse);
-					courseRepository.save(tempCourse);
+					if(!categoryRepository.findById(theCourse.getCategories()[i]).isPresent()){
+						result += "The category with index '"+i+"' doesn't exist in the database. ";
+						categoryNumbersExist = false;
+					}
+				}
+				
+				if(categoryNumbersExist){
+					courses = new ArrayList<Courses>();
+					courses.clear();
+					// For loop to created each course with its own category
+					// Content field should be encrypted with base64 encode
+					for (int i = 0; i < theCourse.getCategories().length; i++) {
+						Courses tempCourse = new Courses();
+						tempCourse.setName(theCourse.getName());
+						tempCourse.setDescription(theCourse.getDescription());
+						tempCourse.setCategories(theCourse.getCategories()[i]);
+						tempCourse.setContent(Base64.getEncoder()
+								.encodeToString(theCourse.getContent().getBytes(StandardCharsets.UTF_8)));
+						courses.add(tempCourse);
+						courseRepository.save(tempCourse);
+					}
 				}
 			}
-			
-			if(!isOk){
+
+			if (!isOk) {
 				result = "The following error(s) occurred: " + result;
-				throw new DuplicateKeyException(result); 
+				throw new DuplicateKeyException(result);
 			}
-		}
-		catch(DuplicateKeyException ex){
+		} catch (DuplicateKeyException ex) {
 			System.out.println(ex);
 			return false;
 		}
 		return isOk;
 	}
-	
-	public Boolean validateFields(CourseRequest theCourse) throws InvalidParameterException{
+
+	public Boolean validateFields(CourseRequest theCourse) throws InvalidParameterException {
 		Boolean isOk = true;
 		result = "";
 
@@ -77,22 +98,21 @@ public class CourseManagerImpl implements CourseManager {
 			if (theCourse == null) {
 				result = "Invalid Course type. ";
 				return false;
-				
+
 			} else {
-				//Missing validations for Courses (Currently applies for categories)
+				// Missing validations for Courses (Currently applies for
+				// categories)
 				String name = theCourse.getName();
 				String description = theCourse.getDescription();
-				
+
 				if (StringUtils.isBlank(name)) {
 					result += "The 'name' field is empty or missing. ";
 					isOk = false;
-				}
-				else{
-					if(name.length() > 50){
+				} else {
+					if (name.length() > 50) {
 						result += "The 'name' field has more than 50 characters. ";
 						isOk = false;
-					}
-					else{
+					} else {
 						Pattern specialChars = Pattern.compile("^[A-Za-z0-9 ]+$");
 						Matcher hasNotSpecialChars = specialChars.matcher(name);
 
@@ -102,24 +122,59 @@ public class CourseManagerImpl implements CourseManager {
 						}
 					}
 				}
-				
-				if (StringUtils.isBlank(description)) {
-					result += "The 'description' field is empty or missing. ";
+
+				if (!StringUtils.isBlank(description) && description.length() > 500) {
+					result += "The 'description' field has more than 500 characters. ";
 					isOk = false;
 				}
+				
+				//This checks if the categories parameter is an array
+				if(theCourse.getCategories() !=null && theCourse.getCategories().getClass().isArray()){
+					
+					//This checks if the categories parameter contains numbers
+					for(int i=0; i < theCourse.getCategories().length; i++){
+						String category = String.valueOf(theCourse.getCategories()[i]);
+						boolean isCategoryNumeric = true;
+						try {
+							Integer.parseInt(category);
+						} catch (TypeMismatchException e) {
+							isCategoryNumeric = false;
+						} catch (NumberFormatException e) {
+							isCategoryNumeric = false;
+						}
+						
+						if(!isCategoryNumeric){
+							result += "The 'categories' field must contain numbers. ";
+							isOk = false;
+							break;
+						}
+					}
+					
+				}
 				else{
-					if(description.length() > 500){
-						result += "The 'description' field has more than 500 characters. ";
+					result += "The 'categories' field must contain at least one category index. ";
+					isOk = false;
+				}
+				
+				if (!StringUtils.isBlank(description)) {
+					
+					if(description.length() > 4000){
+						result += "The 'content' field must not be longer than 4000 characters. ";
 						isOk = false;
 					}
-				}	
+					
+				}
+				else{
+					result += "The 'content' field must not be empty. ";
+					isOk = false;
+				}
 			}
-			
-			if(!isOk){
+
+			if (!isOk) {
 				result = "The following error occurred: " + result;
-				throw new InvalidParameterException(result); 
+				throw new InvalidParameterException(result);
 			}
-			
+
 		} catch (InvalidParameterException ex) {
 			System.out.println(ex);
 			return false;
