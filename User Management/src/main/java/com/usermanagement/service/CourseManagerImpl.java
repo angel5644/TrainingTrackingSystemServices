@@ -58,6 +58,7 @@ public class CourseManagerImpl implements CourseManager {
 					if(!categoryRepository.findById(theCourse.getCategories()[i]).isPresent()){
 						result += "The category with index '"+i+"' doesn't exist in the database. ";
 						categoryNumbersExist = false;
+						isOk = false;
 					}
 				}
 				
