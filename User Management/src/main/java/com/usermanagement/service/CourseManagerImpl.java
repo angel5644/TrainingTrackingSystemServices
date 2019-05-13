@@ -157,7 +157,7 @@ public class CourseManagerImpl implements CourseManager {
 				}
 				
 				//This checks if the categories parameter is an array
-				if(theCourse.getCategories() !=null && theCourse.getCategories().getClass().isArray()){
+				if(theCourse.getCategories() !=null && theCourse.getCategories().length > 0 && theCourse.getCategories().getClass().isArray()){
 					
 					//This checks if the categories parameter contains numbers
 					for(int i=0; i < theCourse.getCategories().length; i++){
