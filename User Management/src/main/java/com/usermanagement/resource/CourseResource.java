@@ -39,7 +39,7 @@ public class CourseResource {
 				return ResponseEntity.status(HttpStatus.CONFLICT)
 						.body("The following error(s) occurred: " + courseManager.getResult());
 			} else {
-				return ResponseEntity.status(HttpStatus.CREATED).body(courseManager.getCourses());
+				return ResponseEntity.status(HttpStatus.CREATED).body(courseManager.getCourseResponse());
 			}
 		}
 	}
