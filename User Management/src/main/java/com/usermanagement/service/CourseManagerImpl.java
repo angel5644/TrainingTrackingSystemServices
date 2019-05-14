@@ -128,67 +128,77 @@ public class CourseManagerImpl implements CourseManager {
 		Boolean isRowNotRepeated = true;
 		try {
 
-			//Check if the course to be edited, exists in the database
-			Courses course = (courseRepository.findById(id).isPresent())
-					? courseRepository.findById(id).get() : null;
-
-			if (course == null) {
-				result = " The course to be edited was not found in the database. ";
-				isOk = false;
+			if (id < 1) {
+				result += " The 'id' parameter should be 1 or greater.";
+				throw new InvalidParameterException(result);
 			} else {
 
-				//Find if the new name for the course to be edited, already exists in another record
-				if (courseRepository.findDuplicate(theCourse.getName(),id).size() > 0) {
-					result += "There is already a course with that name. ";
+				// Check if the course to be edited, exists in the database
+				Courses course = (courseRepository.findById(id).isPresent()) ? courseRepository.findById(id).get()
+						: null;
+
+				if (course == null) {
+					result = " The course to be edited was not found in the database. ";
 					isOk = false;
-					isRowNotRepeated = false;
 				} else {
-					
-					//This will delete existing categories related with the course to be edited
-					//Then it will be re-inserted in the table catcourses
-					
-					catCourseRepository.deleteCategoriesByCourse(id);
-					
-					// This will check if the categories inserted exists in the
-					// Categorie's Table
-					Boolean categoryNumbersExist = true;
 
-					for (int i = 0; i < theCourse.getCategories().length; i++) {
-						if (!categoryRepository.findById(theCourse.getCategories()[i]).isPresent()) {
-							result += "The category with index '" + theCourse.getCategories()[i]
-									+ "' doesn't exist in the database. ";
-							categoryNumbersExist = false;
-							isOk = false;
-						}
-					}
+					// Find if the new name for the course to be edited, already
+					// exists in another record
+					if (courseRepository.findDuplicate(theCourse.getName(), id).size() > 0) {
+						result += "There is already a course with that name. ";
+						isOk = false;
+						isRowNotRepeated = false;
+					} else {
 
-					if (categoryNumbersExist) {
-						courseResponse = new CourseResponse();
+						// This will delete existing categories related with the
+						// course to be edited
+						// Then it will be re-inserted in the table catcourses
 
-						// Content field should be encrypted with base64 encode
-						course.setName(theCourse.getName());
-						course.setDescription(theCourse.getDescription());
-						// tempCourse.setCategories(theCourse.getCategories()[i]);
-						course.setContent(Base64.getEncoder()
-								.encodeToString(theCourse.getContent().getBytes(StandardCharsets.UTF_8)));
-						courseRepository.save(course);
+						catCourseRepository.deleteCategoriesByCourse(id);
 
-						courseResponse.setId(course.getId());
-						courseResponse.setName(course.getName());
-						courseResponse.setDescription(course.getDescription());
-						courseResponse.setCategories(theCourse.getCategories());
-						courseResponse.setContent(course.getContent());
+						// This will check if the categories inserted exists in
+						// the
+						// Categorie's Table
+						Boolean categoryNumbersExist = true;
 
-						// For loop to create each record with a
-						// course/category relation
 						for (int i = 0; i < theCourse.getCategories().length; i++) {
+							if (!categoryRepository.findById(theCourse.getCategories()[i]).isPresent()) {
+								result += "The category with index '" + theCourse.getCategories()[i]
+										+ "' doesn't exist in the database. ";
+								categoryNumbersExist = false;
+								isOk = false;
+							}
+						}
 
-							CatCourses tempCatCourse = new CatCourses();
+						if (categoryNumbersExist) {
+							courseResponse = new CourseResponse();
 
-							tempCatCourse.setIdCategory(theCourse.getCategories()[i]);
-							tempCatCourse.setIdCourse(course.getId());
+							// Content field should be encrypted with base64
+							// encode
+							course.setName(theCourse.getName());
+							course.setDescription(theCourse.getDescription());
+							// tempCourse.setCategories(theCourse.getCategories()[i]);
+							course.setContent(Base64.getEncoder()
+									.encodeToString(theCourse.getContent().getBytes(StandardCharsets.UTF_8)));
+							courseRepository.save(course);
 
-							catCourseRepository.save(tempCatCourse);
+							courseResponse.setId(course.getId());
+							courseResponse.setName(course.getName());
+							courseResponse.setDescription(course.getDescription());
+							courseResponse.setCategories(theCourse.getCategories());
+							courseResponse.setContent(course.getContent());
+
+							// For loop to create each record with a
+							// course/category relation
+							for (int i = 0; i < theCourse.getCategories().length; i++) {
+
+								CatCourses tempCatCourse = new CatCourses();
+
+								tempCatCourse.setIdCategory(theCourse.getCategories()[i]);
+								tempCatCourse.setIdCourse(course.getId());
+
+								catCourseRepository.save(tempCatCourse);
+							}
 						}
 					}
 				}
@@ -205,6 +215,9 @@ public class CourseManagerImpl implements CourseManager {
 			System.out.println(ex);
 			return false;
 		} catch (NoSuchElementException ex) {
+			System.out.println(ex);
+			return false;
+		} catch (InvalidParameterException ex) {
 			System.out.println(ex);
 			return false;
 		}

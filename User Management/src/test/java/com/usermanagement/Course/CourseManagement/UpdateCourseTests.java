@@ -17,7 +17,7 @@ import com.usermanagement.model.CourseRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CourseManagementApplicationTests {
+public class UpdateCourseTests {
 
 	@Mock
 	CourseResource courseResourceMock;
@@ -27,20 +27,24 @@ public class CourseManagementApplicationTests {
 	
 	/*Test cases
 	 * 
-	 * 1.- Course insert successfull with many categories included
-	 * 2.- Course insert successfull when description is empty
-	 * 3.- Course insert not successfull when inserting 2 or more categories that doesnt exists
-	 * 4.- Course insert not successfull when inserting a course with a repeated name
-	 * 5.- Course insert not successfull when inserting a course with no categories included
-	 * 6.- Course insert not successfull when sending an course with an empty name and content
-	 * 7.- Course insert not successfull when inserting a course with a name longer than 50 characters
-	 * 8.- Course insert not successfull when inserting a coruse with a description longer than 500 characters
-	 * 9.- Course insert not successfull when inserting a course with a name with special chars
+	 * 1.- Course update successfull with many categories included
+	 * 2.- Course update successfull when description is empty
+	 * 3.- Course update not successfull when inserting 2 or more categories that doesnt exists
+	 * 4.- Course update not successfull when inserting a course with a repeated name
+	 * 5.- Course update not successfull when inserting a course with no categories included
+	 * 6.- Course update not successfull when sending an course with an empty name and content
+	 * 7.- Course update not successfull when inserting a course with a name longer than 50 characters
+	 * 8.- Course update not successfull when inserting a coruse with a description longer than 500 characters
+	 * 9.- Course update not successfull when inserting a course with a name with special chars
+	 * 10.- Course update not successfull when id path param doesnt exist in the database
+	 * 11.- Course update not successfull when id path param is invalid (negative number)
 	 * 
 	 */
 	
 	@Test
-	public void insertCourseSuccessfully() {
+	public void updateCourseSuccessfully() {
+		
+		Integer id = 1;
 		String name = "A course title";
 		String description = "A course desription";
 		Integer[] categories = {1,2,3};
@@ -52,13 +56,15 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 
-		when(courseResourceMock.createCourse(course)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
+		when(courseResourceMock.updateCourse(id,course)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 		
-		assertEquals(HttpStatus.CREATED, courseResourceMock.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.OK, courseResourceMock.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseSuccessfullyWithEmptyDescription() {
+	public void updateCourseSuccessfullyWithEmptyDescription() {
+		
+		Integer id = 1;
 		String name = "A course title";
 		String description = "";
 		Integer[] categories = {1,2,3};
@@ -70,13 +76,15 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 
-		when(courseResourceMock.createCourse(course)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
+		when(courseResourceMock.updateCourse(id,course)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 		
-		assertEquals(HttpStatus.CREATED, courseResourceMock.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.OK, courseResourceMock.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWhenAddingUnexistingCategories() {
+	public void updateCourseWhenAddingUnexistingCategories() {
+		
+		Integer id = 1;
 		String name = "A course title";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
@@ -88,12 +96,13 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.CONFLICT, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWhenAddingARepeatedName() {
-		String name = "A course";
+	public void updateCourseWhenAddingARepeatedName() {
+		Integer id = 1;
+		String name = "A course2";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
 		String content = "A course content";
@@ -104,11 +113,12 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.CONFLICT, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWithEmptyCategories() {
+	public void updateCourseWithEmptyCategories() {
+		Integer id = 1;
 		String name = "A course title";
 		String description = "A course description";
 		Integer[] categories = {};
@@ -120,11 +130,12 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWithEmptyNameAndContent() {
+	public void updateCourseWithEmptyNameAndContent() {
+		Integer id = 1;
 		String name = "";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
@@ -136,11 +147,12 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWithNameLongerThanExpected() {
+	public void updateCourseWithNameLongerThanExpected() {
+		Integer id = 1;
 		String name = "This is a course title that has more than fifty characters";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
@@ -152,11 +164,12 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWithDescriptionLongerThanExpected() {
+	public void updateCourseWithDescriptionLongerThanExpected() {
+		Integer id = 1;
 		String name = "A course title";
 		String description = "This is a category description with more than 500 characters"
 				+"Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
@@ -176,11 +189,12 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
-	public void insertCourseWithSpecialCharactersInTheName() {
+	public void updateCourseWithSpecialCharactersInTheName() {
+		Integer id = 1;
 		String name = "A course name with $%&";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
@@ -192,6 +206,39 @@ public class CourseManagementApplicationTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
+	}
+	@Test
+	public void updateCourseWithUnknownCourseId() {
+		Integer id = 1000;
+		String name = "A course name with $%&";
+		String description = "A course description";
+		Integer[] categories = {1,2,3};
+		String content = "";
+
+		CourseRequest course = new CourseRequest();
+		course.setName(name);
+		course.setDescription(description);
+		course.setCategories(categories);
+		course.setContent(content);
+		
+		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
+	}
+	
+	@Test
+	public void updateCourseWithInvalidCourseId() {
+		Integer id = -10;
+		String name = "A course name with $%&";
+		String description = "A course description";
+		Integer[] categories = {1,2,3};
+		String content = "";
+
+		CourseRequest course = new CourseRequest();
+		course.setName(name);
+		course.setDescription(description);
+		course.setCategories(categories);
+		course.setContent(content);
+		
+		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
 	}
 }
