@@ -211,7 +211,7 @@ public class UpdateCourseTests {
 	@Test
 	public void updateCourseWithUnknownCourseId() {
 		Integer id = 1000;
-		String name = "A course name with $%&";
+		String name = "A course name";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
 		String content = "";
@@ -222,13 +222,13 @@ public class UpdateCourseTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
 	public void updateCourseWithInvalidCourseId() {
 		Integer id = -10;
-		String name = "A course name with $%&";
+		String name = "A course name";
 		String description = "A course description";
 		Integer[] categories = {1,2,3};
 		String content = "";
@@ -239,6 +239,6 @@ public class UpdateCourseTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
+		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
 	}
 }
