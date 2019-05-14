@@ -222,7 +222,7 @@ public class UpdateCourseTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
 	}
 	
 	@Test
@@ -239,6 +239,6 @@ public class UpdateCourseTests {
 		course.setCategories(categories);
 		course.setContent(content);
 		
-		assertEquals(HttpStatus.CONFLICT, courseResource.updateCourse(id,course).getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, courseResource.updateCourse(id,course).getStatusCode());
 	}
 }
