@@ -129,7 +129,7 @@ public class CourseManagerImpl implements CourseManager {
 		try {
 
 			if (id < 1) {
-				result += " The 'id' parameter should be 1 or greater.";
+				result += " The 'id' parameter should be greater than 0.";
 				throw new InvalidParameterException(result);
 			} else {
 
