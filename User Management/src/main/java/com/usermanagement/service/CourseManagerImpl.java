@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.usermanagement.model.Courses;
-import com.usermanagement.model.CatCourses;
+import com.usermanagement.model.Course;
+import com.usermanagement.model.CatCourse;
 import com.usermanagement.model.CourseRequest;
 import com.usermanagement.model.CourseResponse;
 import com.usermanagement.repository.CatCourseRepository;
@@ -35,22 +35,19 @@ public class CourseManagerImpl implements CourseManager {
 	CategoryRepository categoryRepository;
 
 	private String result;
-	private CourseResponse courseResponse;
 
 	public String getResult() {
 		return this.result;
 	}
 
-	public CourseResponse getCourseResponse() {
-		return this.courseResponse;
-	}
-
 	@Override
 	@Transactional
-	public Boolean createCourse(CourseRequest theCourse) throws DuplicateKeyException {
+	public CourseResponse createCourse(CourseRequest theCourse) throws DuplicateKeyException {
 		result = "";
 		Boolean isOk = true;
 		Boolean isRowNotRepeated = true;
+		CourseResponse courseResponse = null;
+		
 		try {
 			if (courseRepository.findByName(theCourse.getName()).size() > 0) {
 				result += "There is already a course with that name. ";
@@ -72,10 +69,10 @@ public class CourseManagerImpl implements CourseManager {
 				}
 
 				if (categoryNumbersExist) {
+					
 					courseResponse = new CourseResponse();
-
 					// Content field should be encrypted with base64 encode
-					Courses tempCourse = new Courses();
+					Course tempCourse = new Course();
 					tempCourse.setName(theCourse.getName());
 					tempCourse.setDescription(theCourse.getDescription());
 					// tempCourse.setCategories(theCourse.getCategories()[i]);
@@ -93,7 +90,7 @@ public class CourseManagerImpl implements CourseManager {
 					// relation
 					for (int i = 0; i < theCourse.getCategories().length; i++) {
 
-						CatCourses tempCatCourse = new CatCourses();
+						CatCourse tempCatCourse = new CatCourse();
 
 						tempCatCourse.setIdCategory(theCourse.getCategories()[i]);
 						tempCatCourse.setIdCourse(tempCourse.getId());
@@ -112,20 +109,22 @@ public class CourseManagerImpl implements CourseManager {
 			}
 		} catch (DuplicateKeyException ex) {
 			System.out.println(ex);
-			return false;
+			return null;
 		} catch (NoSuchElementException ex) {
 			System.out.println(ex);
-			return false;
+			return null;
 		}
-		return isOk;
+		return courseResponse;
 	}
 
 	@Override
 	@Transactional
-	public Boolean updateCourse(Integer id, CourseRequest theCourse) throws DuplicateKeyException {
+	public CourseResponse updateCourse(int id, CourseRequest theCourse) throws DuplicateKeyException {
 		result = "";
 		Boolean isOk = true;
 		Boolean isRowNotRepeated = true;
+		CourseResponse courseResponse = null;
+		
 		try {
 
 			if (id < 1) {
@@ -134,7 +133,7 @@ public class CourseManagerImpl implements CourseManager {
 			} else {
 
 				// Check if the course to be edited, exists in the database
-				Courses course = (courseRepository.findById(id).isPresent()) ? courseRepository.findById(id).get()
+				Course course = (courseRepository.findById(id).isPresent()) ? courseRepository.findById(id).get()
 						: null;
 
 				if (course == null) {
@@ -192,7 +191,7 @@ public class CourseManagerImpl implements CourseManager {
 							// course/category relation
 							for (int i = 0; i < theCourse.getCategories().length; i++) {
 
-								CatCourses tempCatCourse = new CatCourses();
+								CatCourse tempCatCourse = new CatCourse();
 
 								tempCatCourse.setIdCategory(theCourse.getCategories()[i]);
 								tempCatCourse.setIdCourse(course.getId());
@@ -213,18 +212,18 @@ public class CourseManagerImpl implements CourseManager {
 			}
 		} catch (DuplicateKeyException ex) {
 			System.out.println(ex);
-			return false;
+			return null;
 		} catch (NoSuchElementException ex) {
 			System.out.println(ex);
-			return false;
+			return null;
 		} catch (InvalidParameterException ex) {
 			System.out.println(ex);
-			return false;
+			return null;
 		}
-		return isOk;
+		return courseResponse;
 	}
 
-	public Boolean validateFields(CourseRequest theCourse) throws InvalidParameterException {
+	public boolean validateFields(CourseRequest theCourse) throws InvalidParameterException {
 		Boolean isOk = true;
 		result = "";
 

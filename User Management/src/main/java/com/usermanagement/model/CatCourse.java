@@ -12,19 +12,19 @@ import lombok.Data;
 @Entity
 @Table(name = "CATCOURSES", catalog = "XE")
 @Data
-public class CatCourses {
+public class CatCourse {
 
 	@Id
 	@Column(name = "id",length=32, unique = true, nullable = false, insertable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_NAME_CATCOURSE")
 	@SequenceGenerator(name = "SEQUENCE_NAME_CATCOURSE", sequenceName = "SEQUENCE_NAME_CATCOURSE", allocationSize = 1, initialValue = 1)
-	private Integer id;
+	private int id;
 	
 	@Column(name = "idcategory",nullable = false, length = 32, unique=true)
-	private Integer idCategory;
+	private int idCategory;
 	
 	@Column(name = "idcourse",nullable = false, length = 32, unique=true)
-	private Integer idCourse;
+	private int idCourse;
 	
-	public CatCourses(){}
+	public CatCourse(){}
 }

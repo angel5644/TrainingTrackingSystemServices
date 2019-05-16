@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.usermanagement.model.Categories;
+import com.usermanagement.model.Category;
 import com.usermanagement.resource.CategoryResource;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +26,7 @@ public class CreateCategoryManagementApplicationTests {
 		String name = "A category title N";
 		String description = "A category desription D";
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
 
@@ -48,7 +48,7 @@ public class CreateCategoryManagementApplicationTests {
 							+"culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum"
 							+"dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor.";
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
 
@@ -62,7 +62,7 @@ public class CreateCategoryManagementApplicationTests {
 		String name = "A category title 1";
 		String description = "A category desription 1";
 
-		Categories category1 = new Categories();
+		Category category1 = new Category();
 		category1.setName(name);
 		category1.setDescription(description);
 		System.out.println("Creating category...");
@@ -75,7 +75,7 @@ public class CreateCategoryManagementApplicationTests {
 		}
 		
 		System.out.println("Creating a duplicate category...");
-		Categories category2 = new Categories();
+		Category category2 = new Category();
 		category2.setName(name);
 		category2.setDescription(description);
 		when(categoryResource.createCategory(category2)).thenReturn(new ResponseEntity<>(HttpStatus.CONFLICT));

@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.usermanagement.model.Categories;
+import com.usermanagement.model.Category;
 import com.usermanagement.resource.CategoryResource;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +26,7 @@ public class UpdateCategoryManagementApplicationTests {
 		String name = "A category title N";
 		String description = "A category desription D";
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
 		
@@ -48,7 +48,7 @@ public class UpdateCategoryManagementApplicationTests {
 							+"culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum"
 							+"dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor.";
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
 
@@ -62,7 +62,7 @@ public class UpdateCategoryManagementApplicationTests {
 		String name = "A category title 1";
 		String description = "A category desription 1";
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
 		System.out.println("Updating a duplicate category...");

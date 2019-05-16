@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.usermanagement.model.Courses;
 import com.usermanagement.resource.CourseResource;
 import com.usermanagement.model.CourseRequest;
 
@@ -41,17 +40,19 @@ public class CreateCourseTests {
 	
 	@Test
 	public void insertCourseSuccessfully() {
+		
+		//Arrange
 		String name = "A course title";
 		String description = "A course desription";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "A course content";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
-
 		when(courseResourceMock.createCourse(course)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
 		
 		assertEquals(HttpStatus.CREATED, courseResourceMock.createCourse(course).getStatusCode());
@@ -59,17 +60,19 @@ public class CreateCourseTests {
 	
 	@Test
 	public void insertCourseSuccessfullyWithEmptyDescription() {
+		
+		//Arrange
 		String name = "A course title";
 		String description = "";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "A course content";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
-
 		when(courseResourceMock.createCourse(course)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
 		
 		assertEquals(HttpStatus.CREATED, courseResourceMock.createCourse(course).getStatusCode());
@@ -77,86 +80,108 @@ public class CreateCourseTests {
 	
 	@Test
 	public void insertCourseWhenAddingUnexistingCategories() {
+		
+		//Arrange
 		String name = "A course title";
 		String description = "A course description";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "A course content";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.CONFLICT, courseResource.createCourse(course).getStatusCode());
 	}
 	
 	@Test
 	public void insertCourseWhenAddingARepeatedName() {
+		
+		//Arrange
 		String name = "A course";
 		String description = "A course description";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "A course content";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.CONFLICT, courseResource.createCourse(course).getStatusCode());
 	}
 	
 	@Test
 	public void insertCourseWithEmptyCategories() {
+		
+		//Arrange
 		String name = "A course title";
 		String description = "A course description";
-		Integer[] categories = {};
+		int[] categories = {};
 		String content = "A course content";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
 	}
 	
 	@Test
 	public void insertCourseWithEmptyNameAndContent() {
+		
+		//Arrange
 		String name = "";
 		String description = "A course description";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
 	}
 	
 	@Test
 	public void insertCourseWithNameLongerThanExpected() {
+		
+		//Arrange
 		String name = "This is a course title that has more than fifty characters";
 		String description = "A course description";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
 	}
 	
 	@Test
 	public void insertCourseWithDescriptionLongerThanExpected() {
+		
+		//Arrange
 		String name = "A course title";
 		String description = "This is a category description with more than 500 characters"
 				+"Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
@@ -167,31 +192,37 @@ public class CreateCourseTests {
 				+"pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in"
 				+"culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum"
 				+"dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor.";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
 	}
 	
 	@Test
 	public void insertCourseWithSpecialCharactersInTheName() {
+		
+		//Arrange
 		String name = "A course name with $%&";
 		String description = "A course description";
-		Integer[] categories = {1,2,3};
+		int[] categories = {1,2,3};
 		String content = "";
-
 		CourseRequest course = new CourseRequest();
+		
+		//Act
 		course.setName(name);
 		course.setDescription(description);
 		course.setCategories(categories);
 		course.setContent(content);
 		
+		//Assert
 		assertEquals(HttpStatus.BAD_REQUEST, courseResource.createCourse(course).getStatusCode());
 	}
 }

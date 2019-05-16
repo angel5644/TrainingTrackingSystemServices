@@ -13,7 +13,7 @@ public class CourseRequest {
 	@ApiModelProperty(position = 3, dataType="Integer", example = "Course description", required = false)
 	private String description;
 	@ApiModelProperty(position = 4, dataType="List", example = "[1,2,3]", required = true)
-	private Integer[] categories;
+	private int[] categories;
 	@ApiModelProperty(position = 5, dataType="String", example = "<div>HTML Content </div>", required = true)
 	private String content;
 	

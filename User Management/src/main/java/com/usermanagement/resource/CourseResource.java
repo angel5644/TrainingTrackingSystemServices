@@ -48,11 +48,14 @@ public class CourseResource {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body("The following error(s) occurred: " + courseManager.getResult());
 		} else {
-			if (!courseManager.createCourse(theCourse)) {
+			
+			CourseResponse courseResponse = courseManager.createCourse(theCourse);
+			
+			if (courseResponse == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT)
 						.body("The following error(s) occurred: " + courseManager.getResult());
 			} else {
-				return ResponseEntity.status(HttpStatus.CREATED).body(courseManager.getCourseResponse());
+				return ResponseEntity.status(HttpStatus.CREATED).body(courseResponse);
 			}
 		}
 	}
@@ -70,7 +73,7 @@ public class CourseResource {
 		@ResponseBody
 		public ResponseEntity<?> updateCourse(
 				@ApiParam(value = "Id of the course to be edited", required = true)
-				@PathVariable("id") final Integer id,
+				@PathVariable("id") final int id,
 				@ModelAttribute("CourseRequest") CourseRequest theCourse) {
 
 			theCourse.setName(theCourse.getName().trim().toUpperCase());
@@ -80,11 +83,14 @@ public class CourseResource {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body("The following error(s) occurred: " + courseManager.getResult());
 			} else {
-				if (!courseManager.updateCourse(id,theCourse)) {
+				
+				CourseResponse courseResponse = courseManager.updateCourse(id,theCourse);
+				
+				if (courseResponse == null) {
 					return ResponseEntity.status(HttpStatus.CONFLICT)
 							.body("The following error(s) occurred: " + courseManager.getResult());
 				} else {
-					return ResponseEntity.status(HttpStatus.OK).body(courseManager.getCourseResponse());
+					return ResponseEntity.status(HttpStatus.OK).body(courseResponse);
 				}
 			}
 		}

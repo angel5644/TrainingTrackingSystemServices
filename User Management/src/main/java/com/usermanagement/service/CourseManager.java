@@ -5,10 +5,9 @@ import com.usermanagement.model.CourseResponse;
 
 public interface CourseManager {
 
-	public Boolean createCourse(CourseRequest theCourse);
-	public Boolean updateCourse(Integer id, CourseRequest theCourse);
-	public Boolean validateFields(CourseRequest theCourse);
-	public CourseResponse getCourseResponse();
+	public CourseResponse createCourse(CourseRequest theCourse);
+	public CourseResponse updateCourse(int id, CourseRequest theCourse);
+	public boolean validateFields(CourseRequest theCourse);
 	public String getResult();
 	
 }

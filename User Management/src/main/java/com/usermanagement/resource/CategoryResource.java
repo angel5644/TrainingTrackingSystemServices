@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.usermanagement.model.Categories;
+import com.usermanagement.model.Category;
 import com.usermanagement.service.CategoryManager;
 
 import io.swagger.annotations.Api;
@@ -30,7 +30,7 @@ public class CategoryResource {
 
 	@ApiOperation(value = "View a list of available categories", response = List.class)
 	@GetMapping("/category/all")
-	public List<Categories> getAll() {
+	public List<Category> getAll() {
 		// usersRepository.flush();
 		System.out.println(categoryManager.getCategories());
 		return categoryManager.getCategories();
@@ -40,7 +40,7 @@ public class CategoryResource {
 	@ApiOperation(value = "Creates a new category", response = ResponseEntity.class)
 	@RequestMapping(value = "/category", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Categories theCategory) {
+	public ResponseEntity<?> createCategory(@ModelAttribute("Categories") Category theCategory) {
 
 		theCategory.setName(theCategory.getName().trim().toUpperCase());
 		theCategory.setDescription(theCategory.getDescription().trim().toUpperCase());
@@ -75,7 +75,7 @@ public class CategoryResource {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body("The following error(s) occurred: " + categoryManager.getResult());
 		} else {
-			Categories theCategory = new Categories();
+			Category theCategory = new Category();
 			theCategory.setName(name.trim().toUpperCase());
 			theCategory.setDescription(description.trim().toUpperCase());
 			theCategory.setId(id);
