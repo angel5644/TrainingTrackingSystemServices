@@ -9,10 +9,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "COURSES", catalog = "XE")
 @Data
+@NoArgsConstructor
 public class Course {
 
 	@Id
@@ -26,7 +28,5 @@ public class Course {
 	private String description;
 	@Column(name = "content",nullable = false, length = 4000)
 	private String content;
-	
-	public Course(){}
 	
 }

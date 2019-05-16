@@ -8,10 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "CATCOURSES", catalog = "XE")
 @Data
+@NoArgsConstructor
 public class CatCourse {
 
 	@Id
@@ -25,6 +27,4 @@ public class CatCourse {
 	
 	@Column(name = "idcourse",nullable = false, length = 32, unique=true)
 	private int idCourse;
-	
-	public CatCourse(){}
 }
