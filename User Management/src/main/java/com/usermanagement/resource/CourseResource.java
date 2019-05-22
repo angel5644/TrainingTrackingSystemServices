@@ -112,7 +112,7 @@ public class CourseResource {
 			@ApiResponse(code = 500, message = "Internal Server Error") })
 	@RequestMapping(value = "/course", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> listCourses(@RequestHeader("user-id") String userId) {
+	public ResponseEntity<?> listCourses(@RequestHeader(value = "user-id",required = true) String userId) {
 
 		boolean isUserIdInteger = true;
 		try {
