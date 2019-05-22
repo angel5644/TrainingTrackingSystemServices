@@ -3,6 +3,7 @@ package com.usermanagement.service;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 import java.util.Base64;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,9 +16,11 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.usermanagement.model.Course;
+import com.usermanagement.model.CourseListResponse;
 import com.usermanagement.model.CatCourse;
 import com.usermanagement.model.CourseRequest;
 import com.usermanagement.model.CourseResponse;
+import com.usermanagement.model.Users;
 import com.usermanagement.repository.CatCourseRepository;
 import com.usermanagement.repository.CategoryRepository;
 import com.usermanagement.repository.CourseRepository;
@@ -38,6 +41,47 @@ public class CourseManagerImpl implements CourseManager {
 
 	public String getResult() {
 		return this.result;
+	}
+	
+	@Override
+	@Transactional
+	public CourseListResponse getCourses(int userId,Users theUser){
+		
+		//If the User is not a trainer nor admin will return a null response
+		if(theUser.getType() == 0){
+			return null;
+		}
+		else{
+			//Gets all the courses in the database
+			List<Course> courses = courseRepository.findAll();			
+			//Creates a new course response
+			CourseResponse[] courseResponse = new CourseResponse[courses.size()];
+			
+			//Creates the collection for the collection categories inside the course response
+			for(int i= 0; i < courses.size(); i++){
+				courseResponse[i] = new CourseResponse();
+				courseResponse[i].setId(courses.get(i).getId());
+				courseResponse[i].setName(courses.get(i).getName());
+				
+				List<CatCourse> categoriesByCourseId = catCourseRepository.searchCategoriesByIdCourse(courses.get(i).getId());
+				
+				int[] tempCategories = new int[categoriesByCourseId.size()];
+				for(int j = 0; j < categoriesByCourseId.size(); j++){
+					tempCategories[j] = categoriesByCourseId.get(j).getIdCategory();
+				}
+				
+				//Sets the category collection that each course has
+				courseResponse[i].setCategories(tempCategories);
+			}
+			
+			//Creates a new course list response to return
+			CourseListResponse courseListResponse = new CourseListResponse();
+			courseListResponse.setTotalRecords(courses.size());
+			//Sets all the course elements found in the database
+			courseListResponse.setCourseElements(courseResponse);
+			
+			return courseListResponse;
+		}
 	}
 
 	@Override
