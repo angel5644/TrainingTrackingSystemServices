@@ -21,7 +21,7 @@ public class jpaConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.usermanagement.resource")).paths(PathSelectors.any())
-				.build().apiInfo(apiInfo());
+				.build().apiInfo(apiInfo()).useDefaultResponseMessages(false);
 	}
 
 	private ApiInfo apiInfo() {

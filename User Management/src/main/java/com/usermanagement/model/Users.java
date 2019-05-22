@@ -8,10 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "USERS", catalog = "XE")
 @Data
+@NoArgsConstructor
 public class Users {
 
 	@Id
@@ -27,7 +29,5 @@ public class Users {
 	private String email;
 	@Column(name = "type",nullable = false, length =4 )
 	private Integer type;
-	
-	public Users(){}
 
 }

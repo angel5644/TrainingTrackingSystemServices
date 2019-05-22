@@ -13,7 +13,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.usermanagement.model.Categories;
+import com.usermanagement.model.Category;
 import com.usermanagement.model.FindCategoryResponse;
 import com.usermanagement.repository.CategoryRepository;
 
@@ -28,19 +28,19 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	@Override
 	@Transactional
-	public List <Categories> getCategories(){
+	public List <Category> getCategories(){
 		return categoryRepository.findAll();
 	}
 	
 	@Override
 	@Transactional
-	public List <Categories> listCategories(){
+	public List <Category> listCategories(){
 		return categoryRepository.findAll();
 	}
 	
 	@Override
 	@Transactional
-	public Boolean createCategory(Categories theCategory) throws DuplicateKeyException{
+	public boolean createCategory(Category theCategory) throws DuplicateKeyException{
 		result = "";
 		Boolean isOk = true;
 		try{
@@ -64,7 +64,7 @@ public class CategoryManagerImpl implements CategoryManager {
 		return isOk;
 	}
 	
-	public Boolean validateFields(Categories theCategory) throws InvalidParameterException{
+	public boolean validateFields(Category theCategory) throws InvalidParameterException{
 		Boolean isOk = true;
 		result = "";
 
@@ -123,12 +123,12 @@ public class CategoryManagerImpl implements CategoryManager {
 	
 	@Override
 	@Transactional
-	public Boolean updateCategory(Categories theCategory) throws DuplicateKeyException {
+	public boolean updateCategory(Category theCategory) throws DuplicateKeyException {
 		result = "";
 		Boolean isOk = true;
 		try {
-			Categories category = (categoryRepository.findById(theCategory.getId()).isPresent())
-					? categoryRepository.findById(theCategory.getId()).get() : null;
+			Category category = (categoryRepository.findById((Integer)theCategory.getId()).isPresent())
+					? categoryRepository.findById((Integer)theCategory.getId()).get() : null;
 
 			if (category == null) {
 				result = " The category to be edited was not found in the database. ";
@@ -159,7 +159,7 @@ public class CategoryManagerImpl implements CategoryManager {
 		return isOk;
 	}
 
-	public Boolean validateFields(String name, String description) throws InvalidParameterException {
+	public boolean validateFields(String name, String description) throws InvalidParameterException {
 		Boolean isOk = true;
 		result = "";
 
@@ -221,7 +221,7 @@ public class CategoryManagerImpl implements CategoryManager {
 		totalRecordsFound = 0;
 		Integer lowerLimit, upperLimit = null;
 		FindCategoryResponse findCategoryResponse = new FindCategoryResponse();
-		List<Categories> categoriesFound = new ArrayList<Categories>();
+		List<Category> categoriesFound = new ArrayList<Category>();
 		
 		lowerLimit = ((pageNo*numberRec)-numberRec)+1;
 		upperLimit = pageNo*numberRec;

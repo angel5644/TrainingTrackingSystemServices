@@ -8,6 +8,6 @@ import lombok.Data;
 public class FindCategoryResponse {
 
 	private int totalRecords;
-	private List<Categories> categories;
+	private List<Category> categories;
     
 }
