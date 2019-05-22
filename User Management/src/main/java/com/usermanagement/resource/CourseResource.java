@@ -42,7 +42,8 @@ public class CourseResource {
 	@ApiOperation(value = "Creates a new course", response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Course created successfully", response = CourseResponse.class),
-			@ApiResponse(code = 400, message = "Bad Request"), @ApiResponse(code = 409, message = "Conflict"),
+			@ApiResponse(code = 400, message = "Bad Request"), 
+			@ApiResponse(code = 409, message = "Conflict"),
 			@ApiResponse(code = 500, message = "Internal Server Error") })
 	@RequestMapping(value = "/course", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
@@ -72,7 +73,8 @@ public class CourseResource {
 	@ApiOperation(value = "Updates an existing course", response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Course updated successfully", response = CourseResponse.class),
-			@ApiResponse(code = 400, message = "Bad Request"), @ApiResponse(code = 409, message = "Conflict"),
+			@ApiResponse(code = 400, message = "Bad Request"), 
+			@ApiResponse(code = 409, message = "Conflict"),
 			@ApiResponse(code = 500, message = "Internal Server Error") })
 	@RequestMapping(value = "/course/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
@@ -103,7 +105,7 @@ public class CourseResource {
 	// List Courses
 	@ApiOperation(value = "Returns all the courses created in the database (Must be a trainer or admin)", response = ResponseEntity.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "OK", response = CourseResponse.class),
+			@ApiResponse(code = 200, message = "OK", response = CourseListResponse.class),
 			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 401, message = "Unauthorized"),
 			@ApiResponse(code = 409, message = "Conflict"),
