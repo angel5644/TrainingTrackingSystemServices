@@ -114,7 +114,7 @@ public class CourseManagerImpl implements CourseManager {
 			courseDetails.setName(course.getName());
 			courseDetails.setDescription(course.getDescription());
 			courseDetails.setCategories(tempCategories);
-			courseDetails.setContent(course.getContent());
+			courseDetails.setContent(new String(Base64.getDecoder().decode(course.getContent())));
 
 			return courseDetails;
 		}
@@ -164,7 +164,7 @@ public class CourseManagerImpl implements CourseManager {
 					courseResponse.setName(tempCourse.getName());
 					courseResponse.setDescription(tempCourse.getDescription());
 					courseResponse.setCategories(theCourse.getCategories());
-					courseResponse.setContent(tempCourse.getContent());
+					courseResponse.setContent(new String(Base64.getDecoder().decode(tempCourse.getContent())));
 
 					// For loop to created each record with a course/category
 					// relation
@@ -265,7 +265,7 @@ public class CourseManagerImpl implements CourseManager {
 							courseResponse.setName(course.getName());
 							courseResponse.setDescription(course.getDescription());
 							courseResponse.setCategories(theCourse.getCategories());
-							courseResponse.setContent(course.getContent());
+							courseResponse.setContent(new String(Base64.getDecoder().decode(course.getContent())));
 
 							// For loop to create each record with a
 							// course/category relation
