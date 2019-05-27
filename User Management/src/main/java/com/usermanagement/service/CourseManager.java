@@ -7,11 +7,13 @@ import com.usermanagement.model.Users;
 
 public interface CourseManager {
 
-	public CourseListResponse getCourses(int userId,Users theUser);
+	public boolean deleteCourse(int courseId, Users theUser);
+	public CourseListResponse getCourses(Users theUser);
 	public CourseResponse getCourse(int courseId);
 	public CourseResponse createCourse(CourseRequest theCourse);
 	public CourseResponse updateCourse(int id, CourseRequest theCourse);
 	public boolean validateFields(CourseRequest theCourse);
+	public boolean validateUserIdCourseId(String userId, String courseId);
 	public String getResult();
 	
 }

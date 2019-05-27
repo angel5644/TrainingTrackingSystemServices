@@ -45,7 +45,20 @@ public class CourseManagerImpl implements CourseManager {
 
 	@Override
 	@Transactional
-	public CourseListResponse getCourses(int userId, Users theUser) {
+	public boolean deleteCourse(int courseId, Users theUser) {
+
+		// If the User is not an admin will return a null response
+		if (theUser.getType() != 2) {
+			return false;
+		} else {
+			courseRepository.deleteById(courseId);
+			return true;
+		}
+	}
+
+	@Override
+	@Transactional
+	public CourseListResponse getCourses(Users theUser) {
 
 		// If the User is not a trainer nor admin will return a null response
 		if (theUser.getType() == 0) {
@@ -89,7 +102,7 @@ public class CourseManagerImpl implements CourseManager {
 	@Transactional
 	public CourseResponse getCourse(int courseId) {
 
-		//Checks if the course exists in the database
+		// Checks if the course exists in the database
 		if (!courseRepository.findById(courseId).isPresent()) {
 
 			result += " The course ID entered doesn't exist in the database. ";
@@ -101,15 +114,13 @@ public class CourseManagerImpl implements CourseManager {
 			// Creates a new course response
 			CourseResponse courseDetails = new CourseResponse();
 
-			
-			List<CatCourse> categoriesByCourseId = catCourseRepository
-					.searchCategoriesByIdCourse(course.getId());
+			List<CatCourse> categoriesByCourseId = catCourseRepository.searchCategoriesByIdCourse(course.getId());
 
 			int[] tempCategories = new int[categoriesByCourseId.size()];
 			for (int i = 0; i < categoriesByCourseId.size(); i++) {
 				tempCategories[i] = categoriesByCourseId.get(i).getIdCategory();
 			}
-			
+
 			courseDetails.setId(course.getId());
 			courseDetails.setName(course.getName());
 			courseDetails.setDescription(course.getDescription());
@@ -391,6 +402,52 @@ public class CourseManagerImpl implements CourseManager {
 			System.out.println(ex);
 			return false;
 		}
+		return isOk;
+	}
+
+	public boolean validateUserIdCourseId(String userId, String courseId) {
+
+		boolean isOk = true;
+		result = "";
+
+		boolean isUserIdInteger = true;
+		try {
+			Integer.parseInt(userId);
+		} catch (TypeMismatchException e) {
+			isUserIdInteger = false;
+		} catch (NumberFormatException e) {
+			isUserIdInteger = false;
+		}
+
+		boolean isCourseIdInteger = true;
+		try {
+			Integer.parseInt(courseId);
+		} catch (TypeMismatchException e) {
+			isCourseIdInteger = false;
+		} catch (NumberFormatException e) {
+			isCourseIdInteger = false;
+		}
+
+		if (!isUserIdInteger) {
+			isOk = false;
+			result += "The user ID must be a valid integer. ";
+		} else {
+			if (Integer.parseInt(userId) <= 0) {
+				isOk = false;
+				result += "The user ID must be greater than 0";
+			}
+		}
+
+		if (!isCourseIdInteger) {
+			isOk = false;
+			result += "The course ID must be a valid integer. ";
+		} else {
+			if (Integer.parseInt(courseId) <= 0) {
+				isOk = false;
+				result += "The course ID must be greater than 0";
+			}
+		}
+
 		return isOk;
 	}
 

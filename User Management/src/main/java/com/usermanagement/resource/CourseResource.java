@@ -112,7 +112,8 @@ public class CourseResource {
 
 	// List Courses
 	@ApiOperation(value = "Returns all the courses created in the database (Must be a trainer or admin)", response = ResponseEntity.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = CourseListResponse.class),
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "OK", response = CourseListResponse.class),
 			@ApiResponse(code = 400, message = "Bad Request"), 
 			@ApiResponse(code = 401, message = "Unauthorized"),
 			@ApiResponse(code = 409, message = "Conflict"),
@@ -144,7 +145,7 @@ public class CourseResource {
 					public final String error_msg = "The following error(s) occurred: The user doesn't exist in the database. ";
 				});
 			} else {
-				CourseListResponse courses = courseManager.getCourses(Integer.parseInt(userId), user);
+				CourseListResponse courses = courseManager.getCourses(user);
 				if (courses == null) {
 					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Object() {
 						public final int status_code = 401;
@@ -197,6 +198,47 @@ public class CourseResource {
 					});
 				} else {
 					return ResponseEntity.status(HttpStatus.OK).body(courseDetails);
+				}
+			}
+		}
+	}
+
+	// Delete Course
+	@ApiOperation(value = "Delete the course specified by it's ID. ", response = ResponseEntity.class)
+	@ApiResponses(value = { @ApiResponse(code = 204, message = "OK, NO CONTENT", response = CourseListResponse.class),
+			@ApiResponse(code = 400, message = "Bad Request"), 
+			@ApiResponse(code = 401, message = "Unauthorized"),
+			@ApiResponse(code = 409, message = "Conflict"),
+			@ApiResponse(code = 500, message = "Internal Server Error") })
+	@RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> deleteCourse(@RequestHeader(value = "user-id", required = true) String userId,
+			@PathVariable("id") final String courseId) {
+		
+		boolean isOk = courseManager.validateUserIdCourseId(userId,courseId);
+		
+		if(!isOk){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Object() {
+				public final int status_code = 400;
+				public final String error_msg = "The following error(s) occurred: " + courseManager.getResult();
+			});
+		}
+		else{
+			Users user = userManager.findById(Integer.parseInt(userId));
+
+			if (user == null) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(new Object() {
+					public final int status_code = 409;
+					public final String error_msg = "The following error(s) occurred: The user doesn't exist in the database. ";
+				});
+			} else {
+				if (!courseManager.deleteCourse(Integer.parseInt(courseId),user)) {
+					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Object() {
+						public final int status_code = 401;
+						public final String error_msg = "The following error(s) occurred: The user doesn't have enough privileges to delete a course. It must be an admin. ";
+					});
+				} else {
+					return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
 				}
 			}
 		}
