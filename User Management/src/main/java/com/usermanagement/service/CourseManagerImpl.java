@@ -3,6 +3,7 @@ package com.usermanagement.service;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 import java.util.Base64;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,9 +16,11 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.usermanagement.model.Course;
+import com.usermanagement.model.CourseListResponse;
 import com.usermanagement.model.CatCourse;
 import com.usermanagement.model.CourseRequest;
 import com.usermanagement.model.CourseResponse;
+import com.usermanagement.model.Users;
 import com.usermanagement.repository.CatCourseRepository;
 import com.usermanagement.repository.CategoryRepository;
 import com.usermanagement.repository.CourseRepository;
@@ -42,12 +45,89 @@ public class CourseManagerImpl implements CourseManager {
 
 	@Override
 	@Transactional
+	public CourseListResponse getCourses(int userId, Users theUser) {
+
+		// If the User is not a trainer nor admin will return a null response
+		if (theUser.getType() == 0) {
+			return null;
+		} else {
+			// Gets all the courses in the database
+			List<Course> courses = courseRepository.findAll();
+			// Creates a new course response
+			CourseResponse[] courseResponse = new CourseResponse[courses.size()];
+
+			// Creates the collection for the collection categories inside the
+			// course response
+			for (int i = 0; i < courses.size(); i++) {
+				courseResponse[i] = new CourseResponse();
+				courseResponse[i].setId(courses.get(i).getId());
+				courseResponse[i].setName(courses.get(i).getName());
+
+				List<CatCourse> categoriesByCourseId = catCourseRepository
+						.searchCategoriesByIdCourse(courses.get(i).getId());
+
+				int[] tempCategories = new int[categoriesByCourseId.size()];
+				for (int j = 0; j < categoriesByCourseId.size(); j++) {
+					tempCategories[j] = categoriesByCourseId.get(j).getIdCategory();
+				}
+
+				// Sets the category collection that each course has
+				courseResponse[i].setCategories(tempCategories);
+			}
+
+			// Creates a new course list response to return
+			CourseListResponse courseListResponse = new CourseListResponse();
+			courseListResponse.setTotalRecords(courses.size());
+			// Sets all the course elements found in the database
+			courseListResponse.setCourseElements(courseResponse);
+
+			return courseListResponse;
+		}
+	}
+
+	@Override
+	@Transactional
+	public CourseResponse getCourse(int courseId) {
+
+		//Checks if the course exists in the database
+		if (!courseRepository.findById(courseId).isPresent()) {
+
+			result += " The course ID entered doesn't exist in the database. ";
+			return null;
+
+		} else {
+			// Gets the course selected by Id in the database
+			Course course = courseRepository.findById(courseId).get();
+			// Creates a new course response
+			CourseResponse courseDetails = new CourseResponse();
+
+			
+			List<CatCourse> categoriesByCourseId = catCourseRepository
+					.searchCategoriesByIdCourse(course.getId());
+
+			int[] tempCategories = new int[categoriesByCourseId.size()];
+			for (int i = 0; i < categoriesByCourseId.size(); i++) {
+				tempCategories[i] = categoriesByCourseId.get(i).getIdCategory();
+			}
+			
+			courseDetails.setId(course.getId());
+			courseDetails.setName(course.getName());
+			courseDetails.setDescription(course.getDescription());
+			courseDetails.setCategories(tempCategories);
+			courseDetails.setContent(new String(Base64.getDecoder().decode(course.getContent())));
+
+			return courseDetails;
+		}
+	}
+
+	@Override
+	@Transactional
 	public CourseResponse createCourse(CourseRequest theCourse) throws DuplicateKeyException {
 		result = "";
 		Boolean isOk = true;
 		Boolean isRowNotRepeated = true;
 		CourseResponse courseResponse = null;
-		
+
 		try {
 			if (courseRepository.findByName(theCourse.getName()).size() > 0) {
 				result += "There is already a course with that name. ";
@@ -69,7 +149,7 @@ public class CourseManagerImpl implements CourseManager {
 				}
 
 				if (categoryNumbersExist) {
-					
+
 					courseResponse = new CourseResponse();
 					// Content field should be encrypted with base64 encode
 					Course tempCourse = new Course();
@@ -84,7 +164,7 @@ public class CourseManagerImpl implements CourseManager {
 					courseResponse.setName(tempCourse.getName());
 					courseResponse.setDescription(tempCourse.getDescription());
 					courseResponse.setCategories(theCourse.getCategories());
-					courseResponse.setContent(tempCourse.getContent());
+					courseResponse.setContent(new String(Base64.getDecoder().decode(tempCourse.getContent())));
 
 					// For loop to created each record with a course/category
 					// relation
@@ -124,7 +204,7 @@ public class CourseManagerImpl implements CourseManager {
 		Boolean isOk = true;
 		Boolean isRowNotRepeated = true;
 		CourseResponse courseResponse = null;
-		
+
 		try {
 
 			if (id < 1) {
@@ -185,7 +265,7 @@ public class CourseManagerImpl implements CourseManager {
 							courseResponse.setName(course.getName());
 							courseResponse.setDescription(course.getDescription());
 							courseResponse.setCategories(theCourse.getCategories());
-							courseResponse.setContent(course.getContent());
+							courseResponse.setContent(new String(Base64.getDecoder().decode(course.getContent())));
 
 							// For loop to create each record with a
 							// course/category relation
