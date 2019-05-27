@@ -8,6 +8,7 @@ import com.usermanagement.model.Users;
 public interface CourseManager {
 
 	public CourseListResponse getCourses(int userId,Users theUser);
+	public CourseResponse getCourse(int courseId);
 	public CourseResponse createCourse(CourseRequest theCourse);
 	public CourseResponse updateCourse(int id, CourseRequest theCourse);
 	public boolean validateFields(CourseRequest theCourse);

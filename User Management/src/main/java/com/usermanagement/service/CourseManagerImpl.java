@@ -42,45 +42,81 @@ public class CourseManagerImpl implements CourseManager {
 	public String getResult() {
 		return this.result;
 	}
-	
+
 	@Override
 	@Transactional
-	public CourseListResponse getCourses(int userId,Users theUser){
-		
-		//If the User is not a trainer nor admin will return a null response
-		if(theUser.getType() == 0){
+	public CourseListResponse getCourses(int userId, Users theUser) {
+
+		// If the User is not a trainer nor admin will return a null response
+		if (theUser.getType() == 0) {
 			return null;
-		}
-		else{
-			//Gets all the courses in the database
-			List<Course> courses = courseRepository.findAll();			
-			//Creates a new course response
+		} else {
+			// Gets all the courses in the database
+			List<Course> courses = courseRepository.findAll();
+			// Creates a new course response
 			CourseResponse[] courseResponse = new CourseResponse[courses.size()];
-			
-			//Creates the collection for the collection categories inside the course response
-			for(int i= 0; i < courses.size(); i++){
+
+			// Creates the collection for the collection categories inside the
+			// course response
+			for (int i = 0; i < courses.size(); i++) {
 				courseResponse[i] = new CourseResponse();
 				courseResponse[i].setId(courses.get(i).getId());
 				courseResponse[i].setName(courses.get(i).getName());
-				
-				List<CatCourse> categoriesByCourseId = catCourseRepository.searchCategoriesByIdCourse(courses.get(i).getId());
-				
+
+				List<CatCourse> categoriesByCourseId = catCourseRepository
+						.searchCategoriesByIdCourse(courses.get(i).getId());
+
 				int[] tempCategories = new int[categoriesByCourseId.size()];
-				for(int j = 0; j < categoriesByCourseId.size(); j++){
+				for (int j = 0; j < categoriesByCourseId.size(); j++) {
 					tempCategories[j] = categoriesByCourseId.get(j).getIdCategory();
 				}
-				
-				//Sets the category collection that each course has
+
+				// Sets the category collection that each course has
 				courseResponse[i].setCategories(tempCategories);
 			}
-			
-			//Creates a new course list response to return
+
+			// Creates a new course list response to return
 			CourseListResponse courseListResponse = new CourseListResponse();
 			courseListResponse.setTotalRecords(courses.size());
-			//Sets all the course elements found in the database
+			// Sets all the course elements found in the database
 			courseListResponse.setCourseElements(courseResponse);
-			
+
 			return courseListResponse;
+		}
+	}
+
+	@Override
+	@Transactional
+	public CourseResponse getCourse(int courseId) {
+
+		//Checks if the course exists in the database
+		if (!courseRepository.findById(courseId).isPresent()) {
+
+			result += " The course ID entered doesn't exist in the database. ";
+			return null;
+
+		} else {
+			// Gets the course selected by Id in the database
+			Course course = courseRepository.findById(courseId).get();
+			// Creates a new course response
+			CourseResponse courseDetails = new CourseResponse();
+
+			
+			List<CatCourse> categoriesByCourseId = catCourseRepository
+					.searchCategoriesByIdCourse(course.getId());
+
+			int[] tempCategories = new int[categoriesByCourseId.size()];
+			for (int i = 0; i < categoriesByCourseId.size(); i++) {
+				tempCategories[i] = categoriesByCourseId.get(i).getIdCategory();
+			}
+			
+			courseDetails.setId(course.getId());
+			courseDetails.setName(course.getName());
+			courseDetails.setDescription(course.getDescription());
+			courseDetails.setCategories(tempCategories);
+			courseDetails.setContent(course.getContent());
+
+			return courseDetails;
 		}
 	}
 
@@ -91,7 +127,7 @@ public class CourseManagerImpl implements CourseManager {
 		Boolean isOk = true;
 		Boolean isRowNotRepeated = true;
 		CourseResponse courseResponse = null;
-		
+
 		try {
 			if (courseRepository.findByName(theCourse.getName()).size() > 0) {
 				result += "There is already a course with that name. ";
@@ -113,7 +149,7 @@ public class CourseManagerImpl implements CourseManager {
 				}
 
 				if (categoryNumbersExist) {
-					
+
 					courseResponse = new CourseResponse();
 					// Content field should be encrypted with base64 encode
 					Course tempCourse = new Course();
@@ -168,7 +204,7 @@ public class CourseManagerImpl implements CourseManager {
 		Boolean isOk = true;
 		Boolean isRowNotRepeated = true;
 		CourseResponse courseResponse = null;
-		
+
 		try {
 
 			if (id < 1) {
