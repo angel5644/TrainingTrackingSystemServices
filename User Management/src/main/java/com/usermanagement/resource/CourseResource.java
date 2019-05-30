@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.usermanagement.model.CourseRequest;
 import com.usermanagement.model.CourseResponse;
 import com.usermanagement.model.Users;
+import com.usermanagement.model.Course;
 import com.usermanagement.model.CourseListResponse;
 import com.usermanagement.service.CourseManager;
 import com.usermanagement.service.UserManager;
@@ -232,14 +233,25 @@ public class CourseResource {
 					public final String error_msg = "The following error(s) occurred: The user doesn't exist in the database. ";
 				});
 			} else {
-				if (!courseManager.deleteCourse(Integer.parseInt(courseId),user)) {
-					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Object() {
-						public final int status_code = 401;
-						public final String error_msg = "The following error(s) occurred: The user doesn't have enough privileges to delete a course. It must be an admin. ";
+				
+				Course sCourse = courseManager.findById(Integer.parseInt(courseId));
+				if(sCourse == null){
+					return ResponseEntity.status(HttpStatus.CONFLICT).body(new Object() {
+						public final int status_code = 409;
+						public final String error_msg = "The following error(s) occurred: The course doesn't exist in the database. ";
 					});
-				} else {
-					return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
 				}
+				else{
+					if (!courseManager.deleteCourse(Integer.parseInt(courseId),user)) {
+						return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Object() {
+							public final int status_code = 401;
+							public final String error_msg = "The following error(s) occurred: " + courseManager.getResult();
+						});
+					} else {
+						return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+					}
+				}
+				
 			}
 		}
 	}

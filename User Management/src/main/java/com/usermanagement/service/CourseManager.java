@@ -1,5 +1,6 @@
 package com.usermanagement.service;
 
+import com.usermanagement.model.Course;
 import com.usermanagement.model.CourseListResponse;
 import com.usermanagement.model.CourseRequest;
 import com.usermanagement.model.CourseResponse;
@@ -7,6 +8,7 @@ import com.usermanagement.model.Users;
 
 public interface CourseManager {
 
+	public Course findById(Integer id);
 	public boolean deleteCourse(int courseId, Users theUser);
 	public CourseListResponse getCourses(Users theUser);
 	public CourseResponse getCourse(int courseId);

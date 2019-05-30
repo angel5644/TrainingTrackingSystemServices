@@ -42,13 +42,22 @@ public class CourseManagerImpl implements CourseManager {
 	public String getResult() {
 		return this.result;
 	}
+	
+	@Override
+	@Transactional
+	public Course findById(Integer id){
+		return (courseRepository.findById(id).isPresent())?courseRepository.findById(id).get():null;
+	}
 
 	@Override
 	@Transactional
 	public boolean deleteCourse(int courseId, Users theUser) {
 
+		result = "";
+		
 		// If the User is not an admin will return a null response
 		if (theUser.getType() != 2) {
+			result += "The user doesn't have enough privileges to delete a course. It must be an admin.";
 			return false;
 		} else {
 			courseRepository.deleteById(courseId);
