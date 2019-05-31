@@ -33,6 +33,7 @@ public class DeleteCourseTest {
 	 * 3.- Delete course when user-id header is not an integer 
 	 * 4.- Delete course when user-id header doesn't exist in the database 
 	 * 5.- Delete course when user-id header doesn't have enough privileges (Not an admin)
+	 * 6.- Delete course when course doesn't exist in the database.
 	 * 
 	 */
 
@@ -89,11 +90,23 @@ public class DeleteCourseTest {
 	public void deleteCourseWhenUserDoesntHaveEnoughPrivileges() {
 		// Arrange
 		String userId = "6";
-		String courseId = "2";
+		String courseId = "3";
 
 		// Act
 
 		// Assert
 		assertEquals(HttpStatus.UNAUTHORIZED, courseResource.deleteCourse(userId,courseId).getStatusCode());
+	}
+	
+	@Test
+	public void deleteCourseWhenCourseDoesntExist() {
+		// Arrange
+		String userId = "7";
+		String courseId = "2000";
+
+		// Act
+		
+		// Assert
+		assertEquals(HttpStatus.CONFLICT, courseResource.deleteCourse(userId,courseId).getStatusCode());
 	}
 }

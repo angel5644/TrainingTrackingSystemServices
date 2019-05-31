@@ -36,7 +36,7 @@ public class ViewCourseTest {
 	@Test
 	public void viewCourseSuccessfully() {
 		// Arrange
-		String courseId = "2";
+		String courseId = "3";
 
 		// Act
 
